@@ -1,5 +1,5 @@
 \subfloat[Greedy solution $I$ vs. optimal solution $I^*$]{
-\begin{tikzpicture}[x=.9cm]
+\begin{tikzpicture}[x=.9cm, y=.9cm]
 
 \begin{scope}[every node/.style={red node}]
 \node(1) at(4.5,4.5)	{1};
@@ -78,7 +78,7 @@
 \draw (15) -- (17);
 
 \draw (16) -- (18);
-\node[below=1.9cm of 16]	{$I$};
+\node[below=.8cm of 10]	{$I$};
 
 \begin{scope}[xshift=6cm]
 \begin{scope}[every node/.style={red node}]
@@ -159,7 +159,7 @@
 
 \draw (16') -- (18');
 
-\node[below=1.9cm of 16']	{$I^*$};
+\node[below=.8cm of 16']	{$I^*$};
 \end{scope}
 
 %% GREEDY PACKING
@@ -203,121 +203,165 @@
 (15'.west);
 
 \end{tikzpicture}}
-% 
-% 
-% \subfloat[Mapping of each optimal path to its greedy source]{
-% \begin{tikzpicture}
-% 
-% \graph[
-% default graph,
-% random seed=2,
-% spring layout,
-% node distance=21mm,
-% ] {
-% 
-% {[nodes={red node}] 1, 2},
-% {[nodes={blue node}] 3, 4[hide]},
-% {[nodes={cyan node, hide}] 5, 6},
-% {[nodes={orange node, hide}] 7, 8},
-% {[nodes={brown node}] 9, 10},
-% {[nodes={teal node}] 11, 12[hide]},
-% {[nodes={violet node, hide}] 13, 14},
-% {[nodes={olive node, hide}] 15, 16},
-% {[nodes={green node, hide}] 17, 18},
-% {1 -- 3 -- 2} --[hide] 4;
-% {[edges={hide}]5 -- 1 -- 6};
-% {[edges={hide}]7 -- 3 -- 8};
-% {9 -- 11 -- 10} --[hide] 12;
-% {[edges={hide}]13 -- 9 -- 14};
-% {[edges={hide}]15 -- 17 -- 11 -- 16 -- 18};
-% {[edges={hide}]15 -- 12};
-% {[edges={hide}]4 -- 16 -- 10};
-% {[edges={hide}]14 -- 6};
-% 9 --[hide] 8;
-% 
-% 
-% {[nodes={red node}] 1'/1, 2'/2[hide]};
-% {[nodes={blue node}] 3'/3, 4'/4[hide]};
-% {[nodes={cyan node}] 5'/5, 6'/6};
-% {[nodes={orange node}] 7'/7, 8'/8};
-% {[nodes={brown node}] 9'/9, 10'/10[hide]};
-% {[nodes={teal node}] 11'/11, 12'/12[hide]};
-% {[nodes={violet node}] 13'/13, 14'/14};
-% {[nodes={olive node}] 15'/15, 16'/16};
-% {[nodes={green node}] 17'/17, 18'/18[hide]},
-% 
-% {1' --[hide] 3' --[hide] 2' --[hide] 4'};
-% 5' -- 1' -- 6';
-% 7' -- 3' -- 8';
-% 
-% {9' --[hide] 11' --[hide] 10' --[hide] 12'};
-% 13' -- 9' -- 14';
-% 15' -- 17' -- 11' -- 16' --[hide] 18';
-% 
-% 15' --[hide] 12';
-% {4' --[hide] 16' --[hide] 10'};
-% 14' --[hide] 6';
-% 9' --[hide] 8';
-% };
-% 
-% \node[below=1.9cm of 16]	{$I$};
-% \node[below=1.9cm of 16']	{$I^*$};
-% 
-% %% GREEDY PACKING
-% \draw[packing]
-% (1.north)	to[out=0,in=90]
-% (2.east)	to[out=-90,in=0]
-% (2.south)	to[out=180,in=180]
-% (1.north) node[near end, above right=1mm](pack1){};
-% 
-% \draw[packing]
-% (9.north)	to[out=0,in=90]
-% (10.east)	to[out=-90,in=0]
-% (10.south)	to[out=180,in=180]
-% (9.north);
-% 
-% 
-% %% OPT PACKING
-% \draw[packing]
-% (6'.west)	to[out=90,in=90]
-% (5'.east)	to[out=-90,in=0]
-% (1'.south)	to[out=180,in=-90]
-% (6'.west);
-% 
-% \draw[packing]
-% (8'.west)	to[out=90,in=90]
-% (7'.east)	to[out=-90,in=-90]
-% (8'.west);
-% 
-% \draw[packing]
-% (13'.west)	to[out=90,in=180]
-% (14'.north)	to[out=0,in=0]
-% (9'.south)	to[out=180,in=-90]
-% (13'.west);
-% 
-% \draw[packing]
-% (15'.west)	to[out=90,in=180]
-% (11'.north)	to[out=0,in=90]
-% (16'.east)	to[out=-90,in=0]
-% (16'.south)	to[out=180,in=0]
-% (11'.south)	to[out=180,in=0]
-% (15'.south)	to[out=180,in=-90]
-% (15'.west);
-% 
-% \draw[mapping]
-% (6'.north west)		to[out=135,in=90]
-% (1.north);
-% 
-% \draw[mapping]
-% (8'.north west)		to[out=100,in=45]
-% (pack1.north east);
-% 
-% \draw[mapping]
-% (15'.south west)	to[out=225,in=-90]
-% (10.south);
-% 
-% \draw[mapping]
-% (13'.south west)	to[out=225,in=-45]
-% (10.south east);
-% 
-% \end{tikzpicture}}
+
+
+\subfloat[Mapping of each optimal path to its greedy source]{
+\begin{tikzpicture}[x=.9cm,y=.9cm]
+
+\begin{scope}[every node/.style={red node}]
+\node(1) at(4.5,4.5)	{1};
+\node(2) at(4.5,2)		{2};
+\end{scope}
+
+\begin{scope}[every node/.style={blue node}]
+\node(3) at(4.5,3) 		{3};
+\end{scope}
+
+\begin{scope}[every node/.style={cyan node}]
+\end{scope}
+
+\begin{scope}[every node/.style={orange node}]
+\end{scope}
+
+\begin{scope}[every node/.style={brown node}]
+\node(9) at(2,2.5) 		{9};
+\node(10) at(2,0)		{10};
+\end{scope}
+
+\begin{scope}[every node/.style={teal node}]
+\node(11) at(2,1) 		{11};
+\end{scope}
+
+\begin{scope}[every node/.style={violet node}]
+\end{scope}
+
+\begin{scope}[every node/.style={olive node}]
+\end{scope}
+
+\begin{scope}[every node/.style={green node}]
+\end{scope}
+
+\draw (1) -- (3);
+
+\draw (2) -- (3);
+
+\draw (9) -- (11);
+
+\draw (10) -- (11);
+\node[below=.8cm of 10]	{$I$};
+
+\begin{scope}[xshift=6cm]
+\begin{scope}[every node/.style={red node}]
+\node(1') at(4.5,4.5) 	{1};
+\end{scope}
+
+\begin{scope}[every node/.style={blue node}]
+\node(3') at(4.5,3)		{3};
+\end{scope}
+
+\begin{scope}[every node/.style={cyan node}]
+\node(5') at(5,6) 		{5};
+\node(6') at(3,5)		{6};
+\end{scope}
+
+\begin{scope}[every node/.style={orange node}]
+\node(7') at(5.5,3)		{7};
+\node(8') at(3,3)		{8};
+\end{scope}
+
+\begin{scope}[every node/.style={brown node}]
+\node(9') at(2,2.5)		{9};
+\end{scope}
+
+\begin{scope}[every node/.style={teal node}]
+\node(11') at(2,1) 		{11};
+\end{scope}
+
+\begin{scope}[every node/.style={violet node}]
+\node(13') at(.5,2.5)	{13};
+\node(14') at(2,3.5)	{14};
+\end{scope}
+
+\begin{scope}[every node/.style={olive node}]
+\node(15') at(0,0) 		{15};
+\node(16') at(3.5,0)	{16};
+\end{scope}
+
+\begin{scope}[every node/.style={green node}]
+\node(17') at(.5,1) 		{17};
+\end{scope}
+
+\draw (1') -- (5');
+\draw (1') -- (6');
+
+\draw (3') -- (7');
+\draw (3') -- (8');
+
+\draw (9') -- (13');
+\draw (9') -- (14');
+
+\draw (11') -- (16');
+\draw (11') -- (17');
+
+\draw (15') -- (17');
+
+\node[below=.8cm of 16']	{$I^*$};
+\end{scope}
+
+%% GREEDY PACKING
+\draw[packing]
+(1.north)	to[out=0,in=0]
+(2.south)	to[out=180,in=180]
+(1.north);
+
+\draw[packing]
+(9.north)	to[out=0,in=0]
+(10.south)	to[out=180,in=180]
+(9.north);
+
+
+%% OPT PACKING
+\draw[packing]
+(6'.west)	to[out=90,in=90]
+(5'.east)	to[out=-90,in=0]
+(1'.south)	to[out=180,in=-90]
+(6'.west);
+
+\draw[packing]
+(8'.west)	to[out=90,in=90]
+(7'.east)	to[out=-90,in=-90]
+(8'.west);
+
+\draw[packing]
+(13'.west)	to[out=90,in=180]
+(14'.north)	to[out=0,in=0]
+(9'.south)	to[out=180,in=-90]
+(13'.west);
+
+\draw[packing]
+(15'.west)	to[out=90,in=180]
+(17'.north)	to[out=0,in=180]
+(11'.north)	to[out=0,in=90]
+(16'.east)	to[out=-90,in=0]
+(16'.south)	to[out=180,in=0]
+(11'.south)	to[out=180,in=0]
+(15'.south)	to[out=180,in=-90]
+(15'.west);
+
+\draw[mapping]
+(6'.north west)		to[out=135,in=90]
+(1.north);
+
+\draw[mapping]
+(8'.north west)		to[out=100,in=45]
+(1.north);
+
+\draw[mapping]
+(15'.south west)	to[out=225,in=-90]
+(10.south);
+
+\draw[mapping]
+(13'.south west)	to[out=225,in=-45]
+(10.south east);
+
+\end{tikzpicture}}
