@@ -1,0 +1,38 @@
+%
+Section~\ref{sec:hard} contains our hardness result for the weighted
+version of \TWOCR{}.  We show that even the \TWOCR{} feasibility question is 
+NP-hard in the case of binary weights.
+%
+In Section~\ref{sec:path_recoloring} we provide
+an alternative definition of \TWOCR{} in terms of maximal independent
+set of paths.
+%
+We first show that we can focus on a specific type of recoloring,
+called a \emph{path recoloring},
+in which each color induces a path.
+%
+Then we show that finding a path recoloring can be translated 
+into finding an independent set of paths.
+%
+In Section~\ref{sec:greedy} we present a greedy algorithm for
+(unweighted) \TWOCR{} in general graphs that is based on iteratively
+adding a shortest path to the current independent set of paths.
+%
+We provide a tight analysis for the algorithm and show
+that its approximation ratio is $\frac{3}{2}$.
+%
+This is the first time a constant-ratio approximation algorithm is
+given for a variant of
+\CRP{} in general graphs.
+%
+We also show that when $G$ is a path, 
+the same algorithm yields a $\frac{5}{4}$-approximation, 
+improving the previous best known approximation ratio by 
+Lima and Wakabayashi~\cite{lima2014convex}.
+%
+In Section~\ref{sec:fpt} we use the above mentioned characterization
+of \TWOCR{} to show that a problem kernel of size $4k$ can be obtained
+in linear time, 
+where $k$ is the cost of an optimal solution.
+%
+This leads to a $O(|E|) + 2^{O(k \log k)}$ time algorithm for \TWOCR{}. 

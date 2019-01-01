@@ -87,8 +87,7 @@ recolored by an optimal path-recoloring is:
 \[
 r := \frac{|D| - |I|}{|D| - |I^*|}
 = \frac{|D| - |I|}{|D| - \alpha |I|}
-~.
-\]
+\].
 Recall that due to Lemma~\ref{lm:does_not_recolor_connected_pair} we
 may assume that an optimal solution does not recolor singletons or
 disconnected pairs.
@@ -221,8 +220,8 @@ $I^*$.
 Hence
 \[
 |D| \geq \sum_{p' \in I^*} (\ell_{p'} - 1) = \sum_{p' \in I^*}{\ell_{p'}} -
-|I^*| ~.
-\]
+|I^*|
+\].
 
 Consider a path $p \in I$. 
 Recall from Observation~\ref{co:dpLeqDp'} that if $p' \in N(p)$ 
@@ -236,9 +235,8 @@ and it follows that
 \geq \sum_{p \in I} d_p \cdot \ell_p
 \geq \sum_{p \in I} d_p(d_p+1)
 =    \sum_{p \in I} d_p^2 + |I^*|
-~,
 \]
-where the second inequality is due to Lemma~\ref{lm:num_in_conflict}
+,where the second inequality is due to Lemma~\ref{lm:num_in_conflict}
 and the equality is due to Observation~\ref{obs:sum}.
 Hence, by Lemma~\ref{lm:avg_ineq} we have that
 \(
@@ -263,25 +261,22 @@ r
 \leq \frac{\alpha ^ 2 \cdot |I| - |I|}{\alpha ^ 2 \cdot |I| - \alpha \cdot |I|}
 =    \frac{\alpha ^ 2 - 1}{\alpha ^ 2 - \alpha}
 =    \frac{\alpha+1}{\alpha}
-~, 
 $$
-and from Lemma~\ref{lemma:kernel} we get that
+,and from Lemma~\ref{lemma:kernel} we get that
 $$
 r
 =    \frac{|D| - |I|}{|D| - \alpha \cdot |I|}
 \leq \frac{2 \alpha \cdot |I| - |I|}{2 \alpha \cdot |I| - \alpha \cdot |I|}
 =    \frac{2 \alpha - 1}{\alpha}
-~.
-$$
+$$,
 Figure~\ref{fig:upper_bound} depicts the two upper bounds on $r$.
 Putting the two bounds together, it follows that
 \[
 r
 \leq \min \left\{\frac{\alpha+1}{\alpha} , \frac{2\alpha-1}{\alpha} \right\}
 \leq    \frac{3}{2}
-~,
 \]
-as required.
+,as required.
 \end{proof}
 
 
@@ -360,18 +355,16 @@ where the main difference is that
 \geq \sum_{p \in I} d_p \cdot \ell_p
 \geq \sum_{p \in I} (d_p^2 + 2d_p)
 =    \sum_{p \in I} d_p^2 + 2|I^*|
-~,
 \]
-which means that 
+,which means that 
 \[
 |D| 
 \geq \sum_{p' \in I^*} \ell_{p'} - |I^*|
 \geq \sum_{p \in I} d_p^2 + |I^*|
 =    \sum_{p \in I} d_p^2 + \alpha |I|
 \geq (\alpha^2 + \alpha) |I|
-~,
 \]
-and the lemma follows.
+,and the lemma follows.
 {}\end{proof}
 
 In this case only one upper bound suffices.
@@ -382,22 +375,25 @@ Greedy is a $\frac{5}{4}$-approximation algorithm for
 \end{theorem}
 \begin{proof}
 Using Lemma~\ref{lemma:strong-alpha-squared} we get that
-\[
-r	=    
+\begin{align*}
+r	& =    
 \frac{|D| - |I|}{|D| - \alpha \cdot |I|}
+\\&
 \leq 
 \frac{
 	(\alpha^2 + \alpha)|I| - |I|
 }{
 	(\alpha^2 + \alpha)|I| - \alpha |I|
 }
+\\&
 =    \frac{\alpha^2 + \alpha - 1}{\alpha^2}
+\\&
 =    \frac{5}{4} - \frac{\alpha^2/4 - \alpha + 1}{\alpha^2}
+\\&
 =    \frac{5}{4} - \frac{(\alpha/2-1)^2}{\alpha^2}
 \leq \frac{5}{4}
-,
-\]
-as required.
+\end{align*}
+,as required.
 {}\end{proof}
 
 Figure~\ref{fig:upper_bound} compares this last bound with the bounds of the general case. 
