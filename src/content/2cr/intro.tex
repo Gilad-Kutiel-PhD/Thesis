@@ -1,0 +1,196 @@
+Let $G = (V, E)$ be a graph and let $\chi : V \rightarrow C$ be a
+coloring function
+\footnote{W.l.o.g. we assume that $\text{img}(\chi) = C$.}
+, assigning each vertex in $V$ a color in $C$.  We
+say that $\chi$ is a \emph{convex coloring} of $G$ if, for every color
+$c \in C$, the vertices with color $c$ induce a connected sub-graph of
+$G$. Figure~\ref{fig:convex} shows an example of convex and non-convex colorings.
+%
+In the \textsc{Convex Recoloring} problem (abbreviated \CRP{}), 
+we are given a colored graph $G_\chi$,
+and we wish to find a recoloring of a minimum number of vertices of $G$,
+such that the resulting coloring is convex. 
+That is,
+the goal is to find a convex coloring $\chi'$,
+that minimizes the size of the set $\{v : \chi(v) \neq \chi'(v)\}$.
+%
+The \textsc{$t$-Convex Recoloring} problem ($t$-\CRP{}) is the special
+case, in which the given coloring assigns the same color to at most
+$t$ vertices in $G$.
+Figure~\ref{fig:input-output} depicts an input and a possible output for the 
+\textsc{$2$-Convex Recoloring} problem
+
+\begin{figure}
+\centering
+\add{fig-convex}
+\caption{
+\label{fig:convex}
+Example of convex and non-convex colorings of a graph.}
+\end{figure}
+
+\begin{figure}
+\centering
+\add{fig-input-output}
+\caption{
+\label{fig:input-output}
+The $2$-Convex Recoloring problem.
+}
+\end{figure}
+
+%%%%%
+
+\subsection*{Related work.}
+%
+The \textsc{Convex Recoloring} problem (\CRP{}) in trees was
+introduced by Moran and Snir~\cite{MoranSnir08} and was motivated by
+its relation with the concept of \emph{perfect phylogeny}.  They
+proved that the problem is NP-hard~\cite{kanj2009convex}, even when
+the given graph is a path.  Later, Kanj et
+al.~\cite{kanj2009convex} showed that \TWOCR{} is also NP-hard on
+paths.
+%
+Applications of \CRP{} in general graphs, 
+such as multicast communication, 
+were described by Kammer and Tholey~\cite{kammer2012complexity}.
+%
+Many variants of the problem have been intensively investigated.
+%
+The differences between one variant to another can be related to
+%
+\begin{itemize}
+\item The structure of the given graph $G$.
+%
+The given graph can be a path, 
+a tree,
+a bounded treewidth graph, 
+a general graph, 
+and others.
+  
+\item Constraints on the coloring function $\chi$.
+%
+In a $t$-coloring at most $t$ colors are used to color a graph,
+while in a $t$-\CRP{} instance at most $t$ vertices are colored using the same color.
+
+\item Type of weight function.
+%
+In the weighted case, 
+each vertex is associated with a weight,
+and the weight of a recoloring is the total weight of recolored vertices.
+%
+In the unweighted case the weight of the solution is the number of recolored vertices.
+%
+In a third variant, 
+referred to as \emph{block recoloring}~\cite{kammer2012complexity}, 
+a cost is incurred for a color $c$ if at least one vertex of color $c$ was recolored. 
+\end{itemize}
+%
+Since \CRP{} was shown to be NP-hard, it was natural to try to design both
+approximation algorithms and parameterized algorithms.
+
+%%% approximation
+
+Moran and Snir~\cite{moran2007efficient} presented a $2$-approximation
+algorithm for \CRP{} in paths and a $3$-approximation algorithm for \CRP{}
+in trees.  
+%
+Both algorithms work for the problem with weights.
+%
+Bar-Yehuda, Feldman and Rawitz~\cite{BFR08} improved the
+latter by providing a $(2+\varepsilon)$-approximation algorithm for
+\CRP{} in trees.  
+%
+This result was later extended to bounded treewidth graphs by 
+Kammer and Tholey~\cite{kammer2012complexity}.
+%
+Recently, Lima and Wakabayashi~\cite{lima2014convex} gave a 
+$\frac{3}{2}$-approximation algorithm for unweighted \TWOCR{} in paths.
+
+On the negative side, 
+Kammer and Tholey~\cite{kammer2012complexity}
+proved that, if vertex weights are either $0$ or $1$, 
+then \TWOCR{} has no polynomial time approximation algorithm with a ratio of size 
+$(1 - o(1))\ln\ln n$ 
+unless $\text{NP} \subseteq \text{DTIME}(n^{O(\log\log n)})$.
+In Section~\ref{sec:hard} we show 
+that this variant of the problem can not be approximated at all. 
+%
+Camp\^{e}lo et al.~\cite{campelo2013complexity} showed that,
+for $t \geq 2$, 
+\CRP{} is NP-hard on $t$-colored grids. 
+%
+They also proved that there is no polynomial time approximation algorithm 
+within a factor of $c\ln n$ for some constant $c > 0$, 
+unless $\text{P} = \text{NP}$, 
+for unweighted \CRP{} in bipartite graphs with $2$-colorings.
+
+%%% FPT
+
+Moran and Snir~\cite{MoranSnir08} presented an algorithm for \CRP{}
+whose running time is $O(n^4 \cdot k (\frac{k}{\log k})^k)$,
+where $k$ is the number of recolorings in an optimal solution.
+%
+Razgon~\cite{Razgon07} gave a $2^{O(k)} \text{poly}(n)$ time algorithm for \CRP{} in trees.
+%
+Ponta et al.~\cite{ponta2008speeding} 
+designed several algorithms for different variants of \CRP{} in trees. 
+%
+For the unweighted case, 
+they gave a $O(3^b \cdot b \cdot n)$ time algorithm, 
+where $b$ is the number of colors that do not induce a connected subtree,
+and it is bounded from above by $2k$.
+%  
+Bar-Yehuda, Feldman and Rawitz~\cite{BFR08} 
+provided an algorithm with an upper bound of $O(n^2 + n \cdot k 2^k)$ on the running time, 
+but it is not hard to verify that this bound can be improved to $O(n \cdot k 2^k)$.
+%
+Bodlaender et al.~\cite{BFLRRW11} showed that \CRP{}  admits a kernel of size $O(k^2)$
+in trees.
+%
+Bachoore and Bodlaender~\cite{bachoore2006convex} 
+presented an algorithm for leaf-colored trees with a running time of $O(4^k \cdot n)$. 
+%
+Camp\^{e}lo et al.~\cite{campelo2013complexity} proved that, 
+for $t \geq 2$, 
+\CRP{} is $W[2]$-hard in $t$-colored graphs.
+
+%%%%%
+
+\paragraph{Our results.}
+%
+Section~\ref{sec:hard} contains our hardness result for the weighted
+version of \TWOCR{}.  We show that even the \TWOCR{} feasibility question is 
+NP-hard in the case of binary weights.
+%
+In Section~\ref{sec:path_recoloring} we provide
+an alternative definition of \TWOCR{} in terms of maximal independent
+set of paths.
+%
+We first show that we can focus on a specific type of recoloring,
+called a \emph{path recoloring},
+in which each color induces a path.
+%
+Then we show that finding a path recoloring can be translated 
+into finding an independent set of paths.
+%
+In Section~\ref{sec:greedy} we present a greedy algorithm for
+(unweighted) \TWOCR{} in general graphs that is based on iteratively
+adding a shortest path to the current independent set of paths.
+%
+We provide a tight analysis for the algorithm and show
+that its approximation ratio is $\frac{3}{2}$.
+%
+This is the first time a constant-ratio approximation algorithm is
+given for a variant of
+\CRP{} in general graphs.
+%
+We also show that when $G$ is a path, 
+the same algorithm yields a $\frac{5}{4}$-approximation, 
+improving the previous best known approximation ratio by 
+Lima and Wakabayashi~\cite{lima2014convex}.
+%
+In Section~\ref{sec:fpt} we use the above mentioned characterization
+of \TWOCR{} to show that a problem kernel of size $4k$ can be obtained
+in linear time, 
+where $k$ is the cost of an optimal solution.
+%
+This leads to a $O(|E|) + 2^{O(k \log k)}$ time algorithm for \TWOCR{}. 

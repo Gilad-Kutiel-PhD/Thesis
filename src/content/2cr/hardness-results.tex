@@ -1,0 +1,34 @@
+\label{sec:hard}
+
+In this section we prove that the weighted version of \TWOCR{} cannot
+be approximated within any multiplicative ratio, unless P$=$NP.  We
+do so using a simple reduction from the 
+\textsc{Disjoint Connecting Paths} problem.
+
+In the \textsc{Disjoint Connecting Paths} problem the input consists
+of an undirected graph $G=(V,E)$ and a set of pairs $\{(s_1,
+t_1), \ldots, (s_k, t_k)\}$, and the question is whether there are $k$
+vertex-disjoint paths that connect $s_i$ to $t_i$.  This problem is
+known to be NP-hard~\cite{karp1972reducibility}.
+
+\begin{theorem}
+The weighted version of \TWOCR{} cannot be approximated within any
+ multiplicative ratio, unless P$=$NP.
+\end{theorem}
+\begin{proof}
+Let $G$ and $\{(s_1, t_1), \ldots, (s_k, t_k)\}$ be an instance
+of \textsc{Disjoint Connecting Paths}.  We constructed a
+weighted \TWOCR{} instance as follows.  First, we use the same graph
+$G$.  Let $\chi(v) = c_v$ (a unique color assigned only to vertex $v$), if
+$v \notin \{s_1,\ldots,s_k\} \cup \{t_1,\ldots,t_k\}$, and let
+$\chi(s_i) = \chi(t_i) = c_i$, for every $i$, where $c_1, \ldots, c_k$
+are distinct colors.
+%
+Define a weight function $w$ as follows: $w(v) = 1$, if
+$v \in \{s_1,\ldots,s_k\} \cup \{t_1,\ldots,t_k\}$, and $w(v) = 0$,
+otherwise.
+%
+It is not hard to verify that $k$ disjoint paths exist in $G$ if and
+only if the minimum convex recoloring costs zero.  Hence, it is
+NP-hard to decide whether a zero cost solution exists.
+\end{proof}

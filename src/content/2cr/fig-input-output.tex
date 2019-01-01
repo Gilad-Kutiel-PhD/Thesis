@@ -1,0 +1,79 @@
+\subfloat[an example of input to the problem]{
+\label{sub:in}
+\begin{tikzpicture}[x=1.1cm, y=1.1cm]
+
+\begin{scope}[every node/.style={red node}]
+\node(1) at(2,2) 		{1};
+\node(2) at(2,-1)		{2};
+\end{scope}
+
+\begin{scope}[every node/.style={blue node}]
+\node(3) at(1,-2) 		{3};
+\node(4) at(1,0)		{4};
+\end{scope}
+
+\begin{scope}[every node/.style={green node}]
+\node(5) at(3,0) 		{5};
+\node(6) at(2,1)		{6};
+\end{scope}
+
+\begin{scope}[every node/.style={orange node}]
+\node(7) at(1,-1) 		{7};
+\node(8) at(4,0)		{8};
+\end{scope}
+
+\begin{scope}[every node/.style={violet node}]
+\node(9) at(0,0) 		{9};
+\end{scope}
+
+\draw (9) -- (4);
+\draw (4) -- (6);
+\draw (6) -- (5);
+\draw (5) -- (2);
+\draw (2) -- (7);
+\draw (7) -- (4);
+\draw (7) -- (3);
+\draw (6) -- (1);
+\draw (5) -- (8);
+
+\end{tikzpicture}}
+\hfill
+\subfloat[a possible output with cost of 2]{
+\label{sub:out}
+\begin{tikzpicture}[x=1.1cm, y=1.1cm]
+
+\begin{scope}[every node/.style={red node}]
+\node(2) at(2,-1)		{2};
+\end{scope}
+
+\begin{scope}[every node/.style={blue node}]
+\node(3) at(1,-2) 		{3};
+\node(4) at(1,0)		{4};
+\node[dashed](7) at(1,-1) 		{7};
+\end{scope}
+
+\begin{scope}[every node/.style={green node}]
+\node[dashed](1) at(2,2) 		{1};
+\node(5) at(3,0) 		{5};
+\node(6) at(2,1)		{6};
+\end{scope}
+
+\begin{scope}[every node/.style={orange node}]
+\node(8) at(4,0)		{8};
+\end{scope}
+
+\begin{scope}[every node/.style={violet node}]
+\node(9) at(0,0) 		{9};
+\end{scope}
+
+\draw (9) -- (4);
+\draw (4) -- (6);
+\draw (6) -- (5);
+\draw (5) -- (2);
+\draw (2) -- (7);
+\draw (7) -- (4);
+\draw (7) -- (3);
+\draw (6) -- (1);
+\draw (5) -- (8);
+
+\end{tikzpicture}}

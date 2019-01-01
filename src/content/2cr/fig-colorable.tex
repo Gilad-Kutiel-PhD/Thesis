@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\node(1) at (-2,1) [red node] {1}; 
+\node(2) at (-2,-1) [red node] {2}; 
+\node(3) at (2,1) [blue node] {3}; 
+\node(4) at (2,-1) [blue node] {4}; 
+\node (5) at (-1,0) [green node] {5}; 
+\node (6) at (1, 0) [green node] {6};
+\node (7) at (0,0) [black node] {7}; 
+
+\draw (3) -- (6); 
+\draw (7) -- (6);
+\draw (7) -- (5);
+\draw (6) -- (4);
+\draw (5) -- (2);
+\draw (1) -- (5);
+\end{tikzpicture}

@@ -1,0 +1,424 @@
+\section{Greedy Algorithm}
+\label{sec:greedy}
+
+In this section we describe a natural greedy algorithm to construct a maximal
+independent set of colorable paths, we discuss how this algorithm can be implemented,
+and define the corresponding path-recoloring it computes.
+%
+We show that the approximation ratio of the greedy algorithm is $\frac{3}{2}$.
+%
+For the special case where the input graph is a path, 
+we show that the greedy algorithm achieves a $\frac{5}{4}$ approximation ratio.
+
+%%%%%
+
+\subsection{The Algorithm}
+
+While we are not attempting to achieve an approximation to the size
+of the maximum independent set of colorable paths,
+the alternative definition given at the end of the previous section
+leads us to a natural greedy algorithm: 
+choose the shortest colorable path that 
+is not in conflict with colorable paths already been chosen and add it
+to an independent set of colorable paths.
+%
+A formal description of this algorithm is given in
+Algorithm~\ref{alg:conv:greedy}.
+
+\begin{algorithm}
+\begin{algorithmic}
+
+\State $I \gets \emptyset$
+
+\While{there is a colorable path, not in conflict with $I$}
+\State add to $I$ a shortest colorable path, not in conflict with $I$ 
+\EndWhile
+\\
+\Return the path-recoloring corresponding to $I$
+
+
+\end{algorithmic}
+\caption{Greedy algorithm for 2-CR.}
+\label{alg:conv:greedy}
+\end{algorithm}
+
+We now describe how a shortest colorable path can be found.
+%
+To do that, 
+at the initialization of the algorithm, 
+all singletons and connected pairs should be removed from the graph.  
+%
+Every colorable path that is added to $I$ should be also removed from the graph.  
+%
+In addition, 
+after each path removal, 
+one should also remove all vertices with a unique color in the remaining graph.  
+%
+On the remaining graph, 
+a shortest path, 
+among those vertices of the same color, 
+is guaranteed to be colorable and independent of $I$.
+%
+In particular,
+it cannot contain two vertices that are colored by the same color, 
+since such a path is not a shortest path.
+
+%%%%%
+
+\subsection{Analysis for General Graphs}
+
+We now analyze the greedy algorithm and prove that it recolors at most 
+$\frac{3}{2} \cdot k$ vertices, 
+where $k$ is the minimum number of vertices that must be recolored to achieve a convex
+coloring.
+%
+We also show that the analysis is tight even in trees.
+
+Recall that $D$ is the set of disconnected pairs in $G$, 
+$I \subseteq D$ is the set of independent paths colored by the greedy algorithm, 
+and let $I^* \subseteq D$ be the set of independent paths colored by an arbitrary, 
+but fixed,
+optimal path-recoloring.  
+%
+Define $\alpha := \frac{|I^*|}{|I|}$,
+then by Lemma~\ref{lm:cost} the ratio between the number of 
+vertices recolored by the greedy algorithm and the number of vertices
+recolored by an optimal path-recoloring is:
+\[
+r := \frac{|D| - |I|}{|D| - |I^*|}
+= \frac{|D| - |I|}{|D| - \alpha |I|}
+~.
+\]
+Recall that due to Lemma~\ref{lm:does_not_recolor_connected_pair} we
+may assume that an optimal solution does not recolor singletons or
+disconnected pairs.
+%
+We now analyze the relationship between $|I|$, $|D|$ and $\alpha$.
+
+Let $\ell_p$ be the number of vertices on a path $p$ (including its endpoints), 
+and observe that:
+
+\begin{lemma}
+\label{lemma:assign}
+If $p' \in I^* \setminus I$, then there is a path $p \in I$ that is in
+conflict with $p'$, and $\ell_p \leq \ell_{p'}$.
+\end{lemma}
+\begin{proof}
+Consider the running of the greedy algorithm at the most recent point,
+where $I$ contains no path with a distance greater than $\ell_{p'}$.  If,
+at this point, there is no path in $I$ that is in conflict with $p'$
+then nothing prevents the greedy algorithm from adding $p'$ to $I$.
+{}\end{proof}
+
+Next, we assign each optimal path to a greedy path.
+%
+Given a path $p' \in I^*$, the \emph{conflict source} of $p'$ is $p'$
+itself if $p' \in I$, otherwise it is an arbitrary shortest path in
+$I$ that is in conflict with $p'$.
+%
+Notice that this is a many-to-one assignment, that is, several optimal
+paths can be assigned to a single greedy path.
+%
+For a path $p \in I$, the set of paths in $I^*$ such that $p$ is their
+conflict source is denoted as $N(p)$.
+The members of $N(p)$ are called the \emph{neighbours} of $p$.
+Figure~\ref{fig:greedy-vs-opt} depicts the mapping between paths in 
+$I^*$ and their conflict source in $I$.
+
+\begin{figure}
+\centering
+\input{fig-greedy-vs-opt}
+\caption{
+\label{fig:greedy-vs-opt}
+A comparison between $I$ (the greedy solution) and $I^*$ (an optimal solution).
+Each path in $I^*$ is mapped to its conflict source in $I$.
+}
+\end{figure}
+
+Due to Lemma~\ref{lemma:assign} we have that:
+
+\begin{observation}
+\label{co:dpLeqDp'}
+For every path $p \in I$, if $p' \in N(p)$, then $\ell_p \leq \ell_{p'}$.
+\end{observation}
+
+Denote $d_p := |N(p)|$ and refer to $d_p$ as the \emph{degree} of $p$.
+Our next goal is to find an upper bound to $d_p$, for $p \in I$.
+
+\begin{lemma}
+\label{lm:num_in_conflict}
+For every path $p \in I$, $d_p \leq \ell_p - 1$.
+\end{lemma}
+\begin{proof}
+We show that the number of paths in $I^*$ that
+are in conflict with $p$ is at most $\ell_p - 1$.
+%
+Associate a vertex in $p$ to every path that is in conflict with $p$.
+For a path that is in direct conflict with $p$ associate a common
+vertex of these paths, for a path that is in indirect conflict due to
+color $c$, associate the vertex that has color $c$ in $p$.  Recall
+that no two paths in $I^*$ are in conflict, and observe that
+associating the same vertex to more than one path implies the
+existence of such conflict. 
+Finally, since the end points of $p$ have the same color, 
+at most one of them can be associated with a path in $I^*$, 
+or otherwise, $I^*$ is not independent.
+{}\end{proof}
+
+In what follows we obtain two lower bounds on $|D|$, which translate
+into two upper bounds on the approximation ratio $r$.
+
+\begin{lemma}
+\label{lemma:kernel}
+$|D| \geq 2|I^*|$.
+\end{lemma}
+\begin{proof}
+Every path $p \in I^*$ has $l_p \geq 3$, 
+since its end points form a disconnected pair. 
+Also, the internal vertices must be part of another disconnected pair.
+Thus, we can observe the existence of at least two disconnected pairs
+for every path in $I^*$.  We do not count the same disconnected pair
+twice, or otherwise, $I^*$ is not independent.
+{}\end{proof}
+
+
+\begin{observation}
+\label{obs:sum}
+$\sum_{p \in I}{d_p} = |I^*| = \alpha \cdot |I|$
+\end{observation}
+\begin{proof}
+By definition every path $p' \in I^*$ has one, and only one, conflict
+source in $I$, thus, 
+there exists exactly one path $p \in I$ such that $p' \in N(p)$.
+{}\end{proof}
+
+
+\begin{lemma}
+\label{lm:avg_ineq}
+$\frac{\sum_{p \in I}{d_p^2}}{|I|} \geq \alpha^2$.
+\end{lemma}
+\begin{proof}
+Due to Observation~\ref{obs:sum} we have that the average degree of
+paths in $I$ is $\alpha$, i.e. $\frac{\sum_{p \in I}{d_p}}{|I|}
+= \alpha$.  The lemma follows from the Jensen's inequality.
+{}\end{proof}
+
+
+\begin{lemma}
+\label{lemma:alpha-squared}
+$|D| \geq \alpha^2|I|$.
+\end{lemma}
+\begin{proof}
+Let $v$ be a vertex in a path $p' \in I^*$.
+Then $v$ must be a part of
+a disconnected pair, otherwise $v$ is a singleton or part of a
+connected pair and thus the considered recoloring is not a
+path-recoloring.  Observe, also, that aside from the two endpoints of
+each path, no two vertices of the same disconnected pair can belongs to paths
+in $I^*$ (or otherwise $I^*$ is not independent).  
+Thus, we can count $\ell_{p'} - 1$ disconnected pairs for every path $p'$ in
+$I^*$.  
+Hence
+\[
+|D| \geq \sum_{p' \in I^*} (\ell_{p'} - 1) = \sum_{p' \in I^*}{\ell_{p'}} -
+|I^*| ~.
+\]
+
+Consider a path $p \in I$. 
+Recall from Observation~\ref{co:dpLeqDp'} that if $p' \in N(p)$ 
+then $\ell_{p'} \geq \ell_p$.
+%
+Hence, 
+$\sum_{p' \in N(p)}{\ell_{p'}} \geq d_p \cdot \ell_p$, 
+and it follows that
+\[
+\sum_{p' \in I^*} \ell_{p'}
+\geq \sum_{p \in I} d_p \cdot \ell_p
+\geq \sum_{p \in I} d_p(d_p+1)
+=    \sum_{p \in I} d_p^2 + |I^*|
+~,
+\]
+where the second inequality is due to Lemma~\ref{lm:num_in_conflict}
+and the equality is due to Observation~\ref{obs:sum}.
+Hence, by Lemma~\ref{lm:avg_ineq} we have that
+\(
+|D| \geq \sum_{p \in I} d_p^2 \geq \alpha^2 |I|
+\).
+{}\end{proof}
+
+We can now obtain two upper bounds on the approximation ratio $r$ as a
+function of $\alpha$. 
+%Figure~\ref{fig:upper_bound} depicts these two bounds.
+
+\begin{theorem}
+The greedy algorithm is a $\frac{3}{2}$-approximation algorithm for
+\TWOCR{}.
+\end{theorem}
+\begin{proof}
+Using Lemma~\ref{lemma:alpha-squared} and the fact that $\alpha \geq 1$ we get
+that
+$$
+r
+=    \frac{|D| - |I|}{|D| - \alpha \cdot |I|}
+\leq \frac{\alpha ^ 2 \cdot |I| - |I|}{\alpha ^ 2 \cdot |I| - \alpha \cdot |I|}
+=    \frac{\alpha ^ 2 - 1}{\alpha ^ 2 - \alpha}
+=    \frac{\alpha+1}{\alpha}
+~, 
+$$
+and from Lemma~\ref{lemma:kernel} we get that
+$$
+r
+=    \frac{|D| - |I|}{|D| - \alpha \cdot |I|}
+\leq \frac{2 \alpha \cdot |I| - |I|}{2 \alpha \cdot |I| - \alpha \cdot |I|}
+=    \frac{2 \alpha - 1}{\alpha}
+~.
+$$
+Figure~\ref{fig:upper_bound} depicts the two upper bounds on $r$.
+Putting the two bounds together, it follows that
+\[
+r
+\leq \min \left\{\frac{\alpha+1}{\alpha} , \frac{2\alpha-1}{\alpha} \right\}
+\leq    \frac{3}{2}
+~,
+\]
+as required.
+\end{proof}
+
+
+
+\begin{figure}
+\centering
+\input{fig-2bounds}
+\caption{
+\label{fig:upper_bound}
+An upper bound on the approximation ratio as a function of $\alpha$.
+The dashed (blue) and the dotted (orange) plots are the two bounds for the general case.
+The solid (green) plot is the bound for 2-cr on paths.
+}
+\end{figure}
+
+\begin{figure}
+\centering
+\input{fig-greedy-tight}
+\caption{
+Greedy might choose to color the path (1, 3, 2), 
+then it must recolor one of the vertices \{5, 6\} 
+and one of the vertices \{7, 8\}, 
+a total of three recolored vertices, 
+while an optimal recoloring can color two paths: (5, 1, 6) and (7, 3, 8), 
+a total of two recolored vertices.}
+\label{fig:tight}
+\end{figure}
+
+We show that our analysis is tight even for colored trees, using the
+instance depicted in Figure~\ref{fig:tight}, 
+which consists of a colored graph where the greedy algorithm might recolor
+$\frac{3}{2}$ times more vertices than the optimal convex recoloring.
+%
+We note that one can simply duplicate the instance using new colors for
+each copy in order to construct an arbitrary large graph with the same
+approximation ratio.
+
+%%%%%
+
+\subsection{Analysis for Paths}
+
+For the special case when the input graph is a path, 
+we show that the greedy algorithm achieves a $\frac{5}{4}$ approximation ratio.
+We show that the analysis is tight for this special case as well.
+
+We start our analysis  by observing that, in the case of a path, we can replace
+Lemma~\ref{lm:num_in_conflict} with the following lemma:
+
+\begin{lemma}
+For every path $p \in I$, $d_p \leq \ell_p - 2$.
+\end{lemma}
+\begin{proof}
+We show that the number of paths in $I^*$ that
+are in conflict with $p$ is at most $\ell_p - 2$.  
+This is true, because if $G$ is a  path, 
+then for every path that is in conflict with $p$, 
+we can now associate a (unique) vertex that is not one of the endpoints of $p$.  
+If the conflict is direct, then the two paths
+must overlap, thus associate the other path's endpoint.  If the
+conflict is indirect, then this must be due to some color other than
+the one on the endpoints of $p$, or else this is a direct conflict.
+{}\end{proof}
+
+Using the above lemma we can strengthen
+Lemma~\ref{lemma:alpha-squared}.
+
+\begin{lemma}
+\label{lemma:strong-alpha-squared}
+$|D| \geq (\alpha^2+\alpha)|I|$.
+\end{lemma}
+\begin{proof}
+The proof is similar to the proof of Lemma~\ref{lemma:alpha-squared},
+where the main difference is that
+\[
+\sum_{p' \in I^*} \ell_{p'}
+\geq \sum_{p \in I} d_p \cdot \ell_p
+\geq \sum_{p \in I} (d_p^2 + 2d_p)
+=    \sum_{p \in I} d_p^2 + 2|I^*|
+~,
+\]
+which means that 
+\[
+|D| 
+\geq \sum_{p' \in I^*} \ell_{p'} - |I^*|
+\geq \sum_{p \in I} d_p^2 + |I^*|
+=    \sum_{p \in I} d_p^2 + \alpha |I|
+\geq (\alpha^2 + \alpha) |I|
+~,
+\]
+and the lemma follows.
+{}\end{proof}
+
+In this case only one upper bound suffices.
+
+\begin{theorem}
+Greedy is a $\frac{5}{4}$-approximation algorithm for
+\TWOCR{} on paths.
+\end{theorem}
+\begin{proof}
+Using Lemma~\ref{lemma:strong-alpha-squared} we get that
+\[
+r	=    
+\frac{|D| - |I|}{|D| - \alpha \cdot |I|}
+\leq 
+\frac{
+	(\alpha^2 + \alpha)|I| - |I|
+}{
+	(\alpha^2 + \alpha)|I| - \alpha |I|
+}
+=    \frac{\alpha^2 + \alpha - 1}{\alpha^2}
+=    \frac{5}{4} - \frac{\alpha^2/4 - \alpha + 1}{\alpha^2}
+=    \frac{5}{4} - \frac{(\alpha/2-1)^2}{\alpha^2}
+\leq \frac{5}{4}
+,
+\]
+as required.
+{}\end{proof}
+
+Figure~\ref{fig:upper_bound} compares this last bound with the bounds of the general case. 
+To see that our analysis is tight, consider the instance depicted in
+Figure~\ref{fig:tight_path}. On this colored path, the greedy algorithm might
+recolor $\frac{5}{4}$ times more vertices than the optimal recoloring.
+
+
+\begin{figure}[t]
+\centering
+\input{fig-simple-paths}
+\caption{
+The greedy algorithm might choose to color the path $2 \ldots 5$, 
+then it must recolor one of the vertices \{1, 10\} 
+(the path $1 \ldots 10$ contains the path $2 \ldots 5$), 
+one of \{6, 12\}
+(the paths $2 \ldots 5$ and $6 \ldots 12$ are in indirect conflict), 
+and one of \{8, 11\}
+(the paths $2 \ldots 5$ and $8 \ldots 11$ are in indirect conflict),
+a total of five recolored vertices,
+while an optimal recoloring can recolor the paths $4 \ldots 7$ and
+$8 \ldots 11$, a total of four recolored vertices.}
+\label{fig:tight_path}
+\end{figure}

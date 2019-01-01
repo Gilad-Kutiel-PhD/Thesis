@@ -1,0 +1,213 @@
+As a first step we show that it may be assumed that all 
+colors retain at least one representative.
+%
+In other words,
+we show that there is always an optimal convex recoloring $\chi'$ 
+that does not recolor singletons and recolors at most one vertex of every pair. 
+
+Given a colored graph $G_\chi$ and a recoloring $\chi'$, 
+a vertex $v$ \emph{retains} its color if $\chi(v)=\chi'(v)$. 
+%
+We say that $\chi'$ \emph{retains} a pair $p$, 
+if both vertices of $p$ retain their color.  
+%
+The recoloring $\chi'$ \emph{retains} a color $c \in C$,
+if there exists a vertex $v \in G$ such that ${\chi'(v) = \chi(v) = c}$
+\footnote{
+Note that this definition is different from the one given
+in~\cite{kanj2009convex}.
+}.
+%
+If a recoloring retains all the colors of a graph, 
+we refer to it as a \emph{retains-all} recoloring (see Figure~\ref{fig:retains-all}).
+Observe that a retains-all recoloring does not recolor singletons.
+
+\begin{figure}
+\centering
+\input{fig-retains-all}
+\caption{
+\label{fig:retains-all}
+Example of retains-all and non-retains-all (optimal) convex recolorings.
+}
+\end{figure}
+%
+We show that there exists a retains-all optimal recoloring.
+
+\begin{lemma}
+\label{lm:retains-all}
+For every colored graph $G_\chi$, 
+there exists a retains-all optimal convex recoloring.
+\end{lemma}
+
+\begin{proof}
+Consider an optimal convex recoloring $\chi'$ that retains a maximum
+number of colors over all optimal, 
+convex recolorings of $G$.
+%
+Assume for contradiction that $\chi'$ does not retain a color $c$, 
+and let $v$ be a vertex such that $\chi(v) = c$ and $\chi'(v) = c' \neq c$.
+%
+Without loss of generality we assume that $c$ is not used by $\chi'$ 
+(otherwise, we can recolor each vertex in $G_{\chi'}[c]$ using a new unique color.
+% \footnote{
+% Unique colors are used for simplicity. 
+% The new colors can be replaced by original colors, 
+% by iteratively recoloring a vertex with unique color 
+% using the color of an adjacent vertex which is colored by an original color
+% }).
+%
+We define a recoloring $\chi''$ by considering $G_{\chi'}[c']$.
+%
+First, 
+define $\chi''(v) = c$.
+Next, 
+if $G_{\chi'}[c']$ contains a vertex $u$ such that $\chi(u) = c'$, 
+then define $\chi''(u) = c'$.
+%
+Each vertex of the remaining vertices in $G_{\chi'}[c']$ is colored by $\chi''$ 
+using a unique new color.
+%
+Observe that if there exists a second vertex 
+$u' \neq u$ such that $\chi'(u') = \chi(u') = c'$, 
+then $\chi''$ recolors it.
+%
+Finally, 
+$\chi''(x) = \chi'(x)$ for any vertex $x$ not in $G_{\chi'}[c']$.
+
+$\chi''$ is convex since every vertex in
+$G_{\chi'}[c']$ is colored by a unique color. 
+%
+$\chi''$ recolors at most as many vertices as $\chi'$ 
+since it may recolor $u$'s mate (if it exists), 
+but it avoids the recoloring of $v$. 
+%
+Finally, 
+$\chi''$ retains more colors than $\chi'$ 
+since it retains $c$.
+%
+Thus, 
+we obtained an optimal recoloring that retains more colors than $\chi'$.  
+%
+A contradiction.
+{}\end{proof}
+
+Next we show that we need not recolor connected pairs.
+
+\begin{lemma}
+\label{lm:does_not_recolor_connected_pair}
+For every colored graph $G_\chi$ there exists a retains-all,
+optimal,
+convex recoloring that does not recolor any connected pair.
+\end{lemma}
+
+\begin{proof}
+Consider an optimal retains-all convex recoloring $\chi'$ 
+that retains the maximum number of connected pairs, 
+over all optimal, 
+retains-all recolorings of $G$.  
+%
+Assume for contradiction that $\chi'$ 
+recolors one of the vertices of a connected pair $\{u, v\}$, 
+that is, 
+without loss of generality,
+$\chi(u) = \chi(v) = c$ and $\chi'(v) = c' \neq c$.
+%
+We can use a similar argument to the one used in the proof of Lemma~\ref{lm:retains-all}.
+%
+The difference is in the definition of $\chi''$.  
+%
+We let $\chi''(v) = c$. 
+Next, if $G_{\chi'}[c']$ contains a vertex $w \neq v$ such that $\chi(w) = c'$,
+then define $\chi''(w) = c'$, 
+also, if $G_{\chi'}[c']$ contains a connected pair $u_1, u_2$ 
+such that $\chi(u_1) = \chi(u_2) = \chi'(u_1) = \chi'(u_2) = c'$, 
+then we define $\chi''(u_1) = \chi''(u_2) = c'$.
+Each vertex of the remaining vertices in $G_{\chi'}[c']$ is colored by $\chi''$ 
+using a unique new color.
+%
+Observe that $\chi''$ is convex, since apart from the possible
+connected pair $u_1$ and $u_2$ which are colored by $c'$, every vertex
+in $G_{\chi'}[c']$ is colored by a unique color.
+%
+Observe also that $\chi''$ is a retains-all recoloring that recolors at most as
+many vertices as $\chi'$, and retains more connected pairs than $\chi'$. 
+%
+A contradiction.
+{}\end{proof}
+
+We are now ready to define \emph{path-recolorings}.
+%
+Given a colored graph $G_\chi$ and a convex recoloring $\chi'$, 
+we say that $\chi'$ \emph{path-recolors} $G$ with respect to $c \in C$ 
+if there is a Hamiltonian path 
+\footnote{
+Note that we are not concerned with the decision problem whether a given recoloring 
+is a path-recoloring or not.
+Later in the paper we will introduce a simple algorithm that computes a path-recoloring. 
+} 
+in $G_{\chi'}[c]$: 
+$u, \dots, v$ such that $\chi(u) = \chi(v) = c$.
+%
+A special case of this definition is when  $G_{\chi'}[c]$ 
+is a single vertex $v$ and $\chi(v) = c$.
+%
+We say that $\chi'$ is a \emph{path-recoloring} if:
+\begin{enumerate}
+	\item $\chi'$ does not recolor any connected pair, and 
+	\item $\chi'$ path-recolors $G$ with respect to every $c \in C$.
+\end{enumerate}
+Clearly, every path-recoloring also retains all colors.
+
+\begin{lemma}
+\label{lm:optimal_path_recoloring}
+For every colored graph $G_\chi$ 
+there exists an optimal recoloring that is a path recoloring.
+\end{lemma}
+
+\begin{proof}
+Let $\chi'$ be an optimal, 
+retains-all recoloring that does not recolor any connected pair 
+(whose existence was shown in Lemma~\ref{lm:does_not_recolor_connected_pair}) 
+that path-recolors $G$ with respect to a subset of $C$ of a maximum possible size. 
+%
+Assume for contradiction that $\chi'$ is not a path-recoloring.  
+%
+Hence there is a color $c$ such that $\chi'$ does not path-recolor $G$ with $c$.
+%
+Consider $G_{\chi'}[c]$, 
+and assume for now that there are two vertices $u$
+and $v$ in $G_{\chi'}[c]$ such that $\chi(u) = \chi(v) = c$.  
+%
+Fix a simple path from $u$ to $v$ in $G_{\chi'}[c]$, 
+and let $\chi''$ be identical to $\chi'$ with the following modification: 
+$\chi''$ assigns a unique color for every vertex in $G_{\chi'}[c]$ 
+that is not on the simple path from $u$ to $v$.
+%
+Clearly, 
+$\chi''$ is an optimal recoloring that path-recolors 
+$G$ with respect to more colors than $\chi'$.  
+%
+A contradiction.
+	
+Now,
+if there is at most one vertex $v$ in $G_{\chi'}[c]$ such that $\chi(v) = c$ 
+then consider a recoloring $\chi''$ that is identical to $\chi'$ 
+except it assigns a unique color to every vertex in $G_{\chi'}[c]$ that is not $v$.
+%
+This time, 
+again, 
+we found an optimal recoloring that path-recolors $G$ with more colors than $\chi'$.  
+%
+A contradiction.
+{}\end{proof}
+
+Henceforth, 
+whenever we refer to a recoloring, 
+we assume that it is a path-recoloring.
+In particular, 
+we assume that for every disconnected pair in $G$ with color $c$, 
+a recoloring either:
+\begin{inparaenum}[(i)]
+	\item colors exactly a path between the disconnected pair with color $c$, or
+	\item changes the color of exactly one of its vertices. 
+\end{inparaenum}

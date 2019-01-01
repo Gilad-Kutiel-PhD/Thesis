@@ -1,0 +1,50 @@
+\subfloat[Convex]{
+\begin{tikzpicture}
+
+
+\begin{scope}[every node/.style={green node}]
+\node(2) at(0,0) 		{2};
+\node(3) at(-1,-1.5)	{3};
+\node(7) at(0,-1)		{7};
+\end{scope}
+
+\begin{scope}[every node/.style={red node}]
+\node(4) at(1,-1.5)		{4};
+\node(1) at(1.5,-2.5)	{1};
+\end{scope}
+
+\begin{scope}[every node/.style={blue node}]
+\node(5) at(1,.5)		{5};
+\node(6) at(1.7,-.5)	{6};
+\end{scope}
+
+\draw (3) -- (7) -- (2) -- (5) -- (6) -- (4) -- (1);
+\draw (4) -- (7);
+
+\end{tikzpicture}}
+\hspace{1cm}
+\subfloat[Non-Convex]{
+\begin{tikzpicture}
+
+
+\begin{scope}[every node/.style={green node}]
+\node(7) at(0,-1)		{7};
+\end{scope}
+
+\begin{scope}[every node/.style={red node}]
+\node(2) at(0,0) 		{2};
+\node(3) at(-1,-1.5)	{3};
+\node(4) at(1,-1.5)		{4};
+\end{scope}
+
+\begin{scope}[every node/.style={blue node}]
+\node(1) at(1.5,-2.5)	{1};
+\node(5) at(1,.5)		{5};
+\node(6) at(1.7,-.5)	{6};
+\end{scope}
+
+\draw (3) -- (7) -- (2) -- (5) -- (6) -- (4) -- (1);
+\draw (4) -- (7);
+
+
+\end{tikzpicture}}

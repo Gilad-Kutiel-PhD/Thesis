@@ -1,0 +1,44 @@
+\label{sec:fpt}
+
+Let $k$ be the minimum number of vertices that has to be recolored. In this
+section, we describe an exact algorithm for \TWOCR{} with a running time
+of $O(|E|) + 2^{O(k \log k)}$.
+
+\begin{theorem}
+\label{th:kernel_size}
+There is a $4k$ kernel for \TWOCR{} that can be computed in linear time, where the
+parameter $k$ is the size of an optimal solution.
+\end{theorem}
+
+\begin{proof}
+Recall from Lemma~\ref{lm:cost} that $k = |D| - |I^*|$.
+From Lemma~\ref{lemma:kernel} we know that $|D| \geq 2|I^*|$ and we can
+conclude that $|D| \leq 2k$.
+That is, the number of disconnected pairs in any colored graph is at most twice
+the minimum number of vertices needed to be recolored by any convex recoloring.
+Finally, Lemma~\ref{lm:optimal_path_recoloring} states that an optimal solution
+that recolors only disconnected pairs exists.
+Thus, given a colored graph, we can reduce, in linear time, the number of
+vertices in the graph to no more than $4k$ by removing all singletons and connected
+pairs.{}
+\end{proof}
+
+We use kernelization to obtain a parameterized algorithm for \TWOCR{}.
+
+\begin{theorem}
+There is an $O(|E|) + 2^{O(k\log{k})}$ time algorithm for \TWOCR{}, where
+the parameter $k$ is the size of an optimal solution.
+\end{theorem}
+
+\begin{proof}
+First reduce the size of the graph to no more than $4k$ vertices, as described
+in the proof of Theorem~\ref{th:kernel_size}.
+This takes $O(|E|)$.
+A brute force search algorithm
+that tests every possible recoloring can now be used to find an optimal one.
+Such algorithm needs to consider $2k$ colors for every vertex of the $4k$
+vertices, thus at most $(2k)^{4k}$ coloring exists. 
+Each proposed recoloring can be tested in linear time, so the overall running
+time of the algorithm is $O(k^2 \cdot (2k)^{4k}) =  2^{O(k\log{k})}$.
+\end{proof}
+

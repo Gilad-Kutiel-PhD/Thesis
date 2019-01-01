@@ -1,0 +1,153 @@
+When a recoloring $\chi'$ colors a path between a disconnected pair (using the pair's color), 
+we refer to the path as a \emph{colored path}.
+%
+Let $D$ be the set of all disconnected pairs in $G$, 
+and denote by $I$ the set of colored paths in $G_{\chi'}$. 
+Then the following lemma holds:
+
+\begin{lemma}
+\label{lm:cost}
+Given a colored graph $G_\chi$, 
+a path-recoloring $\chi'$ recolors exactly $|D| - |I|$ vertices.
+\end{lemma}
+
+\begin{proof}
+By definition,
+$\chi'$ may only recolor vertices from the disconnected pairs.
+Also, it does not recolor any of the vertices that form the endpoints of paths in $I$.
+%
+$\chi'$ must recolor exactly one vertex of every other disconnected pair:
+if it recolors both vertices then the color of this pair is not retained,
+and if it recolors none of them then convexity does not hold.
+\end{proof}
+
+\begin{figure}
+\centering
+\input{fig-colorable}
+\caption{
+\label{fig:paths}
+In this colored graph, the paths (4, 6, 3) and (1, 5, 2) are colorable, while
+the path (6, 7, 5) is not.
+Path (4, 6, 3) is in indirect conflict with path (1, 5, 2) and in direct
+conflict with path (6, 7, 5).
+}
+\end{figure}
+Given a colored graph $G_\chi$ and a path $p$, 
+let $V(p)$ be the set of vertices on the path and let $\chi(p)$ 
+be the set of colors assigned to vertices on this path, 
+i.e. $\chi(p) = {\{\chi(v) : v \in V(p)\}}$.
+%
+Given two paths $p_1$ and $p_2$ in $G_\chi$:
+\begin{itemize}
+\item 
+$p_1$ and $p_2$ are in \emph{direct conflict} if $V(p_1) \cap V(p_2) \neq \emptyset$.
+
+\item 
+$p_1$ and $p_2$ are in \emph{indirect conflict} if $\chi(p_1) \cap \chi(p_2) \neq \emptyset$,
+\end{itemize}
+%
+$p_1$ and $p_2$ are in \emph{conflict} if they are either in a direct
+or an indirect conflict 
+(observe that direct conflict implies an indirect conflict).
+%
+If two paths are not in conflict, 
+then they are \emph{independent}.
+%
+Given a set of paths $I$, 
+we say that this set is \emph{independent}
+if it is pairwise independent, 
+that is, 
+if every two paths $p_1, p_2 \in I$ are independent.
+%
+A path $u, \dots, v$ in $G$ is called \emph{colorable} if $u$ and $v$
+form a disconnected pair and the path does not contain singletons nor
+vertices of connected pairs.
+%
+Figure~\ref{fig:paths} depicts these concepts.
+
+In the next lemma we show that the set of colored paths that is
+induced by a path-recoloring is an independent set of colorable paths.
+
+\begin{lemma}
+\label{lm:independent}
+Let $G_\chi$ be a colored graph.
+%
+Also, 
+let $\chi'$ be a path-recoloring,
+and let $I$ denote the set of colored paths (w.r.t.\ $\chi'$).  
+%
+Then $I$ is an independent set of colorable paths with respect to $\chi$.
+\end{lemma}
+
+\begin{proof}
+Obviously, 
+two colored paths in $I$ cannot be in direct conflict.
+%
+Assume for contradiction that there are two paths $p_1, p_2 \in I$
+that are in indirect conflict, 
+that is, 
+there is a color $c \in \chi(p_1) \cap \chi(p_2)$.
+%
+It follows that $\chi'$ recolors two vertices of the same color, 
+and we get a contradiction since $\chi'$ does not retain all colors.
+%
+Finally, it follows that all colored paths, with respect to $\chi'$,
+are colorable with respect to $\chi$, or otherwise $\chi'$ must
+recolor a singleton or a connected pair.
+\end{proof}
+
+We say that a set of paths, $I$, \emph{covers} a pair if at least one of the
+vertices of the pair belongs to one of the paths in $I$.
+
+\begin{lemma}
+\label{lm:independent_set_is_recoloring}
+For any independent set of colorable paths $I$ in $G_{\chi}$, 
+there exists a path-recoloring $\chi'$ of $G$, 
+where $I$ is the set of colored paths.
+\end{lemma}
+
+\begin{proof}
+Consider a recoloring $\chi'$ that colors every colorable path in $I$
+using the color of its endpoints, assigns a unique new color 
+to one (arbitrary) of the endpoints of
+every disconnected pair that is not covered by $I$ 
+and keeps the colors of the other vertices.
+%
+We first show that $\chi'$ is a path recoloring.  
+%
+Since $I$ is independent, 
+no two paths in $I$ contain the same color.
+Moreover,
+every path in $I$ is colorable, 
+thus, by definition, it does not contain singletons.
+It follows that $\chi'$ retains all colors.  
+%
+Also, every path in $I$ does not contain any vertices of connected pairs, 
+thus $I$ does not recolor vertices of connected pairs.
+%
+Finally, by the construction of $\chi'$, 
+it is not hard to verify that for every color $c \in C$,
+the subgraph $G_{\chi'}[c]$ contains a Hamiltonian path or it is a single vertex.
+%
+Further observe that for every color $c \in \text{Image}(\chi')$,
+$G_{\chi'}[c]$ is either a simple path or a single vertex, and it
+follows that $\chi'$ is a path-recoloring.  
+%
+Finally, by the
+construction of $\chi'$, it is straightforward to verify that $I$ is
+the set of colored paths induced by $\chi'$.
+\end{proof}
+
+The following is obtained due to  Lemmas~\ref{lm:cost}, 
+\ref{lm:independent} and~\ref{lm:independent_set_is_recoloring}.
+
+\begin{theorem}
+\label{th:independent_set}
+Given a colored graph $G_\chi$, the cost of an optimal
+(path-)recoloring is $|D| - s$ if and only if the size of the maximum
+independent set of colorable paths is $s$.
+\end{theorem}
+
+Theorem~\ref{th:independent_set} suggests an alternative definition to \TWOCR{}: 
+given a colored graph $G_\chi$, 
+find a maximum independent set of colorable paths in $G_\chi$.

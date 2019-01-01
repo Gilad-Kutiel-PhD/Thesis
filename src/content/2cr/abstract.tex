@@ -1,0 +1,39 @@
+\begin{abstract}
+Given a graph $G = (V, E)$, a coloring function $\chi: V \rightarrow
+C$, assigning each vertex a color, is called \emph{convex} if, for
+every color $c \in C$, the set of vertices with color $c$ induces a
+connected subgraph of $G$.
+%
+In the \textsc{Convex Recoloring} problem a colored graph $G_\chi$ is
+given, and the goal is to find a convex coloring $\chi'$ of $G$ that
+\emph{recolors} a minimum number of vertices.
+In the weighted version each vertex has a weight, 
+and the goal is to minimize the total weight of recolored vertices.
+%
+The \textsc{2-Convex Recoloring} problem (\TWOCR{}) is the special
+case, where the given coloring $\chi$ assigns the same color to at
+most two vertices.  \TWOCR{} is known to be NP-hard even if $G$ is a
+path.
+
+We show that weighted \TWOCR{} cannot be approximated within any ratio, 
+unless P$=$NP.
+%
+On the other hand, we provide an alternative definition of
+(unweighted) \TWOCR{} in terms of maximum independent set of paths,
+which leads to a natural greedy algorithm.  We prove that its
+approximation ratio is $\frac{3}{2}$ and show that this analysis is
+tight.
+%
+This is the first constant factor approximation algorithm for a
+variant of \CRP{} in general graphs.
+%
+For the special case, where $G$ is a path, the algorithm obtains a
+ratio of $\frac{5}{4}$, an improvement over the previous best known
+approximation.
+%
+We also consider the problem of determining whether a given graph has
+a convex recoloring of size $k$.  We use the above mentioned
+characterization of \TWOCR{} to show that a problem kernel of size
+$4k$ can be obtained in linear time and to design an
+$O(|E|) + 2^{O(k \log k)}$ time algorithm for parametrized \TWOCR{}.
+\end{abstract}

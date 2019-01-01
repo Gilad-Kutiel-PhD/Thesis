@@ -1,0 +1,41 @@
+\label{sec:path_recoloring}
+
+In this section we introduce a special type of convex recoloring,
+called \emph{path-recoloring}. 
+%
+Path-recolorings are more constrained than general recolorings and thus are simpler to
+understand and analyze.
+%
+Nevertheless, 
+we show that, for the \TWOCR{} problem,
+there is always an optimal convex recoloring that is a path-recoloring.
+%
+Based on the above, 
+we give an alternative definition to \TWOCR{} in terms of independent set of paths.
+%
+From now on, we only consider the \TWOCR{} problem,
+in particular, 
+whenever we mention a colored graph, 
+we refer to a \TWOCR{} instance.
+
+\begin{figure}
+\centering
+\input{fig-pairs}
+\caption{
+\label{fig:concepts}
+In this colored graph, vertex 5 is a singleton, vertices 1 and 2
+are a \emph{connected pair}, and vertices 3 and 4 are a disconnected pair.
+}
+\end{figure}
+
+Given a colored graph $G_\chi$, 
+if two vertices in the colored graph have the same color, we call them a \emph{pair}, 
+if they are connected with an edge, then they are a \emph{connected pair}, 
+otherwise they are a \emph{disconnected pair}.  
+%
+Any vertex with a unique color $c$ is a \emph{singleton}, 
+we call $c$ a \emph{singleton color}.
+%
+We denote by $G_\chi[c]$ the subgraph induced by the set of vertices $\{v : \chi(v) = c\}$.
+Figure~\ref{fig:concepts} depicts these concepts.
+%

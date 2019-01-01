@@ -1,0 +1,55 @@
+\subfloat[Input]{\begin{tikzpicture}
+\graph[
+default graph,
+node distance=6mm,
+]{
+
+
+{[nodes={red node}]4, 2};
+{[nodes={green node}]5};
+{[nodes={blue node}]1, 3};
+{[nodes={orange node}]6, 7};
+
+1 -- 4 -- 3 -- 2 -- 5 -- 1;
+6 -- 1 -- 7;
+
+
+};
+\end{tikzpicture}}
+\hspace{1cm}\subfloat[Retains All]{\begin{tikzpicture}
+\graph[
+default graph,
+node distance=6mm,
+]{
+
+
+{[nodes={red node}]4, 2[green node]};
+{[nodes={green node}]5};
+{[nodes={blue node}]1[orange node], 3};
+{[nodes={orange node}]6, 7};
+
+1 -- 4 -- 3 -- 2 -- 5 -- 1;
+6 -- 1 -- 7;
+
+
+};
+
+\end{tikzpicture}}
+\hspace{1cm}\subfloat[Not Retains All]{\begin{tikzpicture}
+\graph[
+default graph,
+node distance=6mm,
+]{
+
+
+{[nodes={red node}]4, 2};
+{[nodes={green node}]5};
+{[nodes={blue node}]1[orange node], 3[red node]};
+{[nodes={orange node}]6, 7};
+
+1 -- 4 -- 3 -- 2 -- 5 -- 1;
+6 -- 1 -- 7;
+
+
+};
+\end{tikzpicture}}

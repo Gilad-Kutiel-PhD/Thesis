@@ -1,7 +1,14 @@
-\newcommand{\add}[1]{\input{content/#1/main}}
+\newcommand{\defpath}[1]{\def\path{content/#1}}
+\newcommand{\add}[1]{\input{\path/#1}}
 
+\defpath{introduction}
 \chapter*{Introduction}
 \add{introduction}
 
+\defpath{2cr}
+\chapter*{Convex Recoloring}
+\add{2cr}
+
+\defpath{conclusion}
 \chapter*{Conclusion}
 \add{conclusion}
