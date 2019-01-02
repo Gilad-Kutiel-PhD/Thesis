@@ -1,0 +1,53 @@
+\begin{tikzpicture}[every node/.style={default node}]
+%\node[draw=none] at(3, 1) {Virtual Path};
+
+\node(sigma) at (-2,0) {$\sigma$};
+\node(alpha1) at(0,0) {$\alpha_1$};
+\node(alpha2) at(2,0) {$\alpha_2$};
+\node[draw=none] at(6,0) {$\cdots$};
+\node(alphan) at(10,0) {$\alpha_n$};
+\node(tau) at(12,0) {$\tau$};
+
+\draw (sigma) -- (alpha1);
+\draw (alpha1) -- (alpha2);
+\draw (alpha2) -- +(2, 0);
+\draw ($(alphan) + (-2,0)$) -- (alphan);
+\draw (alphan) -- (tau);
+
+\node(s) at (-2,-4) {$s$};
+\node(v1-) at(0, -2) {$v_1^-$};
+\node(v1+) at(0, -4) {$v_1^+$};
+\node(v2-) at(2, -2) {$v_2^-$};
+\node(v2+) at(2, -4) {$v_2^+$};
+
+\node[draw=none] at(6,-2) {$\cdots$};
+\node[draw=none] at(6,-4) {$\cdots$};
+
+\node(vn-) at(10, -2) {$v_n^-$};
+\node(vn+) at(10, -4) {$v_n^+$};
+\node(t) at(12, -2) {$t$};
+
+\draw (s) -- (v1-) node[label below] {$0$};
+\draw (v1-) -- (v1+) node[label above] {$a_1$};
+\draw (v1+) -- (v2-) node[label below] {$0$};
+\draw (v2-) -- (v2+) node[label above] {$a_2$};
+\draw (v2+) -- +(2, 2)node[label below] {$0$};
+
+\draw ($(vn-) + (-2,-2)$) -- (vn-)node[label below] {$0$};;
+\draw (vn-) -- (vn+)node[label above] {$a_n$};
+\draw (vn+) -- (t)node[label below] {$0$};;
+
+\begin{scope}[every node/.style={label above, orange}]
+\draw[group, ->] (sigma) to[bend right] node {$0$} (s);
+
+\draw[group, ->] (alpha1) to[bend left] node {$0$} (v1-);
+\draw[group, ->] (alpha1) to[bend right] node {$a_1$} (v1+);
+\draw[group, ->] (alpha2) to[bend left] node {$0$} (v2-);
+\draw[group, ->] (alpha2) to[bend right] node {$a_2$} (v2+);
+\draw[group, ->] (alphan) to[bend left] node {$0$} (vn-);
+\draw[group, ->] (alphan) to[bend right] node {$a_n$} (vn+);
+
+\draw[group, ->] (tau) to[bend left] node {$0$} (t);
+\end{scope}
+
+\end{tikzpicture}

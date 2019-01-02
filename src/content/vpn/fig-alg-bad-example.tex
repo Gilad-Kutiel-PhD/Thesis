@@ -1,0 +1,14 @@
+\begin{tikzpicture}[every node/.style={default node}]
+\foreach \x \y \n in {0/0/s, -1/-1/1, 1/-1/2, 0/-2/t}{
+	\node(\n) at(\x,\y) {\n};
+}
+\foreach \u \v in {%
+	s/1%
+	,s/2%
+	,1/2%
+	,1/t%
+	,2/t%
+}{
+	\draw (\u) -- (\v);
+}
+\end{tikzpicture}

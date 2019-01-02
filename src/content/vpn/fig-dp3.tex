@@ -1,0 +1,40 @@
+\begin{tikzpicture}[every node/.style={default node}]
+\node[draw=none] at(5, 2.7) {Virtual Graph};
+
+\node(sv) at(0,0) {$\sigma$};
+\node(alpha) at(4,0) {$\alpha$};
+\node(beta) at(6.2,0) {$\beta$};
+\node(gamma) at(10,0) {$\gamma$};
+
+\draw[cloud, blue, dashed] 
+($(sv.west) + (-.3,0)$)	to[out=90, in=90] 
+($(alpha.east) + (.3, 0)$)	to[out=-90, in=-90]
+($(sv.west) + (-.3,0)$)
+;
+
+\draw (alpha) -- (beta) node[label above] {$b(\alpha\beta)$};
+
+\draw[path] (beta) -- (gamma);
+
+
+\node[draw=none] at(4.5, -8) {Physical Graph};
+\node(s) at(0,-5) {s};
+\node(v) at(5, -5){v};
+\node(w) at(8,-5) {w};
+
+\draw[cloud, blue, dashed] 
+($(s.west) + (-.3,0)$)			to[out=90, in=90] 
+($(v.east) + (.3, 0)$)	to[out=-90, in=-90]
+($(s.west) + (-.3,0)$)
+;
+
+\draw[path] (v) -- (w);
+
+\draw[group]
+(beta.west) to[out=90, in=90]
+(gamma.east) to[out=-90, in=-90] coordinate[near start](f)
+(beta.west)
+;
+
+\draw[group, ->] (f) to[bend left] (w.east);
+\end{tikzpicture}

@@ -1,0 +1,47 @@
+\begin{tikzpicture}[every node/.style={default node}]
+
+\tikzset{ref/.style={insert path={
+	coordinate[pos=0](#1 nw)
+	coordinate[pos=1](#1 se)
+	coordinate[pos=.5](#1 center)
+	(#1 se -| #1 center) coordinate(#1 south)
+	(#1 center |- #1 nw) coordinate(#1 north)
+}}}
+
+\node[draw=none] at(5, 1) {Virtual Graph};
+
+\node(sv) at(0,0) {$\sigma$};
+\node(alpha) at(4,0) {$\alpha$};
+\node(beta) at(6.2,0) {$\beta$};
+\node(gamma) at(10,0) {$\gamma$};
+
+\draw[blue, dashed] 
+($(sv.north west) + (-.3,.3)$) rectangle 
+($(alpha.south east) + (.3, -.3)$) [ref=r1]
+;
+
+\draw (alpha) -- (beta) node[label above] {$b(\alpha\beta)$};
+
+\draw[path] (beta) -- (gamma);
+
+
+\node(s) at(0,-2) {s};
+\node(u) at(5, -2){v};
+\node(v) at(8,-2) {w};
+\node[draw=none] at(5, -3) {Physical Graph};
+
+\draw[blue, dashed] 
+($(s.north west) + (-.3,.3)$) rectangle 
+($(u.south east) + (.3, -.3)$) [ref=r2]
+;
+
+\draw[path] (u) -- (v);
+
+\draw[group]
+($(beta.north west) + (-.3,.3)$) rectangle
+($(gamma.south east) + (.3, -.3)$) [ref=r3]
+;
+
+\draw[blue, dashed, ->] (r1 south) to[bend right] (r2 north);
+\draw[group, ->] (r3 south) to[bend left] (v.north);
+\end{tikzpicture}

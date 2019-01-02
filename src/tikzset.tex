@@ -1,0 +1,107 @@
+\tikzset{every picture/.style={
+	very thick,
+	>=Latex,
+}}
+
+
+% MISC
+\tikzset{
+	packing/.style={
+		dashed, 
+		very thick,	
+		looseness=.7,
+	},
+	group/.style={
+		dotted, 
+		very thick,	
+		orange, 
+		-
+	},
+	mapping/.style={
+		-{Triangle[]}, 
+		dotted,
+		thick,	
+	},
+}
+
+% NODE
+\tikzset{default node/.style={
+	draw, 
+	circle,
+	inner sep=0mm,
+	minimum size=5mm,
+	very thick,
+	font=\small,
+	black!70,
+}}
+
+\tikzset{
+colored node/.style={line width=1.6pt, star, minimum size=9mm,inner sep=0pt,scale=0.9,}, 
+red node/.style={colored node, draw=red, star points=2},
+blue node/.style={colored node, draw=blue, star points=3},
+green node/.style={colored node, draw=green, star points=4},
+black node/.style={colored node, draw=black, star points=5},
+orange node/.style={colored node, draw=orange, star points=6},
+brown node/.style={colored node, draw=brown, star points=8},
+teal node/.style={colored node, draw=teal, star points=10},
+violet node/.style={colored node, draw=violet, star points=12},
+olive node/.style={colored node, draw=olive, star points=14},
+cyan node/.style={colored node, draw=cyan, star points=18},
+}
+
+
+% LABELS
+\tikzset{
+	label/.style={
+		rectangle,
+		draw=none,
+		sloped,
+		midway,
+		fill=white,
+		inner sep=2pt,
+		minimum height=0,
+		minimum width=0,
+	},
+	label above/.style={
+		label,
+		above,
+	},
+	label below/.style={
+		label,
+		below,
+	},
+	label inside/.style={
+		label,
+		fill=white,
+		draw=black,
+	},
+}
+
+% EDGES
+\tikzset{
+	light/.style={
+		thin,
+		gray,
+	},
+	path/.style={
+		light,
+		decorate, 
+		decoration={snake, segment length=18pt},
+	},
+	brace/.style={
+		decorate,
+		decoration={brace, amplitude=5},
+		-,
+	},
+}
+
+\tikzset{cloud/.style={
+	-,
+	decorate, 
+	decoration={
+		snake, 
+		segment length=3mm,
+		amplitude=.5mm,
+	},
+}}
+

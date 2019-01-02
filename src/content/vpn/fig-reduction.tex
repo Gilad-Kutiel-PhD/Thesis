@@ -1,0 +1,29 @@
+\begin{tikzpicture}[every node/.style={default node}]
+
+\begin{scope}[layered layout, grow=right, sibling distance=2cm, level distance=2cm]
+
+\node(ss) {$\sigma$};
+\node(v1p) {$\beta_1$};
+\node(v1m) {$\alpha_1$};
+\node(v2p) {$\beta_2$};
+\node(v2m) {$\alpha_2$};
+\node[clear node, inner sep=5mm](dotsp) {$\ldots$};
+\node[clear node, inner sep=5mm](dotsm) {$\ldots$};
+\node(vnp) {$\beta_n$};
+\node(vnm) {$\alpha_n$};
+\node(tt) {$\tau$};
+
+\graph{
+	(ss) -> {(v1p), (v1m)};
+	(v1p) -> {(v2p), (v2m)};
+	(v1m) -> {(v2p), (v2m)};
+	(v2p) -> {(dotsp), (dotsm)};
+	(v2m) -> {(dotsp), (dotsm)};
+	(dotsp) -> {(vnp), (vnm)};
+	(dotsm) -> {(vnp), (vnm)};
+	{(vnp), (vnm)} -> (tt);
+};
+
+\end{scope}
+
+\end{tikzpicture}

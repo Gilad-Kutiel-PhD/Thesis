@@ -1,0 +1,97 @@
+\begin{tikzpicture}[every node/.style={default node}, x=2cm, y=2cm, ->]
+
+\node[dashed](a)	at(0,0)	{1a};
+\node[dashed](b)	at(4,2)	{2b};
+\node(c) 			at(1,0)	{3c};
+\node(d) 			at(3,2)	{4d};
+\node(e) 			at(3,0)	{5e};
+\node(f) 			at(2,1)	{6f};
+\node(g) 			at(2,-1){7g};
+\node(h) 			at(2,0)	{2h};
+\node(i) 			at(3,1)	{1i};
+\node(j)		 	at(4,0)	{3j};
+
+% \begin{scope}[every edge/.style={draw, blue, dashed}]
+% 	\foreach \u\v in{
+% 		b/d,d/i,i/e,e/g,g/c,c/a%
+% 	}{
+% 		\draw[] (\u) edge (\v);
+% 	}
+% \end{scope}
+
+\begin{scope}[]
+	\foreach \u\v\l in{
+		b/d,d/i,i/e,e/g,g/c,c/a%
+	}{
+		\draw[] (\u) to[] node[label]{\l} (\v);
+	}
+\end{scope}
+% \graph{
+% 	(a) ->["5" label above] (b);
+% 	(b) ->["6" label above] {(d), (e)};
+% 	(d) ->["7" label above] {(f), (h)};
+% 	(f) ->["4" label above] {(g), (h), (c)};
+% 	(h) ->["8" label above] {(g), (i), (e)};
+% 	{[edges={blue, dashed}, edge node={node[label above] {2}}]
+% 		(a) -> (c) -> (d) -> (e) -> (i) -> (g) -> (j);
+% 	}
+% };
+
+% \node[dashed](pa) {8};
+% \node(pb) {3};
+% \node(pc) {5};
+% \node(pd) {6};
+% \node(pe) {19};
+% \node(pf) {8};
+% \node[dashed](pg) {4};
+% \node(ph) {2};
+
+% \graph{
+% 	(pb) ->["3" label above] (pd);
+% 	(pd) ->["1" label above] {(pf), (ph)};
+% 	(pf) ->["4" label above] {(pg), (ph), (pc)};
+% 	(pc) ->["2" label above] (pd);
+% 	{[edges={blue, dashed}]
+% 		(pa) ->["2" label above] (pb);
+% 		(pb) ->["3" label above] (pe);
+% 		(pe) ->["3" label above] (ph);
+% 		(ph) ->["6" label above] (pg);
+% 	}
+% };
+
+% \node[clear node, above right] at(a.north east) {$\sigma$};
+% \node[clear node, left] at(j.west) {$\tau$};
+% 
+% \node[clear node, above] at(pa.north) {$s$};
+% \node[clear node, below] at(pg.south) {$t$};
+% 
+% \begin{scope}[group]
+% \draw
+% (a.north east) to[out=135, in=45] node(j1)[midway, clear node] {}
+% (c.north west) to[out=225, in=135]
+% (d.south west) to[out=-45, in=-45]
+% (a.north east)
+% ;
+% 
+% \draw
+% (e.east) to[out=-90, in=-90] node(j2)[midway, clear node] {}
+% (i.west) to[out=90, in=90]
+% (e.east)
+% ;
+% 
+% \draw
+% (g.east) to[out=-90, in=-90] node(j3)[midway, clear node] {}
+% (j.west) to[out=90, in=90]
+% (g.east)
+% ;
+% 
+% \draw[->] (j1) to[bend left] (pa);
+% \draw[->] (j2) to[bend right] (pe);
+% \draw[->] (j3) to[bend right] (pg);
+% \end{scope}
+	
+
+%\node[clear node] at(-5,0) {Virtual Graph};
+%\node[clear node] at(5, -2){Physical Graph};
+
+\end{tikzpicture}

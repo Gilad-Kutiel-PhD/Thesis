@@ -1,0 +1,42 @@
+\begin{tikzpicture}[every node/.style={default node}]
+\node(6) at(0, 0){6};
+\node(2) at(1, 1){2};
+\node(1) at(3, 2){1};
+\node(3) at(5, 1){3};
+\node(5) at(4,-1){5};
+\node(4) at(2,-3){4};
+
+\def\pat{\draw[path, -]}
+\pat[blue, dashed, thick] (1) -- (2.north east);
+\pat (2) -- (3);
+\pat (3) -- (5);
+\pat (2.south east) -- (5);
+\pat (2) -- (6);
+\pat (4) -- (6);
+\pat (4) -- (5);
+\pat (1) -- (3);
+\pat[blue, dashed, thick] (2) -- (4);
+\pat (1.north) to[bend right] (6.north);
+\pat (3.south east) to[bend left] (4.east);
+
+\node(6) at(6, 0){6};
+\node(2) at(7, 1){2};
+\node(1) at(9, 2){1};
+\node(3) at(11, 1){3};
+\node(5) at(10,-1){5};
+\node(4) at(8,-3){4};
+
+\def\dpat{\draw[path]}
+\dpat[blue, dashed, thick] (1) -- (2.north east);
+\dpat (2) -- (3);
+\dpat (3) -- (5);
+\dpat (2.south east) -- (5);
+\dpat (2) -- (6);
+\dpat (4) -- (6);
+\dpat (4) -- (5);
+\dpat (1) -- (3);
+\dpat[blue, dashed, thick] (2) -- (4);
+\dpat (1.north) to[bend right] (6.north);
+\dpat (3.south east) to[bend left] (4.east);
+
+\end{tikzpicture}
