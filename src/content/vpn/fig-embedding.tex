@@ -1,6 +1,6 @@
 \begin{tikzpicture}[every node/.style={default node}, x=2cm, y=2cm, ->]
 
-\node[dashed](a)	at(0,0)	{1a};
+\node[dashed](a)	at(1,-1){1a};
 \node[dashed](b)	at(4,2)	{2b};
 \node(c) 			at(1,0)	{3c};
 \node(d) 			at(3,2)	{4d};
@@ -9,55 +9,21 @@
 \node(g) 			at(2,-1){7g};
 \node(h) 			at(2,0)	{2h};
 \node(i) 			at(3,1)	{1i};
-\node(j)		 	at(4,0)	{3j};
+\node(j)		 	at(4,1)	{3j};
 
-% \begin{scope}[every edge/.style={draw, blue, dashed}]
-% 	\foreach \u\v in{
-% 		b/d,d/i,i/e,e/g,g/c,c/a%
-% 	}{
-% 		\draw[] (\u) edge (\v);
-% 	}
-% \end{scope}
+\node[above, draw=none] at(b.north) {$\sigma$}; 
+\node[left, draw=none] at(a.west) {$\tau$}; 
+\foreach \u\v\l in{
+	b/j/5,f/d/4,f/h/4,f/c/4,h/c/8,h/e/8,h/g/8,i/f/7,i/h/7,j/i/6,j/e/6%
+}{
+	\draw[] (\u) edge[draw] node[label]{\l} (\v);
+}
 
-\begin{scope}[]
-	\foreach \u\v\l in{
-		b/d,d/i,i/e,e/g,g/c,c/a%
-	}{
-		\draw[] (\u) to[] node[label]{\l} (\v);
-	}
-\end{scope}
-% \graph{
-% 	(a) ->["5" label above] (b);
-% 	(b) ->["6" label above] {(d), (e)};
-% 	(d) ->["7" label above] {(f), (h)};
-% 	(f) ->["4" label above] {(g), (h), (c)};
-% 	(h) ->["8" label above] {(g), (i), (e)};
-% 	{[edges={blue, dashed}, edge node={node[label above] {2}}]
-% 		(a) -> (c) -> (d) -> (e) -> (i) -> (g) -> (j);
-% 	}
-% };
-
-% \node[dashed](pa) {8};
-% \node(pb) {3};
-% \node(pc) {5};
-% \node(pd) {6};
-% \node(pe) {19};
-% \node(pf) {8};
-% \node[dashed](pg) {4};
-% \node(ph) {2};
-
-% \graph{
-% 	(pb) ->["3" label above] (pd);
-% 	(pd) ->["1" label above] {(pf), (ph)};
-% 	(pf) ->["4" label above] {(pg), (ph), (pc)};
-% 	(pc) ->["2" label above] (pd);
-% 	{[edges={blue, dashed}]
-% 		(pa) ->["2" label above] (pb);
-% 		(pb) ->["3" label above] (pe);
-% 		(pe) ->["3" label above] (ph);
-% 		(ph) ->["6" label above] (pg);
-% 	}
-% };
+\foreach \u\v\l in{
+	b/d/2,d/i/2,i/e/2,e/g/2,g/c/2,c/a/2%
+}{
+	\draw[] (\u) edge[draw, blue, dashed] node[label]{\l} (\v);
+}
 
 % \node[clear node, above right] at(a.north east) {$\sigma$};
 % \node[clear node, left] at(j.west) {$\tau$};
