@@ -230,7 +230,7 @@ costs:
 A solution consists of the following:
 \begin{description}
 \item[Virtual path:] A path from $\sigma$ to $\tau$ in $\calG$, namely
-  a sequence of vertices $\alpha_0,\ldots,\alpha_q$, where
+  a sequence of vertices \\ $\alpha_0,\ldots,\alpha_q$, where
   $\alpha_0 = \sigma$, $\alpha_q = \tau$, and
   $(\alpha_j,\alpha_{j+1}) \in \calE$, for every $j \in
   \set{0,\ldots,q-1}$.
@@ -256,9 +256,8 @@ A solution consists of the following:
   that correspond to it, i.e.,
 \[
 \bar{f}(\alpha_j,\alpha_{j+1}) \eqdf \set{(v_i,v_{i+1}) : i' \leq i < i''}
-~,
 \]
-  where $f(\alpha_j) = v_{i'}$ and $f(\alpha_{j+1}) = v_{i''}$.
+,where $f(\alpha_j) = v_{i'}$ and $f(\alpha_{j+1}) = v_{i''}$.
 
 \item $\sum_{\alpha \in f^{-1}(v)} p(\alpha) \leq p(v)$, where
   $f^{-1}(v) \eqdf \set{\alpha : f(\alpha) = v}$.
@@ -281,8 +280,8 @@ Figure~\ref{fig:solution}.
 The cost of a placement $f$ is defined as:
 \[
 c(f) \eqdf \sum_j c(\alpha_j,f(\alpha_j))
-~.
 \]
+.
 In \scp the goal is to find a feasible placement of a virtual path
 into the physical DAG that minimizes the cost.
 
@@ -298,8 +297,8 @@ Given a placement $f: \set{\alpha_0,\ldots,\alpha_q} \to
 \[
 L(f)
 = \sum_{j=0}^{q-1} \sum_{e \in \bar{f}((\alpha_j,\alpha_{j+1}))} \ell((\alpha_j,\alpha_{j+1}),e)
-~.
 \]
+.
 In this case there is an additional constraint that $L(f) \leq L$.
 
 %We note that this global bound does not have to represent latency.
@@ -386,16 +385,16 @@ The virtual DAG is composed of $2n+2$ vertices, namely
 = \set{\sigma,\tau}
   \cup \set{\alpha_1, \ldots, \alpha_n}
   \cup \set{\beta_1, \ldots, \beta_n}
-~.
 \]
+.
 Also,
 \[
 \calE
 = \bigcup_i \set{ \set{\alpha_i,\beta_i} \times \set{\alpha_{i+1},\beta_{i+1}} } 
   \cup
   \set{ (\sigma,\alpha_1), (\sigma,\beta_1), (\alpha_n,t), (\beta_n,t) }
-~.
 \]
+.
 The DAG is shown in Figure~\ref{fig:simple}.
 %
 The demands are $p(\alpha_i) = a_i$ and $p(\beta_i) = 0$, for every
@@ -468,7 +467,7 @@ only if there is a placement with cost $\half \sum_i^n a_i$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Algorithms for Physical Directed Acyclic Graphs}
+\section{Algorithms for Physical DAGs}
 \label{sec:algorithms}
 
 In this section we present an FPTAS for \scp in DAGs which is based on
@@ -495,8 +494,9 @@ every $i$, and $\sum_i p(\alpha_i) \leq p(v)$.  We would like to find
 such a path with minimum cost, and we denote the cost of such a path
 by $\cost_v(\alpha \leadsto \beta)$.
 
-We use dynamic programming in order to compute such a path.  Let
-$\process_v(\alpha \leadsto \beta,c)$ be the minimum amount of
+We use dynamic programming in order to compute such a path.  
+\\
+Let $\process_v(\alpha \leadsto \beta,c)$ be the minimum amount of
 processing required to place a virtual path form $\alpha$ to $\beta$
 into $v$ among paths whose cost is at most $c$.
 %
@@ -531,8 +531,8 @@ To complete our argument observe that the following holds:
 \[
 \cost_v(\alpha \leadsto \beta)
 = \min \set{c : \process_v(\alpha \leadsto \beta, c) \leq p(v)}
-~.
 \]
+.
 
 Since the costs are assumed to be polynomially bounded, there is a
 polynomial number of states to be computed, and the computation of
@@ -566,7 +566,7 @@ virtual path from $\sigma$ to $\alpha$ in a path from $s$ to $v$,
 where $\alpha$ is the last VNF which is placed along the physical
 path.
 %
-In addition, we write $(u, v) \Mapsto (\gamma,\beta)$ if $v$ is
+In addition, we write $(u, v) \mapsto (\gamma,\beta)$ if $v$ is
 reachable from $u$ using only edges with bandwidth at least
 $b(\gamma,\beta)$, namely if there is a path from $u$ to $v$ such that
 the bandwidth of all edges in the path is at least $b(\gamma,\beta)$.
@@ -580,7 +580,7 @@ $\cost(\alpha,v)$ can be computed recursively, as follows:
 \min_{
   \substack{\beta \prec \alpha, (\gamma,\beta) \in \calE, \\
            u \prec v, \\
-         (u,v) \Mapsto (\gamma,\beta)}
+         (u,v) \mapsto (\gamma,\beta)}
      }
   \set{\cost(\gamma,u) + \cost_v(\beta \leadsto \alpha)}
   & \text{otherwise}.
@@ -601,7 +601,7 @@ does not violate the capacity of $v$.
 Thus, we check all pairs $(\gamma,u)$, where $\gamma \prec \alpha$ and
 $u \prec v$, and for each pair we consider any neighbor
 $(\gamma,\beta) \in \calE$ and $\beta \prec \alpha$ such that $(u, v)
-\Mapsto (\gamma,\beta)$.
+\mapsto (\gamma,\beta)$.
 %
 The recursive computation is illustrated in Figure~\ref{fig:dp1}.
 
@@ -620,7 +620,7 @@ The recursive computation is illustrated in Figure~\ref{fig:dp1}.
 \label{fig:dp1}
 \end{figure}
 
-As for the running time, observe that checking whether $(u, v) \Mapsto
+As for the running time, observe that checking whether $(u, v) \mapsto
 (\gamma,\beta)$ can be done using DFS in linear time.
 %
 Since the number of state is polynomial, and each state can be
@@ -651,8 +651,8 @@ all edges in the path is at least $b(\gamma,\beta)$.  That is,
 \latency(\gamma,\beta,w \leadsto v)
 = \min_{f: b(\gamma,\beta) \leq \min_{e \in \bar{f}(\gamma,\beta)} b(e)}
     \sum_{e \in \bar{f}(\gamma,\beta)} \ell((\gamma,\beta),e)
-~.
 \]
+~.
 Observe that $\latency(\gamma,\beta,w \leadsto v)$ can be computed
 using a \textsc{Shortest Path} algorithm, were we consider only edges
 whose bandwidth cap is at least $b(\gamma,\beta)$.
@@ -661,24 +661,34 @@ Now we are ready for the computation of $\latency(\alpha,v,c)$:
 \[
 \latency(\alpha,v,c) =
 \begin{cases}
-\infty  &  c < 0,\\
-0       &
-\begin{array}{c}
-\alpha = \sigma, v = s, \\
-\text{and } c \geq 0,
-\end{array} \\
+\infty  
+&  
+c < 0,
+\\
+0       
+&
+\begin{array}{l}
+\alpha = \sigma,
+\\
+v = s, 
+\\
+c \geq 0,
+\end{array} 
+\\
 \displaystyle
+
 \min_{
   \substack{\beta \prec \alpha, (\gamma,\beta) \in \calE, \\
            w \prec v, (u,w) \in E, \\
-         (u,v) \Mapsto (\gamma,\beta)}
+         (u,v) \mapsto (\gamma,\beta)}
      }
      \set{\begin{array}{l}
           \latency(\gamma,\beta,w \leadsto v) + \\
           \latency(\gamma,u,c - \cost_v(\beta \leadsto \alpha))
           \end{array}
      }
-  & \text{otherwise}.
+& 
+\text{otherwise}
 \end{cases}
 \]
 The minimum latency of a placement of a path to $\alpha$ in a path to
@@ -742,8 +752,8 @@ c(f')
 %& =    c(f) + \frac{\eps c_{\max}}{n} \cdot n \\
 & =    c(f) + \eps c_{\max} \\
 & \leq (1+\eps) c(f)
-~,
 \end{align*}
+,
 where the second inequality is due to the optimality of $f'$ with
 respect to $c'$.
 %
@@ -1117,12 +1127,12 @@ on $G$ corresponds to a placement on $G'$ with the same cost.
 Figure~\ref{fig:layer-transform} depicts this process.
 \begin{figure}
 \captionsetup{singlelinecheck=off}
-\caption[layered]{foo
+\caption[layered]{
 \label{fig:layer-transform}
 \begin{enumerate}
-\item A directed acyclic graph that is not a layered graph
-  \item A topological sorting of the above graph
-  \item A layered graph obtained by replacing crossing arcs with simple paths 
+	\item A directed acyclic graph that is not a layered graph
+	\item A topological sorting of the above graph
+	\item A layered graph obtained by replacing crossing arcs with simple paths 
 \end{enumerate}}
 \begin{center}
 \add{layer-transform}

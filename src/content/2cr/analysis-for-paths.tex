@@ -1,0 +1,102 @@
+
+
+For the special case when the input graph is a path, 
+we show that the greedy algorithm achieves a $\frac{5}{4}$ approximation ratio.
+We show that the analysis is tight for this special case as well.
+
+We start our analysis  by observing that, in the case of a path, we can replace
+Lemma~\ref{lm:num_in_conflict} with the following lemma:
+
+\begin{lemma}
+For every path $p \in I$, $d_p \leq \ell_p - 2$.
+\end{lemma}
+\begin{proof}
+We show that the number of paths in $I^*$ that
+are in conflict with $p$ is at most $\ell_p - 2$.  
+This is true, because if $G$ is a  path, 
+then for every path that is in conflict with $p$, 
+we can now associate a (unique) vertex that is not one of the endpoints of $p$.  
+If the conflict is direct, then the two paths
+must overlap, thus associate the other path's endpoint.  If the
+conflict is indirect, then this must be due to some color other than
+the one on the endpoints of $p$, or else this is a direct conflict.
+{}\end{proof}
+
+Using the above lemma we can strengthen
+Lemma~\ref{lemma:alpha-squared}.
+
+\begin{lemma}
+\label{lemma:strong-alpha-squared}
+$|D| \geq (\alpha^2+\alpha)|I|$.
+\end{lemma}
+\begin{proof}
+The proof is similar to the proof of Lemma~\ref{lemma:alpha-squared},
+where the main difference is that
+\[
+\sum_{p' \in I^*} \ell_{p'}
+\geq \sum_{p \in I} d_p \cdot \ell_p
+\geq \sum_{p \in I} (d_p^2 + 2d_p)
+=    \sum_{p \in I} d_p^2 + 2|I^*|
+\]
+,which means that 
+\[
+|D| 
+\geq \sum_{p' \in I^*} \ell_{p'} - |I^*|
+\geq \sum_{p \in I} d_p^2 + |I^*|
+=    \sum_{p \in I} d_p^2 + \alpha |I|
+\geq (\alpha^2 + \alpha) |I|
+\]
+,and the lemma follows.
+{}\end{proof}
+
+In this case only one upper bound suffices.
+
+\begin{theorem}
+Greedy is a $\frac{5}{4}$-approximation algorithm for
+\TWOCR{} on paths.
+\end{theorem}
+\begin{proof}
+Using Lemma~\ref{lemma:strong-alpha-squared} we get that
+\begin{align*}
+r	& =    
+\frac{|D| - |I|}{|D| - \alpha \cdot |I|}
+\\&
+\leq 
+\frac{
+	(\alpha^2 + \alpha)|I| - |I|
+}{
+	(\alpha^2 + \alpha)|I| - \alpha |I|
+}
+\\&
+=    \frac{\alpha^2 + \alpha - 1}{\alpha^2}
+\\&
+=    \frac{5}{4} - \frac{\alpha^2/4 - \alpha + 1}{\alpha^2}
+\\&
+=    \frac{5}{4} - \frac{(\alpha/2-1)^2}{\alpha^2}
+\leq \frac{5}{4}
+\end{align*}
+,as required.
+{}\end{proof}
+
+Figure~\ref{fig:upper_bound} compares this last bound with the bounds of the general case. 
+To see that our analysis is tight, consider the instance depicted in
+Figure~\ref{fig:tight_path}. On this colored path, the greedy algorithm might
+recolor $\frac{5}{4}$ times more vertices than the optimal recoloring.
+
+
+\begin{figure}[t]
+\centering
+\add{fig-simple-paths}
+\caption{
+The greedy algorithm might choose to color the path $2 \ldots 5$, 
+then it must recolor one of the vertices \{1, 10\} 
+(the path $1 \ldots 10$ contains the path $2 \ldots 5$), 
+one of \{6, 12\}
+(the paths $2 \ldots 5$ and $6 \ldots 12$ are in indirect conflict), 
+and one of \{8, 11\}
+(the paths $2 \ldots 5$ and $8 \ldots 11$ are in indirect conflict),
+a total of five recolored vertices,
+while an optimal recoloring can recolor the paths $4 \ldots 7$ and
+$8 \ldots 11$, a total of four recolored vertices.}
+\label{fig:tight_path}
+\end{figure}

@@ -37,11 +37,11 @@
 
 \draw[path] (u) -- (v);
 
-\draw[group]
+\draw[packing]
 ($(beta.north west) + (-.3,.3)$) rectangle
 ($(gamma.south east) + (.3, -.3)$) [ref=r3]
 ;
 
 \draw[blue, dashed, ->] (r1 south) to[bend right] (r2 north);
-\draw[group, ->] (r3 south) to[bend left] (v.north);
+\draw[packing, ->] (r3 south) to[bend left] (v.north);
 \end{tikzpicture}

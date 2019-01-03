@@ -205,7 +205,7 @@
 \end{tikzpicture}}
 
 
-\subfloat[Mapping of each optimal path to its greedy source]{
+\subfloat[packing of each optimal path to its greedy source]{
 \begin{tikzpicture}[x=.9cm,y=.9cm]
 
 \begin{scope}[every node/.style={red node}]
@@ -348,19 +348,19 @@
 (15'.south)	to[out=180,in=-90]
 (15'.west);
 
-\draw[mapping]
+\draw[packing,->]
 (6'.north west)		to[out=135,in=90]
 (1.north);
 
-\draw[mapping]
+\draw[packing,->]
 (8'.north west)		to[out=100,in=45]
 (1.north);
 
-\draw[mapping]
+\draw[packing,->]
 (15'.south west)	to[out=225,in=-90]
 (10.south);
 
-\draw[mapping]
+\draw[packing,->]
 (13'.south west)	to[out=225,in=-45]
 (10.south east);
 

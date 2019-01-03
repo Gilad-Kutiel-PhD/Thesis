@@ -20,10 +20,5 @@
 			<type>1</type>
 			<location>/usr/share/texlive/texmf-dist/tex/latex/tools/.tex</location>
 		</link>
-		<link>
-			<name>src/tikz.tex</name>
-			<type>1</type>
-			<location>/usr/share/texlive/texmf-dist/tex/plain/pgf/frontendlayer/tikz.tex</location>
-		</link>
 	</linkedResources>
 </projectDescription>

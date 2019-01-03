@@ -1,0 +1,48 @@
+While we are not attempting to achieve an approximation to the size
+of the maximum independent set of colorable paths,
+the alternative definition given at the end of the previous section
+leads us to a natural greedy algorithm: 
+choose the shortest colorable path that 
+is not in conflict with colorable paths already been chosen and add it
+to an independent set of colorable paths.
+%
+A formal description of this algorithm is given in
+Algorithm~\ref{alg:conv:greedy}.
+
+\begin{algorithm}
+\begin{algorithmic}
+
+\State $I \gets \emptyset$
+
+\While{there is a colorable path, not in conflict with $I$}
+\State add to $I$ a shortest colorable path, not in conflict with $I$ 
+\EndWhile
+\\
+\Return the path-recoloring corresponding to $I$
+
+
+\end{algorithmic}
+\caption{Greedy algorithm for 2-CR.}
+\label{alg:conv:greedy}
+\end{algorithm}
+
+We now describe how a shortest colorable path can be found.
+%
+To do that, 
+at the initialization of the algorithm, 
+all singletons and connected pairs should be removed from the graph.  
+%
+Every colorable path that is added to $I$ should be also removed from the graph.  
+%
+In addition, 
+after each path removal, 
+one should also remove all vertices with a unique color in the remaining graph.  
+%
+On the remaining graph, 
+a shortest path, 
+among those vertices of the same color, 
+is guaranteed to be colorable and independent of $I$.
+%
+In particular,
+it cannot contain two vertices that are colored by the same color, 
+since such a path is not a shortest path.
