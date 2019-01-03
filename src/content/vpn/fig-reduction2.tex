@@ -27,27 +27,27 @@
 \node(vn+) at(10, -4) {$v_n^+$};
 \node(t) at(12, -2) {$t$};
 
-\draw (s) -- (v1-) node[label below] {$0$};
-\draw (v1-) -- (v1+) node[label above] {$a_1$};
-\draw (v1+) -- (v2-) node[label below] {$0$};
-\draw (v2-) -- (v2+) node[label above] {$a_2$};
-\draw (v2+) -- +(2, 2)node[label below] {$0$};
+\draw (s) -- (v1-) node[label] {$0$};
+\draw (v1-) -- (v1+) node[label] {$a_1$};
+\draw (v1+) -- (v2-) node[label] {$0$};
+\draw (v2-) -- (v2+) node[label] {$a_2$};
+\draw (v2+) -- +(2, 2)node[label] {$0$};
 
-\draw ($(vn-) + (-2,-2)$) -- (vn-)node[label below] {$0$};;
-\draw (vn-) -- (vn+)node[label above] {$a_n$};
-\draw (vn+) -- (t)node[label below] {$0$};;
+\draw ($(vn-) + (-2,-2)$) -- (vn-)node[label] {$0$};;
+\draw (vn-) -- (vn+)node[label] {$a_n$};
+\draw (vn+) -- (t)node[label] {$0$};;
 
-\begin{scope}[every node/.style={label above, orange}]
-\draw[group, ->] (sigma) to[bend right] node {$0$} (s);
+\begin{scope}[every node/.style={label}, dotted, purple, ->]
+\draw (sigma) to[bend right] node {$0$} (s);
 
-\draw[group, ->] (alpha1) to[bend left] node {$0$} (v1-);
-\draw[group, ->] (alpha1) to[bend right] node {$a_1$} (v1+);
-\draw[group, ->] (alpha2) to[bend left] node {$0$} (v2-);
-\draw[group, ->] (alpha2) to[bend right] node {$a_2$} (v2+);
-\draw[group, ->] (alphan) to[bend left] node {$0$} (vn-);
-\draw[group, ->] (alphan) to[bend right] node {$a_n$} (vn+);
+\draw (alpha1) to[bend left] node {$0$} (v1-);
+\draw (alpha1) to[bend right] node {$a_1$} (v1+);
+\draw (alpha2) to[bend left] node {$0$} (v2-);
+\draw (alpha2) to[bend right] node {$a_2$} (v2+);
+\draw (alphan) to[bend left] node {$0$} (vn-);
+\draw (alphan) to[bend right] node {$a_n$} (vn+);
 
-\draw[group, ->] (tau) to[bend left] node {$0$} (t);
+\draw (tau) to[bend left] node {$0$} (t);
 \end{scope}
 
 \end{tikzpicture}
