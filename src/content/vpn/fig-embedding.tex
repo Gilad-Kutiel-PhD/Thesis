@@ -1,18 +1,18 @@
 \begin{tikzpicture}[every node/.style={default node}, x=2cm, y=2cm, ->]
 
-\node[dashed](a)	at(1,-1){1a};
-\node[dashed](b)	at(4,2)	{2b};
-\node(c) 			at(1,0)	{3c};
-\node(d) 			at(3,2)	{4d};
-\node(e) 			at(3,0)	{5e};
-\node(f) 			at(2,1)	{6f};
-\node(g) 			at(2,-1){7g};
-\node(h) 			at(2,0)	{2h};
-\node(i) 			at(3,1)	{1i};
-\node(j)		 	at(4,1)	{3j};
+\node[dashed](a)	at(1,-1){1};
+\node[dashed](b)	at(4,2)	{2};
+\node(c) 			at(1,0)	{3};
+\node(d) 			at(3,2)	{4};
+\node(e) 			at(3,0)	{5};
+\node(f) 			at(2,1)	{6};
+\node(g) 			at(2,-1){7};
+\node(h) 			at(2,0)	{2};
+\node(i) 			at(3,1)	{1};
+\node(j)		 	at(4,1)	{3};
 
 \node[above, draw=none] at(b.north) {$\sigma$}; 
-\node[left, draw=none] at(a.west) {$\tau$}; 
+\node[below, draw=none] at(a.south) {$\tau$}; 
 
 \foreach \u\v\l in{
 	b/j/5,f/d/4,f/h/4,f/c/4,h/c/8,h/e/8,h/g/8,i/f/7,i/h/7,j/i/6,j/e/6%
@@ -26,39 +26,58 @@
 	\draw[] (\u) edge[draw, blue, dashed] node[label]{\l} (\v);
 }
 
-% \node[clear node, above right] at(a.north east) {$\sigma$};
-% \node[clear node, left] at(j.west) {$\tau$};
-% 
-% \node[clear node, above] at(pa.north) {$s$};
-% \node[clear node, below] at(pg.south) {$t$};
-% 
-% \begin{scope}[group]
-% \draw
-% (a.north east) to[out=135, in=45] node(j1)[midway, clear node] {}
-% (c.north west) to[out=225, in=135]
-% (d.south west) to[out=-45, in=-45]
-% (a.north east)
-% ;
-% 
-% \draw
-% (e.east) to[out=-90, in=-90] node(j2)[midway, clear node] {}
-% (i.west) to[out=90, in=90]
-% (e.east)
-% ;
-% 
-% \draw
-% (g.east) to[out=-90, in=-90] node(j3)[midway, clear node] {}
-% (j.west) to[out=90, in=90]
-% (g.east)
-% ;
-% 
-% \draw[->] (j1) to[bend left] (pa);
-% \draw[->] (j2) to[bend right] (pe);
-% \draw[->] (j3) to[bend right] (pg);
-% \end{scope}
-	
+\begin{scope}[xshift=10cm, yshift=4cm]
 
-%\node[clear node] at(-5,0) {Virtual Graph};
-%\node[clear node] at(5, -2){Physical Graph};
+\node[dashed](k)	at(0,0)		{8};
+\node(l)			at(0,-1)	{3};
+\node(m)			at(-1,-2)	{19};
+\node(n)			at(1,-2)	{6};
+\node(o)			at(0,-3)	{2};
+\node(p)			at(1,-3)	{8};
+\node(q)			at(2,-3)	{5};
+\node[dashed](r)	at(0,-4)	{4};
+
+\node[above, draw=none] at(k.north) {s}; 
+\node[below, draw=none] at(r.south) {t}; 
+
+\end{scope}
+
+\foreach \u\v\l in{
+	l/n/3,n/o/1,n/p/1,p/o/4,p/q/4,p/r/4,q/n/2%
+}{
+	\draw[] (\u) edge[draw] node[label]{\l} (\v);
+}
+
+\foreach \u\v\l in{
+	k/l/2,l/m/3,m/o/3,o/r/6%
+}{
+	\draw[] (\u) edge[draw, blue, dashed] node[label]{\l} (\v);
+}
+
+\begin{scope}[packing]
+\draw
+(a.south) to[out=180, in=180]
+(c.north) to[out=0, in=0]
+(a.south)
+;
+
+\draw
+(e.north east) to[out=-45, in=-45]
+(g.south west) to[out=135, in=135]
+(e.north east)
+;
+
+\draw
+(b.north east) to[out=135, in=45]
+(d.north west) to[out=-135, in=180]
+(i.south) to[out=0,in=-45]
+(b.north east)
+;
+
+\draw[->] (a.south east) to[bend right] (r.west);
+\draw[->] (e.east) to[] (m.north west);
+\draw[->] (b.north east) to[bend left] 	(k.north west);
+\end{scope}
+	
 
 \end{tikzpicture}

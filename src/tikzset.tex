@@ -4,26 +4,6 @@
 }}
 
 
-% MISC
-\tikzset{
-	packing/.style={
-		dashed, 
-		very thick,	
-		looseness=.7,
-	},
-	group/.style={
-		dotted, 
-		very thick,	
-		orange, 
-		-
-	},
-	mapping/.style={
-		-{Triangle[]}, 
-		dotted,
-		thick,	
-	},
-}
-
 % NODE
 \tikzset{default node/.style={
 	draw, 
@@ -31,8 +11,7 @@
 	inner sep=0mm,
 	minimum size=5mm,
 	very thick,
-	font=\small,
-	black!70,
+	font=\small
 }}
 
 \tikzset{
@@ -95,13 +74,25 @@ cyan node/.style={colored node, draw=cyan, star points=18},
 	},
 }
 
-\tikzset{cloud/.style={
-	-,
-	decorate, 
-	decoration={
-		snake, 
-		segment length=3mm,
-		amplitude=.5mm,
-	},
-}}
+% MISC
+\tikzset{
+	cloud/.style={
+		-,
+		decorate, 
+		decoration={
+			snake, 
+			segment length=3mm,
+			amplitude=.5mm,
+		},
+	}
+	,packing/.style={
+		dotted
+		,purple
+		,very thick	
+		,looseness=.6
+		,-
+	}
+}
+
+
 
