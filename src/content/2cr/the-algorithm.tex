@@ -9,22 +9,20 @@ to an independent set of colorable paths.
 A formal description of this algorithm is given in
 Algorithm~\ref{alg:conv:greedy}.
 
+
+
 \begin{algorithm}
-\begin{algorithmic}
+$I \gets \emptyset$
 
-\State $I \gets \emptyset$
-
-\While{there is a colorable path, not in conflict with $I$}
-\State add to $I$ a shortest colorable path, not in conflict with $I$ 
-\EndWhile
-\\
+\While{there is a colorable path, not in conflict with $I$}{
+	add to $I$ a shortest colorable path, not in conflict with $I$
+}
 \Return the path-recoloring corresponding to $I$
 
-
-\end{algorithmic}
 \caption{Greedy algorithm for 2-CR.}
 \label{alg:conv:greedy}
 \end{algorithm}
+
 
 We now describe how a shortest colorable path can be found.
 %

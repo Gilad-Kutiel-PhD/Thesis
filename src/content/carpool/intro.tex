@@ -1,0 +1,105 @@
+Carpooling, is the sharing of car journeys so that more than one person travels
+in a car.
+Knapen et al.~\cite{knapen2013estimating} describe an automatic service
+to match commuting trips.
+Users of the service register their personal profile and a set of periodically
+recurring trips, 
+and the service advises registered candidates on how to combine their commuting
+trips by carpooling.
+The service acts in two phases. 
+
+In the first phase, the service estimates the probability that a person $a$
+traveling in person's $b$ car will be satisfied by the trip.
+This is done based on personal information and feedback from users on past
+rides.
+The second phase is about finding a carpool matching
+that maximizes the global (total expected) satisfaction.
+
+The second phase can be modeled in terms of graph theory.
+Given a directed graph $G = (V, A)$.
+Each vertex $v \in V$ corresponds to a user of the service and an arc
+$(u, v)$ exists if the user corresponding to vertex $u$ is willing to
+commute with the user corresponding to vertex $v$.
+A capacity function $ c: V \rightarrow \N $ is defined
+according to the number of passengers each user can drive if she was
+selected as a driver.
+A weight function $w : A \rightarrow \R $ defines the amount of
+satisfaction $w(u, v)$,
+that user $u$ gains when riding with user $v$.
+
+A feasible \emph{carpool matching} (matching) is a triple 
+$(P, D, M)$, where $P$ and $D$ form a partition of $V$, 
+and $M$ is a subset of $A \cap (P \times D)$,
+under the constraints that for every driver $d \in D$, 
+$\din(d) \leq c(d)$, 
+and for every passenger $p \in P$, ${\dout(p) \leq 1}$.
+In the \textsc{\CARPOOL{}} problem we seek for a matching $(P, D, M)$ that maximizes the
+total weight of $M$.
+In other words, the \textsc{\CARPOOL{}} problem is about finding a set of 
+(directed toward the center) vertex disjoint stars 
+that maximizes the total weights on the arcs.
+Figure~\ref{fig:carpool} is an example of the \textsc{\CARPOOL{}} problem.
+
+\begin{figure}
+\centering
+\add{fig-carpool}
+\caption[]{
+\label{fig:carpool}
+A carpool matching example: 
+\subref{subfloat:input} 
+a directed graph with capacities on the vertices and weights on the arcs. 
+\subref{subfloat:output}
+a feasible matching with total weight of 26.
+$P$ is the set of blue vertices, and $D$ is the set of red, dashed vertices. 
+}
+\end{figure}  
+
+Hartman et al.~\cite{hartman2013optimal} proved that the
+\emph{\CARPOOL{}} problem considered in this paper is NP-hard,
+and that the problem remains NP-hard even for a binary weight function when
+the capacity function $c(v) \leq 2$ for every vertex in $V$.
+It is also worth mentioning, that in the undirected, uncapacitated, unweighted
+variant of the problem, the set of drivers in an optimal solution
+form a minimum dominating set.
+When the set of drivers is known in advanced, however, the problem becomes
+tractable and can be solved using a reduction to a flow network problem.
+
+Agatz et al.~\cite{agatz2012optimization} outlined the optimization challenges
+that arise when developing technology to support ride-sharing and survey the
+related operations research models in the academic literature.  
+Hartman et al.~\cite{hartman2014theory} designed several heuristic algorithms
+for the \CARPOOL{} problem and compared 
+their performance on real data.
+Other heuristic algorithms were developed as well~\cite{knapen2014exploiting}.
+Arkin et al.~\cite{arkin2004approximations}, considered other variants of
+capacitated star packing where a capacity vector is given as part of the input and 
+capacities need to be assigned to vertices.  
+
+Nguyen et al.~\cite{nguyen2008approximating} considered the \textsc{spanning star forest} problem
+(the undirected, uncapacitated, unweighted variant of the problem).
+They proved the following results:
+\begin{enumerate}
+\item
+there is a polynomial-time approximation scheme for planner graphs;
+\item 
+there is a polynomial-time $\frac{3}{5}$-approximation algorithm for graphs;
+\item 
+there is a polynomial-time $\frac{1}{2}$-approximation algorithm for weighted
+gra\-phs.
+\end{enumerate}
+They also showed how to apply the spanning star forest model to aligning multiple
+genomic sequences over a tandem duplication region.
+Chen et al.~\cite{chen2007improved} improved the approximation ratio to 0.71,
+and also showed that the problem can not be approximated to within a factor of
+$\frac{31}{32} + \epsilon$ for any $\epsilon > 0$ under the assumption 
+that $\text{P} \neq \text{NP}$.
+It is not clear, however, if any of the technique used to address the
+\textsc{spanning star forest} problem can be generalized to approximate the
+directed capacitated variant.
+
+In section~\ref{sec:fixed} we present an exact, efficient algorithm for the
+problem when the set of drivers and passengers is given in advanced.
+In section~\ref{sec:uwcm} we present a 2-approximation local search algorithm
+for the unweighted variant of the problem.
+Finally in section~\ref{sec:cm} we
+give a 3-approximation algorithm for the problem.

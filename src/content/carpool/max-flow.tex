@@ -1,0 +1,26 @@
+\label{sec:carpool:preliminary}
+A flow network is a tuple $N = (G = (V, A), s, t, c)$, 
+Where $G$ is a directed graph, 
+$s \in V$ is a source vertex, 
+$t \in V$ is a target vertex, 
+and $c : A \rightarrow \R$ is a capacity function. 
+A flow $f : A \rightarrow \R$ is a function that has the following properties:
+\begin{itemize}
+\item
+$f(e) \leq c(e), \quad \forall e \in A$
+
+\item
+$\sum_{(u, v) \in A} f(u, v) = \sum_{(v, w) \in A} f(v, w), \quad \forall v \in V \setminus \{s, t\}$
+\end{itemize}
+
+Given a flow function $f$, 
+and a weight function $w: A \rightarrow \R$, 
+the \emph{flow weight} is defined to be:
+$\sum_{e \in A}{w(e)f(e)}$.
+A flow with a maximum weight (\emph{maximum weight flow}) can be efficiently found by adding 
+the arc $(t, s)$, with $c(t,s) = \infty$, and $w(t,s) = 0$ and reducing the problem
+(by switching the sign of the weights) 
+to the minimum cost circulation problem~\cite{tardos1985strongly}.
+When the capacity function $c$ is integral, 
+a maximum weight integral flow can be efficiently found.  
+

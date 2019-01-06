@@ -1,0 +1,81 @@
+\newcommand{\arc}[3]{
+	\draw (#1) -- (#2) node[label] {#3};
+}
+\subfloat[]{
+\label{subfloat:input}
+\begin{tikzpicture}[every node/.style={default node}, ->, y=1.5cm]
+
+\node(1) at(-1,3) {2};
+\node(2) at(.5,.5) {3};
+\node(3) at(-1,0) {1};
+\node(4) at(-1,1) {3};
+\node(5) at(-2,2) {0};
+\node(6) at(-2,-1) {4};
+\node(7) at(-3,0) {3};
+\node(8) at(.5,-1) {2};
+\node(9) at(0,2) {1};
+\node(10) at(2,1) {4};
+
+\arc{1}{4}{3}
+\arc{2}{4}{4}
+\arc{3}{4}{5}
+
+\arc{5}{7}{2}
+\arc{6}{7}{4}
+
+\arc{8}{10}{6}
+\arc{9}{10}{2}
+
+\arc{1}{5}{4}
+\arc{4}{5}{4}
+
+\arc{2}{3}{2}
+\arc{6}{3}{2}
+\arc{7}{3}{2}
+
+\arc{8}{2}{1}
+\arc{10}{2}{1}
+
+\arc{3}{8}{3}
+\arc{8}{3}{3}
+
+\arc{1}{9}{1}
+\arc{4}{9}{1}
+
+\end{tikzpicture}}
+\hfill\subfloat[]{
+\label{subfloat:output}
+\begin{tikzpicture}[every node/.style={default node}, ->, y=1.5cm]
+
+\begin{scope}[every node/.style={default node, draw=blue}]
+\node(5) at(-2,2) {0};
+\node(6) at(-2,-1) {4};
+
+\node(2) at(.5,.5) {3};
+\node(3) at(-1,0) {1};
+\node(1) at(-1,3) {2};
+
+\node(8) at(.5,-1) {2};
+\node(9) at(0,2) {1};
+\end{scope}
+
+\begin{scope}[every node/.style={default node, draw=red, dashed}]
+\node(7) at(-3,0) {3};
+
+\node(4) at(-1,1) {3};
+
+\node(10) at(2,1) {4};
+\end{scope}
+
+
+\arc{1}{4}{3}
+\arc{2}{4}{4}
+\arc{3}{4}{5}
+
+\arc{5}{7}{2}
+\arc{6}{7}{4}
+
+\arc{8}{10}{6}
+\arc{9}{10}{2}
+
+\end{tikzpicture}}

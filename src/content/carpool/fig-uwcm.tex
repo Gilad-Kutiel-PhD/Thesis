@@ -1,0 +1,60 @@
+\begin{tikzpicture}[
+very thick, 
+->, 
+every pin arc/.style={
+	-, 
+	very thin,
+	decorate,
+	decoration={snake},
+	black!60,
+}]
+% \draw [help lines] (0,0) grid (3,2);
+
+\tikzset{
+	opt/.style={blue, dashed},
+	d/.style={default node, draw=red, -},
+	p/.style={default node, draw=orange, dashed,-},
+	f/.style={default node, draw=gray, dotted,-},
+}
+
+\draw[] (3,1.3) -- (3.4,1.3) node[right]{\tiny $M$};
+\draw[opt] (3,1) -- (3.4,1) node[right]{\tiny $M^*$};
+\draw[p] (3,.7) -- (3.4,.7) node[right]{\tiny $P^M$};
+\draw[d] (3,.4) -- (3.4,.4) node[right]{\tiny $D^M$};
+\draw[f] (3,.1) -- (3.4,.1) node[right]{\tiny $F^M$};
+
+\begin{scope}[every node/.style={d}]
+\node(3)[pin=above right:{\small 2\$}] at(0,.5)			{3};
+\node(7)[pin=below right:{\small 2\$}] at(-1.5, -1)		{7};
+\end{scope}
+
+\begin{scope}[every node/.style={p}]
+\node(1)[pin=above left:{\small 1\$}] 	at(-1,1)		{1};
+\node(2)[pin=right:{\small 1\$}] 		at(.8,-.2)		{2};
+\node(4)[pin=left:{\small 1\$}] 		at(-2,0)		{4};
+\node(5)[pin=right:{\small 1\$}] 		at(-.4,-1.2)	{5};
+\end{scope}
+
+\begin{scope}[every node/.style={f}]
+\node(8)								at(-2.8,-1.6)	{8};
+\node(9)								at(-2,-2.2)		{9};
+\node(10)								at(.3,-2.2)		{10};
+\end{scope}
+
+\begin{scope}
+\draw (1) to (3);
+\draw (2) to (3);
+\draw (4) to (7);
+\draw (5) to (7);
+\end{scope}
+
+\begin{scope}[opt]
+\draw (1) to (4);
+\draw (8) to (7);
+\draw (9) to (7);
+\draw (10) to (5);
+\draw (2) to (5);
+\draw (3) to (5);
+\end{scope}
+
+\end{tikzpicture}

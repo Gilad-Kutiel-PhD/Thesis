@@ -1,0 +1,88 @@
+We now present a 3-approximation algorithm for the \textsc{\CARPOOL{}} problem.
+This algorithm acts in two phases.
+In the first phase it computes a maximum super-matching of $G$, 
+in the second phase it decomposes the super-matching into 3 feasible
+carpool matching and output the best of them.
+
+We now describe how a super-matching can be decomposed into 3 feasible carpool
+matching.
+First, consider the graph obtained by an optimal super-matching.
+Recall that in a super matching the out degree of every vertex is at most 1,
+that is, the graph obtained by an optimal super matching is a pseudoforest -
+every connected component has at most one cycle.
+We now eliminate cycles from the super-matching by removing one edge from every
+connected component.
+It is easy to see that the resulting graph is a forest of anti-arborescences.
+Each of these anti-arborescences can be, in turn, decomposed into two disjoint
+feasible carpool matching.
+This can be done, for example, by coloring each such anti-arborescences with two
+colors, say red and green, and then consider the two solutions: one where the
+green nodes are the drivers, and the other where the red nodes are the drivers.
+We describe the algorithm in Algorithm~\ref{alg:cm3}, 
+and illustrate it in Figure~\ref{fig:spanning-bipartite-graph}.   
+
+\begin{algorithm}[t]
+\KwIn{$G = (V, A), c : V \rightarrow \N, w : A \rightarrow \R$}											 
+\KwOut{$(M \subseteq A)$}
+
+$M \leftarrow \emptyset$								\\
+$G' = (V, A') \leftarrow \text{superMatching}(G)$				\\
+
+\For{every connected component $C_i = (V_i, A_i) \in G'$}{	
+	Eliminate the cycle in $C_i$ by removing an arc $a_i$							\\
+	Decompose the remains anti-arborescences into two solutions, $M^i_1$, $M^i_2$	\\
+	$M \gets M \cup \argmax_{F \in \{ \{e\}, M_1, M_2 \}}{w(F)}$	
+}
+
+\Return $M$
+\caption{
+\label{alg:cm3}
+SuperMatching}
+\end{algorithm}
+
+\begin{figure}
+\centering
+\add{fig-super-matching-alg}
+\caption[]{
+\label{fig:spanning-bipartite-graph}
+Illustration of the SuperMatching algorithm:
+\subref{subfloat:graph} a directed graph. 
+\subref{subfloat:super} a maximum super-matching.  
+\subref{subfloat:spanning} an anti-arborescences:
+$M_1$ is the set of arcs exiting red, dashed vertices, 
+and $M_2$ is the set of arcs exiting blue vertices.
+\subref{subfloat:matching} a feasible carpool matching with total value of 6.   
+}
+\end{figure}
+
+\begin{theorem}
+Algorithm~\ref{alg:cm3} achieves a 3-approximation ratio.
+\end{theorem}
+
+\begin{proof}
+Let $M_a = \bigcup_i \{a_i\}$ be the set of all removed arcs in the cycle
+elimination phase.
+Let $M_1 = \bigcup_i M^i_1$, and $M_2 = \bigcup_i M^i_2$.
+Clearly, $M_a \cup M_1 \cup M_2 = A'$, 
+and that $\max(w(M_a), w(M_1), w(M_2)) \geq
+\frac{w(A')}{3}$.
+The observation that the weight of a maximum super-matching is an upper bound on
+the weight of a maximum carpool matching finishes the proof. 
+\end{proof}
+
+To see that our analysis is tight, consider the example in
+Figure~\ref{fig:3cm-tight-fig}. 
+Assume, for the given graph in the figure, 
+that all weights are 1 and that there is no capacity constraint.
+The maximum matching, then, is 3 ($\{(1,4), (2,4), (3,4)\}$), 
+but the algorithm can return the super matching $\{(1,2), (2,3), (3,1)\}$ from which
+only one arc can survive.  
+
+\begin{figure}
+\centering
+\add{fig-3cm-tight}
+\caption{
+\label{fig:3cm-tight-fig}
+Super Matching Algorithm, worst case example
+}
+\end{figure}

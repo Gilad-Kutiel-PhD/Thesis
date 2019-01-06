@@ -1,0 +1,18 @@
+\begin{tikzpicture}[every node/.style={default node}, default arc]
+
+\node(1) at(0,0) {1};
+\node(2) at(2,0) {2};
+\node(3) at(4,0) {3};
+
+\node(4) at(.4,1.6) {4};
+\node(5) at(2.4,1.6) {5};
+\node(6) at(6, 0) {6};
+
+\draw[m] (1) -- (2) node[label above]{$5$};
+\draw[m] (4) -- (2) node[label above]{$2$};
+\draw[m] (3) -- (5) node[label above]{$2$};
+\draw[] (6) -- (3) node[label above]{$2$};
+
+\draw (2) -- (3) node[label above]{$8$};
+
+\end{tikzpicture}

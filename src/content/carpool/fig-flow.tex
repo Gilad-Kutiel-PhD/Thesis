@@ -1,0 +1,57 @@
+\begin{tikzpicture}[every node/.style={default node}]
+
+\node(s) at (0,0) {s};
+
+\node[draw=none]() 		at (3,2.2) {$P$};
+\node(p0) 				at (3,1.6) {$p_0$};
+\node[draw=none](pdots1)at (3,.8) {$\vdots$};
+\node(pi) 				at (3,0) {$p_i$};
+\node[draw=none](pdots2)at (3,-.8) {$\vdots$};
+\node(pl) 				at (3,-1.6) {$p_l$};
+
+
+\node[draw=none]() 		at (7,2.2) {$D$};
+\node(d0) 				at (7,1.6) {$d_0$};
+\node[draw=none](pdots)	at (7,.8) {$\vdots$};
+\node(dj) 				at (7,0) {$d_j$};
+\node[draw=none](pdots)	at (7,-.8) {$\vdots$};
+\node(dm) 				at (7,-1.6) {$d_m$};
+
+\node(t) at (10,0) {t};
+
+% s -> P
+\draw[->] (s) -- (pi)
+node[label above] {$w' = 0$}
+node[label below] {$c' = 1$};
+
+% P -> D
+\draw[->] (pi) -- (dj)
+node[label above] {$w' = w(p_i, d_j)$}
+node[label below] {$c' = 1$};
+
+% D -> t
+\draw[->] (dj) -- (t)
+node[label above] {$w' = 0$}
+node[label below] {$c' = c(d_j)$};
+
+% dots
+\newcommand{\edots}[2]{
+\path (#1) -- (#2)
+node[draw=none, sloped, pos=0.1, anchor=center] {$\cdots$}
+node[draw=none, sloped, pos=0.9, anchor=center] {$\cdots$};
+}
+
+\edots{s}{p0}
+\edots{s}{pl}
+
+\edots{p0}{d0}
+\edots{p0}{dj}
+\edots{pi}{d0}
+\edots{pi}{dm}
+\edots{pl}{dj}
+\edots{pl}{dm}
+
+\edots{d0}{t}
+\edots{dm}{t}
+
+\end{tikzpicture}

@@ -1,0 +1,76 @@
+\label{sec:hardness}
+To conclude this paper, we show that the \textsc{\CARPOOL{}} problem is APX-hard,
+using the close relation of the problem to the \textsc{Dominating Set} problem.
+
+Formally, the (unweighted) minimum dominating set problem is defined as
+$\min_{D}(|D|)$,
+where $D$ is any feasible dominating set.
+It is also easy to see that the (unweighted, undirected, uncapacitated) 
+maximum carpool matching problem can be defined as $max_{D}(|V \setminus D|)$, 
+where $D$ is any feasible dominating set.
+The \textsc{Dominating Set-B} is the problem of finding minimum dominating set on 
+graphs with degree bounded by $B$,
+and it was shown to be APX-hard (for $B \geq 3$) by 
+Papadimitriou et al.~\cite{papadimitriou1988optimization}.
+
+Let $G$ be a b-bounded degree graph,
+let $D^*(G)$ be a minimum dominating set in $G$,
+and let $C^*(G)$ be a maximum carpool matching in $G$, 
+then the following lemmas hold:
+
+\begin{lemma}
+$|C^*| = |V| - |D^*|$
+\end{lemma}
+
+\begin{proof}
+The proof follows immediately from the definitions of the two problems. 
+\end{proof}
+
+\begin{lemma}
+\label{lm:optc_leq_boptd}
+$|C^*| \leq b \cdot |D^*|$
+\end{lemma}
+
+\begin{proof}
+The proof follows directly from the observation that $|D^*| \geq \frac{|V|}{b}$.
+\end{proof}
+
+Let $C(G)$ be any feasible carpool matching on $G$, then the following lemma holds:
+
+\begin{lemma}
+\label{lm:erreq}
+$|C^*| - |C| = (|V| - |C|) - |D^*|$
+\end{lemma}
+
+\begin{proof}
+$$
+|C^*| - |C| 				= 
+|V| - |D^*| - |C| 	= 
+(|V| - |C|) - |D^*|
+$$
+\end{proof}
+
+Let $D(G)$ be any feasible dominating set in $G$, 
+we argue that $f(G) = G$, and $g(C(G)) = V \setminus C(G)$ 
+define a linear reduction (L-reduction) from the \textsc{Dominating Set-B} problem to the 
+\textsc{\CARPOOL{}} problem.
+\begin{proof}
+By lemma~\ref{lm:optc_leq_boptd} we get that $C^*(f(G)) = C^*(G) \leq b \cdot D^*(G)$,
+and by lemma~\ref{lm:erreq} we get that 
+\begin{equation}
+\begin{split}
+|C^*(f(G))| - |C(G)|		& = |C^*(G)| - |C(G)| 			\\
+							& = (|V| - |C(G)|) - |D^*(G)|	\\
+							& = |g(C(G))| - |D^*(G)|
+\end{split}
+\end{equation}
+\end{proof}
+
+\begin{theorem}
+The \textsc{\CARPOOL{}} problem is APX-hard.
+\end{theorem}
+
+\begin{proof}
+The proof follows directly from the above linear reduction and the fact that 
+\textsc{Dominating Set-B} is APX-hard. 
+\end{proof}
