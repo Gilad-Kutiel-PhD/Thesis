@@ -1,0 +1,300 @@
+
+As traveling costs become higher and parking becomes sparse it is only
+natural to share rides or to \emph{carpool}.  Originally, carpooling
+was an arrangement among a group of people by which they take turns
+driving the others to and from a designated location.  However, taking
+turns is not essential, instead passengers can share the cost of the
+ride with the driver.  Carpooling has social advantages other than
+reducing the costs: it reduces fuel consumption and road congestion
+and frees parking space.  
+%
+While in the past carpooling was usually a fixed arrangement between
+friends or neighbors, the emergence of social networks has made
+carpooling more dynamic and wide scale.  These days applications like
+Zimride~\cite{zimride}, BlaBlaCar~\cite{blablacar},
+Moovit~\cite{moovit} and even Waze~\cite{waze} are matching passengers
+to drivers.
+
+The matching process of passengers to drivers entails more than
+matching the route.
+%
+Passenger satisfaction also need to be taken into account.  Given
+several riding options (including taking their own car), passengers
+have preferences.  For example, a passenger may prefer to ride with a
+co-worker or a friend.  A passenger may have an opinion on a driver
+that she rode with in the past.  She may prefer a non-smoker, someone
+who shares her taste in music, or someone who is recommended by
+others.
+%
+Moreover, the matching process may take into account driver
+preferences.  For instance, we would like to minimize the extra
+distance that a driver has to take.
+%
+Preferences may also be computed using past information.  Knapen et
+al.~\cite{knapen2013estimating} described an automatic service to
+match commuting trips.  Users of the service register their personal
+profile and a set of periodically recurring trips, and the service
+advises registered candidates on how to combine their commuting trips
+by carpooling.  The service estimates the probability that a person
+$a$ traveling in person's $b$ car will be satisfied by the trip.  This
+is done based on personal information and feedback from users on past
+rides.
+
+In this paper we assume that potential passenger-driver satisfactions
+are given as input and the goal is to compute an assignment of
+passengers to drivers so as to maximize the global satisfaction.
+%
+More formally, we are given a directed graph $G = (V, A)$, where each
+vertex $v \in V$ corresponds to a user of the service, and an arc $(u,
+v)$ exists if the user corresponding to vertex $u$ is willing to
+commute with the user corresponding to vertex $v$.  We are given a
+capacity function $c: V \rightarrow \N$ which bounds the number of
+passengers each user can drive if she is selected as a driver.  A
+non-negative weight function $w : A \rightarrow \R^+$ is used to model
+the amount of satisfaction $w(u,v)$ of assigning $u$ to $v$.
+%
+If $(u,v) \in A$ implies that $(v,u) \in A$ and $w(u,v) = w(v,u)$, the
+instance is \emph{undirected}.  If $w(v,u) = 1$, for every $(v,u) \in
+A$, then the instance is \emph{unweighted}.  If $c(v) = \deg(v)$, for
+every $v$, then the instance in \emph{uncapacitated}.
+
+Given a directed graph $G$ and a subset $M \subseteq A$, define
+$$\din[M](v) \eqdf \abs{\set{u :(u,v) \in M}}$$ 
+and
+$$\dout[M](v) \eqdf \abs{\set{u :(v,u) \in M}}$$
+%
+A feasible \emph{carpool matching} is a subset of arcs, $M \subseteq
+A$, such that every $v \in V$ satisfies:%
+\begin{inparaenum}[(i)]
+\item $\din[M](v) \cdot \dout[M](v) = 0$,
+\item $\din[M](v) \leq c(v)$, and 
+\item $\dout[M](v) \leq 1$.
+\end{inparaenum}
+A feasible carpool matching $M$ partitions $V$ as follows:
+\begin{align*}
+P_M & \eqdf \set{v : \dout[M](v) = 1} &
+\\
+D_M & \eqdf \set{v : \din[M](v) \geq 1} &
+\\
+Z_M & \eqdf \set{v : \dout[M](v) = \din[M](c) = 0}
+%~.
+\end{align*}
+where $P_M$ is the set of \emph{passengers}, $D_M$ is the set of
+\emph{active drivers}, and $Z_M$ is the set of \emph{solo drivers}.
+%
+In the \carpool problem the goal is to find a matching $M$ of maximum
+total weight, namely to maximize $w(M) \eqdf \sum_{(v,u) \in M}
+w(v,u)$.  In other words, the \carpool problem is about finding a set
+of (directed toward the center) vertex disjoint stars that maximizes
+the total weight of the arcs.  
+%
+Figure~\ref{fig:carpool-new} contains an example of a \carpool instance.
+%
+Note that in the unweighted case the goal is to find a carpool
+matching $M$ that maximizes $\abs{P_M}$.
+%
+Moreover, observe that if $G$ is undirected, $D_M \cup Z_M$ is
+a \emph{dominating set}.  Hence, in this case, an optimal carpool
+matching induces an optimal dominating set and vice versa.
+Since \textsc{Minimum Dominating Set} is NP-hard, it follows
+that \carpool is NP-hard even if the instance is undirected,
+unweigthed, and uncapacitated.
+
+\begin{figure}
+\centering
+\add{fig-carpool}
+\caption[]{
+\label{fig:carpool-new}
+A \carpool example.
+%(\subref{carpool:input}) an instance containing a
+%directed graph with capacities on the vertices and weights on the
+%arcs.  (\subref{carpool:output}) a feasible matching with total weight
+%of 23.  $P_M$ is the set of blue vertices, and $D_M$ is the set of
+%red, dashed vertices, and $Z_M$ contains only the dotted, black
+%vertex.
+}
+\end{figure}  
+
+%In this paper
+%
+We also consider an extension of \carpool, called \gcp, in which each
+vertex represents a group of passengers, and each group may have a
+different size.  Such a group may represent a family or two friends
+traveling together.  Formally, each vertex $u \in V$ has a size
+$s(u) \in \N$, and the constraint $\din[M](v) \leq c(v)$ is replaced
+with the constraint $\sum_{u:(u,v) \in M} s(u) \leq c(v)$.
+%
+Notice that \textsc{Knapsack} is the special case where only arcs
+directed at a single vertex have non-zero (integral) weights.
+
+%%%%%
+
+\subparagraph{Related work.}
+%
+Agatz et al.~\cite{agatz2012optimization} outlined the optimization
+challenges that arise when developing technology to support
+ride-sharing and survey the related operations research models in the
+academic literature.
+%
+Hartman et al.~\cite{hartman2014theory} designed several heuristic
+algorithms for the \carpool problem and compared their performance on
+real data.  Other heuristic algorithms were developed by Knapen et
+al.~\cite{knapen2014exploiting}.
+%
+Hartman~\cite{hartman2013optimal} proved that the \carpool problem is
+NP-hard even in the case where the weight function is binary and
+$c(v) \leq 2$ for every $v \in V$.  In addition, Hartman presented a
+natural integer linear program and showed that if the set of drivers
+is known, then an optimal assignment of passengers to drivers can be
+found in polynomial time using a reduction to \textsc{Network Flow}
+(see also~\cite{kutiel2017}.)
+%
+Kutiel~\cite{kutiel2017} presented a $\frac{1}{3}$-approximation
+algorithm for \carpool that is based on a \textsc{Minimum Cost Flow}
+computation and a local search $\half$-approximation algorithm for the
+unweighted variant of \carpool.  The latter starts with an empty
+matching and tries to improve the matching by turning a single
+passenger into a driver.
+
+Nguyen et al.~\cite{nguyen2008approximating} considered
+the \textsc{Spanning Star Forest} problem.  A \emph{star forest} is a
+graph consisting of node-disjoint star graphs.  In
+the \textsc{Spanning Star Forest} problem, we are given an undirected
+graph $G$, and the goal is to find a spanning subgraph which is a star
+forest that maximizes the weight of edges that are covered by the star
+forest.  Notice that this problem is equivalent to \carpool on
+undirected and uncapacitated instances.  We also note that if all
+weights leaving a node are the same, then the instance is referred to
+as node-weighted.
+%
+Nguyen et al.~\cite{nguyen2008approximating} provided a PTAS for
+unweighted planner graphs and a polynomial-time
+$\frac{3}{5}$-approximation algorithm for unweighted graphs.  They
+gave an exact optimization algorithm for weighted trees, and used it
+on a maximum spanning tree of the input graph to obtain a
+$\frac{1}{2}$-approximation algorithm for weighted graphs.  They also
+shows that it is NP-hard to approximate unweighted \textsc{Spanning
+Star Forest} within a ratio of $\frac{259}{260}+\eps$, for any
+$\eps>0$.
+%
+%They also showed how to apply the spanning star forest model to
+%aligning multiple genomic sequences over a tandem duplication region.
+%
+Chen et al.~\cite{CENRRS13} improved the approximation ratio for
+unweighted graphs from $\frac{3}{5}$ to $0.71$ and gave a
+$0.64$-approximation algorithm for node weighted graphs.  They also
+showed that the edge- and node-weighted problem cannot be approximated
+to within a factor of $\frac{19}{20} + \eps$, and $\frac{31}{32}
++ \eps$, resp., for any $\eps > 0$, assuming that
+$\text{P} \neq \text{NP}$.
+%
+Chakrabarty and Goel~\cite{ChakrabartyGoel10} improved the lower bounds
+to $\frac{10}{11} + \eps$ and $\frac{13}{14}$.
+
+Athanassopoulos et al.~\cite{ACKK09} improve the ratio for the
+unweighted case to $\frac{193}{240} \approx 0.804$.
+%
+They consider a natural family of \emph{local search} algorithms
+for \textsc{Spanning Star Forest}.  Such an algorithm starts with the
+solution where all node are star centers.  Then, it repeatedly tries
+to turn $t \leq k$ from leaves to centers and $t+1$ centers to leaves.
+A change is made if it results in a feasible solution, namely if each
+leave is adjacent to at least one center.  The algorithm terminates
+when such changes are no longer possible.
+%
+Athanassopoulos et al.~\cite{ACKK09} showed that, for any $k$ and
+$\eps \in (0,\inv{2(k+2)}]$, there exists an instance $G$ and a local
+optima whose size is smaller than $(\half + \eps) \textsc{opt}$,
+where \textsc{opt} is the size of the optimal spanning star forest.
+We note that, for a given $k$, the construction of the above result
+requires that the maximum degree of $G$ is at least $2(k+2)$.  Hence,
+this result does not hold in graphs with maximum degree $\Delta$.
+
+Arkin et al.~\cite{arkin2004approximations} considered
+the \textsc{Maximum Capacitated Star Packing} problem.  In this
+problem the input consists of a complete undirected graph with
+non-negative edge weights and a capacity vector $c
+= \set{c_1,\ldots,c_p}$, where $\sum_{i=1}^p c_i = \abs{V} - p$.  The
+goal is to find a set of vertex-disjoint stars in $G$ of size
+$c_1,\ldots,c_p$ of maximum total weight.  Arkin et
+al.~\cite{arkin2004approximations} provided a local search algorithm
+whose approximation ratio is $\inv{3}$, and a matching-based
+$\half$-approximation algorithm for the case where edge weights
+satisfy the triangle inequality.
+
+Bar-Noy et al.~\cite{bar2015improved} considered the
+\textsc{Minimum $2$-Path Partition} problem.
+In this problem the input is a complete graph on $3k$ vertices with
+non-negative edge weights, and the goal is to partition the graph into
+disjoint paths of length 2.  This problem is the special case of the
+undirected carpool matching where $c(v) = 2$, for every $v \in V$.
+They presented two approximation algorithms, one for the weighted case
+whose ratio is $0.5833$, and another for the unweighted case whose
+ratio is $\frac{3}{4}$.
+
+Another related problem is the \textsc{$k$-Set Packing}, where one is
+given a collection of weighted sets, each containing at most $k$
+elements, and the goal is to find a maximum weight subcollection of
+disjoint sets.  Chandra and Halld\'orsson~\cite{chandra2001greedy}
+presented a $\frac{3}{2(k+1)}$-approximation algorithm for this
+problem.
+%
+\carpool can be seen as a special case of \textsc{$k$-Set Packing}
+with $k = \cmax + 1$.  Consider a subset of nodes $U$ of size at most
+$k$.  Observe that each subset of nodes has an optimal internal
+assignment of passenger to drivers.  Let the weight of this assignment
+be the profit of $U$, denote $p(U)$.  If $k = O(1)$, $p(U)$ can be
+computed for every $U$ of size at most $k$ in polynomial time.  The
+outcome is a \textsc{$k$-Set Packing} instance.  This leads to a
+$\frac{3}{2(\cmax+2)}$-approximation algorithm for the case where
+$\cmax = O(1)$.
+
+
+%%%%%
+
+\subparagraph{Our contribution.}
+%
+Section~\ref{sec:approx} contains approximation algorithms
+for the \carpool problem.  
+First, in Section~\ref{sec:sub} we show that \carpool
+can be formulated as an unconstrained submodular maximization problem,
+thus it has a $\frac{1}{2}$-approximation algorithm due
+to~\cite{BFNS15,buchbinder2016deterministic}.
+%
+We present a local search algorithm for \carpool which repeatedly
+checks whether the current carpool matching can be improved by means
+of a star centered at a vertex, and it terminates when such a step is
+not possible.
+%
+The approximation ratio of this algorithm is $\half$ if weights are
+polynomially bounded, and its ratio is $\half-\eps$ in general.
+
+In Section~\ref{sec:cmax} we consider \carpool with boun\-ded maximum
+capacity.   
+%
+In Section~\ref{sec:hardness} we show that \carpool is APX-hard even
+for undirected and unweighted instances with $\Delta \leq b$, for any
+$b \geq 3$.
+%
+In Section~\ref{sec:local} we provide another local search algorithm,
+whose approximation ratio is $\half + \inv{2\cmax} - \eps$, for any
+$\eps>0$, for unweighted \carpool, where $\cmax \eqdf \max_{v \in V}
+c(v)$.  Given a parameter $k$, our algorithm starts with the empty
+carpool matching.  Then, it repeatedly tries to find a better matching
+by replacing $t \leq k$ arcs in the current solution by $t+1$ arcs
+that are not in the solution.
+%
+We show that our analysis is tight.
+%
+We also note that our algorithm falls within the local search family
+defined in~\cite{ACKK09}.  However, on undirected and uncapaciated
+instances we have that $\cmax = \Delta$, and as mentioned above the
+result from~\cite{ACKK09} does not hold in bounded degree graphs.
+
+Finally, Section~\ref{sec:group} discusses \gcp.  We show that the
+unconstrained submodular maximization formulation for \carpool does
+not work for \gcp.  We show, however, that this problem still admits a
+$(\frac{1}{2} -\varepsilon)$-approximation algorithm by extending our
+first local search algorithm.  In addition, we show that the second
+local search algorithm generalizes to unweighted \gcp with the same
+approximation ratio.

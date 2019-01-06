@@ -1,0 +1,77 @@
+
+As we mentioned earlier, \textsc{Spanning Star Forest} has a lower
+bound of $\frac{10}{11} + \eps$ for any $\eps > 0$, unless
+P$=$NP~\cite{ChakrabartyGoel10}, and this bound applies to \carpool.
+%
+The result, however, does not hold for the case where $\Delta = O(1)$
+(and $\cmax = O(1)$).  In this section we show that the problem remains
+APX-hard even in this case.
+
+Formally, the (unweighted) \textsc{Minimum Dominating Set} problem is
+defined as follows.  The input is an undirected graph $G = (V,E)$, and
+a feasible solution, or a \emph{dominating set}, is a subset
+$D \subseteq V$ that dominates $V$ namely such that
+$D \cup \bigcup_{v \in D} N(v) = V$, where $N(v)$ is the neighborhood
+of $v$.  The goal is to find a minimum cardinality dominating set.
+%
+\textsc{Minimum Dominating Set-$b$} is the special case of
+\textsc{Minimum Dominating Set} in which
+the maximum degree of a vertex in the input graph $G$ is bounded by
+$b$.  The problem was shown to be APX-hard, for $b \geq 3$, by
+Papadimitriou and Yannakakis~\cite{PapYan88}.
+
+We now consider the unweighted and undirected special case of
+the \carpool problem.  In this case, the input consists of an
+undirected graph $G$ and a capacity function $c$, and the goal is to
+find a carpool matching $M$ that maximizes $\abs{P_M}$.
+
+Given an undirected graph $G$, let $D^*$ be a minimum cardinality
+dominating set, and let $M^*$ be an optimal carpool matching with
+respect to $G$ and the capacity function: $c(v) = \deg(v)$, for every
+$v \in V$.
+
+\begin{observation}
+$\abs{P_{M^*}} + \abs{D^*} = \abs{V}$ 
+\end{observation}
+\begin{proof}
+Given a carpool matching $M$, observe that $D_M \cup Z_M$ is a
+dominating set.  In the other direction, a dominating set $D$ induces
+a carpool matching of size $\abs{V \setminus D}$.
+\end{proof}
+
+We use this duality to obtain a hardness result for \carpool.
+
+\begin{theorem}
+The \carpool problem is APX-hard, even for undirected and unweighted
+instances with maximum degree bounded by $b$, for $b \geq 3$.
+\end{theorem}
+\begin{proof}
+We prove the theorem by presenting an $L$-reduction from
+\textsc{Minimum Dominating Set-$b$}.
+(For details on $L$-reductions the reader is referred to~\cite{PapYan88}.)
+%
+We define a function $f$ from \textsc{Minimum Dominating Set-$b$}
+instances to \carpool instances as follows: $f(G) = (G,c)$, where
+$c(v) = \deg(v)$, for every $v \in V$.  Next, we define a function $g$
+that given a carpool matching computes a dominating set as follows:
+$g(M) = V \setminus P_{M}$.  Both $f$ and $g$ can be computed in
+polynomial time.
+
+Let $D^*$ be an optimal dominating set with respect to $G$, and let
+$M^*$ be an optimal carpool matching with respect to $G$ and $c$.
+Since $|D^*| \geq \frac{|V|}{b+1}$, it follows that 
+\(
+\abs{P_{M^*}} \leq b \abs{D^*}
+%~,
+\),
+In addition, if $M$ is a carpool matching, we have that
+\(
+\abs{D_M \cup Z_M} - \abs{D^*}
+= (\abs{V} - \abs{P_M}) - \abs{D^*}
+= \abs{P_{M^*}} - \abs{P_M}
+%~.
+\).
+Hence, there is an $L$-reduction from \textsc{Minimum Dominating
+Set-$b$} to unweighted and undirected \carpool with bounded capacity
+$b$.
+\end{proof}

@@ -29,6 +29,30 @@ olive node/.style={colored node, draw=olive, star points=14},
 cyan node/.style={colored node, draw=cyan, star points=18},
 }
 
+% EDGES
+\tikzset{
+	light/.style={
+		thin,
+		gray,
+	},
+	path/.style={
+		light,
+		decorate, 
+		decoration={snake, segment length=18pt},
+	},
+	brace/.style={
+		decorate,
+		decoration={brace, amplitude=5},
+		-,
+	},
+}
+
+\tikzset{e1/.style={cyan}}
+\tikzset{e2/.style={green, loosely dash dot dot}}
+\tikzset{e3/.style={blue, loosely dotted}}
+\tikzset{e4/.style={loosely dashed}}
+\tikzset{e5/.style={red, loosely dashed}}
+\tikzset{e6/.style={orange, loosely dash dot}}
 
 % LABELS
 \tikzset{
@@ -57,23 +81,6 @@ cyan node/.style={colored node, draw=cyan, star points=18},
 	},
 }
 
-% EDGES
-\tikzset{
-	light/.style={
-		thin,
-		gray,
-	},
-	path/.style={
-		light,
-		decorate, 
-		decoration={snake, segment length=18pt},
-	},
-	brace/.style={
-		decorate,
-		decoration={brace, amplitude=5},
-		-,
-	},
-}
 
 % MISC
 \tikzset{
@@ -86,12 +93,16 @@ cyan node/.style={colored node, draw=cyan, star points=18},
 			amplitude=.5mm,
 		},
 	}
-	,packing/.style={
+	,outline/.style={
 		dotted
 		,purple
 		,very thick	
+	}
+	,packing/.style={
+		outline
 		,-
 	}
+	,m/.style={blue, dashed}
 }
 
 

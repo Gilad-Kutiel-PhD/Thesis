@@ -1,0 +1,338 @@
+
+In this section we present a local search $(\half + \inv{2c_{\max}}
+- \eps)$-approximation algoithm for unweighted \carpool whose running
+time is polynomial if $c_{\max} = O(1)$.
+
+Let $k$ be a constant integer to be determined later.
+Algorithm~\textbf{EdgeSwap} (Algorithm~\ref{alg:local-new}) maintains a
+feasible matching $M$ throughout its execution and operates in
+iterative manner where in each iteration it tries to find a better
+solution by replacing a subset of at most $k$ edges in the current
+solution with another (larger) subset of edges not in the solution.
+The algorithm halts when no improvement can be done. 
+
+\begin{algorithm}
+\caption{\textbf{EdgeSwap}$(G,c,k)$}
+\label{alg:local-new}
+\begin{small}
+\SetKw{True}{true}
+\SetKw{False}{false}
+%\KwIn{$G = (V, A)$, $c : V \rightarrow \N$, $k$}
+%\KwOut{$M$}
+$M \leftarrow \emptyset$								\\
+\Repeat{done}{
+ 	$done \leftarrow{}$ \True							\\
+ 	\ForAll{$M' \subseteq M : |M'| \leq k$}{
+ 		\ForAll{$A' \subseteq A \setminus M : |A'| = |M'| + 1$}{
+			\If{$M \setminus M' \cup A'$ is feasible}{
+				$M \leftarrow{} M \setminus M' \cup A'$	\\
+				$done \leftarrow{}$ \False				\\
+			}
+		}
+ 	}
+}
+\Return{$M$}
+\end{small}
+\end{algorithm}
+
+Algorithm~\textbf{EdgeSwap} terminates in polynomial time, since in
+every non-final iteration it improves the value of the solution by
+one.  Thus, after at most $n$ iterations the algorithm terminates.  In
+every iteration the algorithm examines all subsets of edges of a fixed
+size and tests for feasibility, both these operations can be done in
+polynomial time.
+
+Observe that a vertex $v \in D_M \cup Z_M$ is the center of
+a \emph{directed star} whose leaves are the passengers in the set
+$P_M(v) = \set{u : (u,v) \in M}$
+($P_M(v) = \emptyset$, for $v \in Z_M$).
+%
+Given a carpool matching $M$, we define $\calS(M)$ to be the set of
+stars that are induced by $M$.  Denote by $V(S)$ the set of vertices
+of a star, i.e., if $v$ is the center of $S$, then $V(S) = \{v\} \cup
+P_M(v)$.  Also, let $A(S)$ be the arcs of $S$.  For
+$\calT \subseteq \calS(M)$, define
+$V(\calT) \eqdf \bigcup_{S \in \calT} V(S)$ and
+$A(\calT) \eqdf \bigcup_{S \in \calT} A(S)$.
+
+It remains to analyze the approximation ratio of \textbf{EdgeSwap}.
+Consider an optimal matching $M^*$, and $M$ be the matching computed
+by \textbf{EdgeSwap}.  Given both matchings we build the \emph{star
+graph} of the two solutions in which each node represents a star from
+the optimal solution, namely from $\calS(M^*)$, and an edge exists
+between two nodes if there is a star in $\calS(M)$ that intersects the
+two corresponding stars of the optimal solution.
+%
+Formally $H = (\calS(M^*), E)$ where
+$$
+{E = \set{(S^*_i, S^*_j) : \exists S \in \calS(M), 
+         V(S) \cap V(S^*_i) \neq \emptyset \land
+         V(S) \cap V(S^*_j) \neq \emptyset}}
+$$
+Figure \ref{fig:conflict} depicts a star graph.
+
+\begin{figure}
+%\centering
+%
+\subfloat[$M^*$ is depicted by the dashed red edges,
+and $M$ is depicted by the solid green edges.
+The optimal stars are outlined.
+]{
+\centering
+\add{fig-sub-graph}
+\vspace{-20pt}
+}
+%
+\hfill
+%
+\subfloat[The star graph: each vertex corresponds to a star in $G$.
+The upper left vertex corresponds to the star that
+contains the vertices a,b,c.
+]{
+\centering
+\add{fig-sub-conflict}
+\vspace{9pt}
+}
+%
+\caption{An example of a star graph.}
+\label{fig:conflict}
+\end{figure}  
+
+\begin{lemma}
+The maximum degree of $H$ is $\cmax(\cmax+1)$.
+\end{lemma}
+\begin{proof}
+Each star in $\calS(M^*)$ contains at most $\cmax+1$ vertices and each
+such vertex can belong to a star in $\calS(M)$ containing additional
+$\cmax$ vertices, each of which is located in a different star in
+$\calS(M^*)$.
+\end{proof}
+
+In what follows we compare $\abs{M}$ and $\abs{M^*}$ in maximal
+connected components of the star graph $H$.  Intuitively, we show that
+$M$ is optimal on small maximal components, and that the approximation
+ratio on medium (non-necessarily) components can be bounded due to the
+termination condition of \textbf{EdgeSwap}.  Large maximal components
+will be partitioned into medium components.
+
+We first show that large connected graphs (or maximal connected
+components) can be partitioned in to medium size components.  
+
+\begin{lemma}
+\label{lemma:dec}
+An undirected connected graph $G = (V,E)$ with maximum degree
+$\Delta$, can be decomposed into connected components of size at least
+$\ell$ and at most $\Delta \ell$, if $\ell \leq \abs{V}$.
+\end{lemma}
+
+\begin{proof}
+We give a constructive proof.
+%
+First, if $\ell \leq |V| \leq \Delta \ell$, then we are done.
+%
+Otherwise, we partition the graph recursively as follows.  Let $U
+= \emptyset$.  As long as $\abs{U} < \ell$, choose an arbitrary vertex
+$u$ such that $U \cup \set{u}$ is connected and add $u$ to $U$.
+%
+If the graph $G[V \setminus U]$, which is induced by $V \setminus U$,
+is connected, then choose the next vertex.
+%
+However, if $G[V \setminus U]$ becomes disconnected, then consider the
+maximal connected components of $G[V \setminus U]$.  Add the vertices
+of any maximal component that contains less than $\ell$ vertices to
+$U$.  Observe that afterwards $\abs{U} < \ell + (\Delta-1) \ell
+= \Delta \ell$.
+%
+If $\abs{U} \geq \ell$, then recursively partition any component of
+$G[V \setminus U]$ that contains more than $\ell$ vertices.
+%
+If $\abs{U} < \ell$, then there must exist at least one maximal
+component $C$ of $G[V \setminus U]$ that contains more than $\ell$
+vertices.  In this case recursively partition any maximal component of
+$G[V \setminus (U \cup C)]$ that contains more than $\ell$ vertices.
+Also, continue to augment $U$ in the graph $G[U \cup C]$.
+\end{proof}
+
+
+\iffalse %%%%%% Removed
+
+\begin{proof}
+Let $T$ be any spanning tree of $G$ and let $r$ be an arbitrary root.
+Starting with $r$, repeatedly choose a child whose subtree is strictly
+larger than $\frac{\Delta-1}{\Delta} \abs{V}$, until this is not
+possible.  Hence, we have reached a vertex $v$ whose subtree contains
+more than $\frac{\Delta-1}{\Delta} \abs{V}$ vertices, but the subtrees
+of its children contain at most $\frac{\Delta-1}{\Delta} \abs{V}$
+vertices.
+%
+If $v = r$, then $v$ has a child $u$ with at least $\inv{\Delta}
+(\abs{V}-1) \geq \ell$ vertices.  Otherwise, there exists a child $u$
+of $v$ whose subtree is of size at least
+$\inv{\Delta} \abs{V} \geq \ell$.  Disconnect $u$ and the vertices in
+its subtree from the graph.
+%
+In both cases $u$'s subtree contains at most
+$\frac{\Delta-1}{\Delta} \abs{V}$ vertices, and thus at least
+$\inv{\Delta} \abs{V} \geq \ell$ vertices remain in the graph.  Hence
+we obtain two connected subgraphs of size at least $\ell$.
+%
+We repeat this procedure recursively on any component of size
+strictly larger $\Delta\ell$.
+\end{proof}
+
+\fi %%%%%% End removed
+
+Define $\deg_M(v) \eqdf \din[M](v) + \dout[M](v)$.  For a subset
+$U \subseteq V$ of vertices define $\deg_M(U) \eqdf \sum_{v \in
+U} \deg_M(u)$.
+%
+Observe that $\abs{M} = \half \deg_M(V)$.
+
+In the next lemma we bound the degree ratio in a component that
+contains stars with at most $k$ arcs.
+
+\begin{lemma}
+\label{lemma:r}
+Let $\calT \subseteq \calS(M^*)$ that induces a connected subgraph of
+$H$.  If $\abs{A(\calT)} \leq k$, then
+\[
+\frac{\deg_M(V(\calT))}{\deg_{M^*}(V(\calT))} 
+\geq \half + \inv{2\cmax} - \inv{2\cmax\abs{\calT}}
+\]
+\end{lemma}
+\begin{proof}
+Consider the solution $M'$ obtained from $M$ by removing all the
+edges from $M$ that intersect $V(\calT)$ and adding all the edges from
+$M^*$ that intersect $V(\calT)$.  Observe that if an edge $(u,v)$ in
+$M^*$ intersects $V(\calT)$, then $\set{u,v} \in V(\calT)$ by the
+definition of the graph $H$.  Hence, $M'$ is feasible carpool
+matching.
+
+Since $\calT$ induces a connected subgraph of $H$, the removal of
+edges in $M$ that intersect $V(\calT)$ decreased $\abs{M}$ by at most
+$\deg_M(V(\calT)) - \abs{\calT} + 1$.
+%
+On the other hand, the increase in size is exactly
+ $\half \deg_{M^*}(V(\calT)) \leq \cmax \abs{\calT}$.
+%
+Since $\abs{A(\calT)} \leq k$, we know that this difference can not be
+positive, or else, \textsc{EdgeSwap} would not have terminated.  Thus
+\(
+\half \deg_{M^*}(V(\calT)) \leq \deg_M(V(\calT)) - \abs{\calT} + 1
+\),
+and so
+\[
+\frac{\deg_M(V(\calT))}{\deg_{M^*}(V(\calT))}
+\geq \half + \frac{\abs{\calT} - 1}{\deg_{M^*}(V(\calT))}
+\geq \half + \frac{\abs{\calT} - 1}{2\cmax \abs{\calT}}
+=    \half + \inv{2\cmax} - \inv{2\cmax \abs{\calT}}
+\]
+as required.
+\end{proof}
+
+
+\iffalse %%%%% Removed
+
+\begin{lemma}
+%\label{lemma:dec}
+Given a parameter $k$, a connected graph $G$ with a maximum degree $d$
+can be decomposed into connected components of size at least $k$, and
+at most $d(k-1) + 1$.
+\end{lemma}
+
+\begin{proof}
+We give a constructive proof.  Start constructing a connected
+component by adding adjacent vertices one by one to the component and
+removing them from the graph.  If at some point, removing a vertex
+disconnect the graph, add all the small components (of size less than
+$k$) to the constructed component and decompose the large components
+(of size at least $k$) recursively.  Note that removing a vertex can
+break the graph to at most $d - 1$ additional components.
+\end{proof}
+
+\fi %%%%% End removed
+
+It remains to bound the approximation ratio of \textbf{EdgeSwap}.
+
+\begin{lemma}
+If $k \geq \cmax$, then $\abs{M} \geq (\half + \inv{2\cmax}
+- \frac{\cmax(\cmax+1)}{2k}) \cdot \abs{M^*}$.
+\end{lemma}
+\begin{proof}
+Consider a maximal (with respect to set inclusion) connected component
+of $H$ induced by the vertices in $\calT \subseteq \calS(M^*)$.
+%
+If $\abs{M \cap A(\calT)} \leq k$, then it must be that $\abs{M \cap
+A(\calT)} = \abs{M^* \cap A(\calT)}$, since otherwise $M \cap
+A(\calT)$ could be improved.
+
+It remains to consider a maximal component $\calT$ such that If
+$\abs{M \cap A(\calT)} > k$.  Since the number of edges in
+$S \in \calS(M^*)$ is at most $\cmax$, it must be that $\abs{V(\calT)}
+> \frac{k}{\cmax}$.
+%
+Due to Lemma~\ref{lemma:dec} (with $\ell
+= \frac{k}{\cmax^2(\cmax+1)}$) we can partition $\calT$ into connected
+components each of which contains between $\frac{k}{\cmax^2(\cmax+1)}$
+and $\frac{k}{\cmax}$ vertices.
+%
+Since each such vertex set $\calX$ is connected and contains at most
+$\frac{k}{\cmax}$ stars, it follows that $\abs{A(\calX)} \leq k$.
+%
+Due to Lemma~\ref{lemma:r} we have that
+\(
+\frac{\deg_M(V(\calX))}{\deg_{M^*}(V(\calX))} 
+\geq \half + \inv{2\cmax} - \frac{\cmax(\cmax+1)}{2k}
+%~.
+\).
+Since $\deg_{M^*}(V(\calT)) = \sum_{\calX} \deg_{M^*}(V(\calX))$ 
+and
+$$\deg_M(V(\calT)) = \sum_{\calX} \deg_M(V(\calX))$$, 
+it follows that
+\(
+\frac{\deg_M(V(\calT))}{\deg_{M^*}(V(\calT))}
+\geq \half + \inv{2\cmax} - \frac{\cmax(\cmax+1)}{2k}
+%~,
+\),
+and thus
+\(
+\abs{M \cap A(\calT)}
+\geq \paren{ \half + \inv{2\cmax} -
+             \frac{\cmax(\cmax+1)}{2k}} \abs{M^* \cap A(\calT)}
+%~,
+\).
+%and the lemma follows.
+\end{proof}
+
+By setting $k = \ceil{\cmax(\cmax+1)/2\eps}$, we get the following
+result.
+
+\begin{corollary}
+\label{cor:local}
+There exists a $(\half + \inv{2\cmax} - \eps)$-approximation algorithm
+for unweighted \carpool, for every $\eps>0$.
+\end{corollary}
+
+We now show that Corollary~\ref{cor:local} is tight.  
+Consider the
+example in Figure~\ref{fig:local search tight}, the example is for the
+special case when $k = 11$ and $\cmax = 2$ but this example can be
+generalized in a straightforward manner.  One can verify that as the
+graph in the example growth, the ratio between the optimal solution
+and the local search solution approaches $\frac{3}{4}$.
+
+\begin{figure}[h]
+\begin{center}
+\scalebox{.9}{
+\add{fig-local-tight}
+}
+\caption{A tight example for Corollary~\ref{cor:local}. 
+The optimal solution is given by the red solid arcs while the local
+search solution is given by the green, dashed arcs.  The solution can
+be improved by the local search algorithm only if it removes all the
+edges.}
+\label{fig:local search tight}
+\end{center}
+\end{figure}
+
+

@@ -1,0 +1,29 @@
+\begin{tikzpicture}[every node/.style={default node}, <->, x=.95cm]
+
+\def\sep{1.5}
+
+\foreach \n in {0,...,5}{
+	\pgfmathsetmacro{\x}{\n * \sep}
+	\node(\n) at(\x,0){};
+}
+
+\foreach \n/\m in {0/1,2/3,4/5}{
+	\draw[m] (\n) -- (\m) node[label above]{1};
+}
+
+\foreach \n/\m in {1/2,3/4}{
+	\draw[] (\n) -- (\m) node[label above]{2};
+}
+
+\pgfmathsetmacro{\x}{6 * \sep}
+\node[draw=none] at(\x, 0){$\cdots$};
+
+\foreach \n in {7,...,8}{
+	\pgfmathsetmacro{\x}{\n * \sep}
+	\node(\n) at(\x,0){};
+}
+
+\draw[m] (7) -- (8) node[label above]{1};
+
+
+\end{tikzpicture}
