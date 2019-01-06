@@ -1,6 +1,5 @@
-\subfloat[]{
-\label{sub:can improved}
-\begin{tikzpicture}[every node/.style={default node}, default arc]
+\subfloat[A matching that can be improved.]{
+\begin{tikzpicture}[every node/.style={default node}]
 \node(1) at(0,0) {1};
 \node(2) at(2,0) {2};
 \node(3) at(4,0) {3};
@@ -9,17 +8,18 @@
 \node(5) at(2.4,1.6) {5};
 \node(6) at(2.4, -1.6) {6};
 
-\draw[m] (1) -- (2) node[label above]{$5$};
-\draw[m] (4) -- (2) node[label above]{$2$};
-\draw[m] (3) -- (5) node[label above]{$2$};
-\draw[] (6) -- (3) node[label above]{$2$};
+\draw[m,->] (1) -- (2) node[label above]{$5$};
+\draw[m,->] (4) -- (2) node[label above]{$2$};
+\draw[m,<-] (3) -- (5) node[label above]{$2$};
+\draw[->] (6) -- (3) node[label above]{$2$};
+\draw[->] (2) -- (3) node[label above]{$8$};
 
-\draw (2) -- (3) node[label above]{$8$};
-
-\end{tikzpicture}
-}\hspace{1cm}\subfloat[]{
-\label{sub:improved}
-\begin{tikzpicture}[every node/.style={default node}, default arc]
+\end{tikzpicture}}
+%
+\hfill
+%
+\subfloat[The matching after improving vertex 3.]{
+\begin{tikzpicture}[every node/.style={default node}]
 \node(1) at(0,0) {1};
 \node(2) at(2,0) {2};
 \node(3) at(4,0) {3};
@@ -28,12 +28,10 @@
 \node(5) at(2.4,1.6) {5};
 \node(6) at(2.4, -1.6) {6};
 
-\draw[] (1) -- (2) node[label above]{$5$};
-\draw[] (4) -- (2) node[label above]{$2$};
-\draw[] (3) -- (5) node[label above]{$2$};
-\draw[m] (6) -- (3) node[label above]{$2$};
+\draw[->] (1) -- (2) node[label above]{$5$};
+\draw[->] (4) -- (2) node[label above]{$2$};
+\draw[<-] (3) -- (5) node[label above]{$2$};
+\draw[m,->] (6) -- (3) node[label above]{$2$};
+\draw[m,->] (2) -- (3) node[label above]{$8$};
 
-\draw[m] (2) -- (3) node[label above]{$8$};
-
-\end{tikzpicture}
-}
+\end{tikzpicture}}
