@@ -12,7 +12,7 @@ solution with another (larger) subset of edges not in the solution.
 The algorithm halts when no improvement can be done. 
 
 \begin{algorithm}
-\caption{\textbf{EdgeSwap}$(G,c,k)$}
+\caption[]{\textbf{EdgeSwap}$(G,c,k)$}
 \label{alg:local-new}
 \begin{small}
 \SetKw{True}{true}
@@ -94,7 +94,7 @@ contains the vertices a,b,c.
 \vspace{9pt}
 }
 %
-\caption{An example of a star graph.}
+\caption[An example of a star graph]{An example of a star graph.}
 \label{fig:conflict}
 \end{figure}  
 
@@ -326,7 +326,7 @@ and the local search solution approaches $\frac{3}{4}$.
 \scalebox{.9}{
 \add{fig-local-tight}
 }
-\caption{A tight example for Corollary~\ref{cor:local}. 
+\caption[Bounded Capacity Local Search Algorithm - A Tight Example]{A tight example for Corollary~\ref{cor:local}. 
 The optimal solution is given by the red solid arcs while the local
 search solution is given by the green, dashed arcs.  The solution can
 be improved by the local search algorithm only if it removes all the
