@@ -1,0 +1,115 @@
+In \cite{khuller1999budgeted} it is shown that by enumerating all the triplets over the 
+ground set and greedily adding elements to those seed sets one obtains a 
+$1-e^{-1}$-approximation algorithm.
+This result was also generalized to a general submodular functions by \cite{sviridenko2004note}.
+The running time of this algorithm is $O(n^5)$.
+
+We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
+This algorithm carefully selects a constant number of pairs of elements and greedily 
+add elements to them.
+
+We assume that the size of the knapsack is 1.
+Consider all pairs of elements, we describe now how to choose the relevant pairs.
+First we divide the pairs by their total size. 
+We only consider pairs of size greater than $1/3$ and split them 
+into $\log(3)/log(1 + \epsilon)$ buckets where the $i$th bucket contains all the pairs of size
+between $1/3(1 + \epsilon)^{i - 1}$ and $1/3(1 + \epsilon)^{i}$  
+for a constant $\epsilon$ that will be determined later on.
+
+We further split each bucket, this time using the density of each pair.
+\todo{
+Make sure the number of density buckets is constant and does not depend on n, 
+for example if there is an exponential difference between the smallest density and the largest. 
+} 
+We assume the maximum density is $1$ and we only consider pairs with density greater than 
+$\alpha$ (a constant to be determined later). 
+We divide each bucket into $-\log(\alpha)/\log(1 + \epsilon)$ smaller buckets where
+the $i$th bucket contains all the pairs with density between $\alpha (1 + \epsilon)^{i - 1}$
+and $\alpha (1 + \epsilon)^{i}$.
+
+From each small bucket we only consider a pair with minimum size (breaking tie arbitrarily). 
+Given such a pair, $P$, we construct a new Knapsack problem of budget $1 - c(P)$ and with 
+respect to the function $f_P$.
+We use the modified modified algorithm to obtain a $1-e^{-(1/2 + \eps)}$-approximation
+solution to this problem and combine it with the pair to obtain a candidate 
+solution to the original problem.
+
+The algorithm returns the best solution from the following candidates:
+\begin{enumerate}
+  \item Best solution from the above candidates
+  \item The pair with  largest value among all pairs
+  \item The solution of the simple greedy algorithm (starting from an empty set)
+\end{enumerate}       
+
+\begin{theorem}
+The above algorithm is $(1 - e^{-2/3})-approximation$ algorithm.
+\end{theorem}
+
+\begin{proof}
+Fix an optimal solution, $O$, and consider two cases:
+\begin{enumerate}
+  \item $O$ has at least one element larger than $1/3$
+  \item All elements in $O$ are smaller or equal to $1/3$
+\end{enumerate}
+In the later case the proof follows immediately from Lemma~\ref{lemma:sub-main}.
+Now consider the first case and denote by $P^*$ the two largest elements in $O$.
+Let $P$ be the pair considered by the algorithm from the same bucket of $P^*$ then we know
+that:
+\begin{enumerate}
+  \item $c(P) \leq c(P^*)$
+  \item $w(P) \geq (1 + \epsilon)^{-2}w(P^*)$
+\end{enumerate}
+Set $\omega = f(P^*)$ then $f(O\setminus P^* | P^*) = 1 - \omega$.
+Let $S_P$ the solution produced by the bucket algorithm from $P$, 
+then using Lemma~\ref{lemma:sub-main} and using the properties of $P$ we know that
+\begin{equation}
+\label{eq:sub:bucket}
+f(S_P) \geq (1 + \epsilon)^{-2}\omega + (1-e^{-(1/2 + \eps)})(1 - \omega)
+\end{equation}
+On the other hand, denote the size of the third largest element in $O$ by $1/3 - \delta$
+(for $0 \leq \delta \leq 1/3$) and  let $S$ be the solution of the greedy algorithm, then 
+\begin{align}
+\label{eq:sub:greedy}
+f(S) & \geq (1 - e^{-\frac{2/3 + \delta}{1 - 1/3 - (1/3 - \delta)}})(1 - 2w) 
+\\
+& \geq (1 - e^{-1.5})(1-w)
+\end{align}
+Setting $\epsilon$ to (say) $0.002$ and taking the maximum between \ref{eq:sub:bucket} and
+\ref{eq:sub:greedy} completes the proof as can be seen in Figure~\ref{fig:sub:bucket}.
+\end{proof}
+
+\begin{figure}
+\def\zeta{0.002}
+\caption{
+\label{fig:sub:bucket}
+Bucket Algorithm - Approximation Ratio
+}
+\begin{tikzpicture}
+\begin{axis}[
+	width=\textwidth
+	,domain=0:1
+	,ymax=.55
+	,ymin=0.3
+% 	,xmax=.51
+	,xlabel=$\omega$
+	,xtick distance=0.1
+	,ytick distance=0.1
+	,axis lines=left
+	,grid=both
+	,grid style={
+		draw=gray!20
+	}
+	,minor tick num=5
+	,legend pos=south west
+	,legend entries={
+		Bucket Algorithm
+		,Greedy Algorithm
+		,$(1 - e^{-2/3})$
+	}
+]
+  \addplot[blue, dashed]{(1 + \zeta)^(-2)*x + (1 - e^(-(1/2 + \eps))) * (1 - 2 * x)};
+  \addplot[red, dotted]{(1 - exp(-1.5)) * (1 - x)};
+  \addplot[green]{(1 - exp(-2/3))};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
