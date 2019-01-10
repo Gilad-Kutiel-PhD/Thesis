@@ -1,8 +1,33 @@
-In \cite{khuller1999budgeted} it is shown that by enumerating all the triplets over the 
+In \cite{khuller1999budgeted} it was shown that by enumerating all the triplets over the 
 ground set and greedily adding elements to those seed sets one obtains a 
 $1-e^{-1}$-approximation algorithm.
-This result was also generalized to a general submodular functions by \cite{sviridenko2004note}.
+This result was also generalized to a general submodular functions in \cite{sviridenko2004note}.
 The running time of this algorithm is $O(n^5)$.
+
+Before describing the algorithm we further analyze the performance of the greedy algorithm.
+Fix an optimal solution, $O$, and consider its two largest elements, $P = \{a, b\}$.
+Denote $x = f(P)$ so $f(O \setminus P | P) = 1 - x$.
+Now consider the third largest element in $O$, $c$, and denote $|c| = 1/3 - \delta$,
+and let $A$ be the output of the greedy algorithm, then we have the following theorem
+
+\begin{theorem}
+If the largest element in $O$ is bigger than $1/3$ then 
+\begin{align*}
+f(A) 	& \geq (1-e^{-\frac{2/3 + \delta}{1 - 1/3 - (1/3 - \delta)}})(1 - x)
+\\		& \geq (1 - e^{-1.5})(1 - x) 
+\end{align*}
+\end{theorem} 
+
+\begin{proof}
+The proof follows immediately from Lemma~\ref{lemma:sub-main}.
+\end{proof}
+
+As a corollary we have that:
+
+\begin{corollary}
+If $x \leq \frac{1 - e^-{2/3}}{2 - e^{-1.5} - e^{-2/3}} \approx 0.39$ 
+then $f(A) \geq (1 - e^{-2/3})f(O)$.
+\end{corollary}
 
 We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
 This algorithm carefully selects a constant number of pairs of elements and greedily 
@@ -10,24 +35,13 @@ add elements to them.
 
 We assume that the size of the knapsack is 1.
 Consider all pairs of elements, we describe now how to choose the relevant pairs.
-First we divide the pairs by their total size. 
-We only consider pairs of size greater than $1/3$ and split them 
-into $\log(3)/log(1 + \epsilon)$ buckets where the $i$th bucket contains all the pairs of size
-between $1/3(1 + \epsilon)^{i - 1}$ and $1/3(1 + \epsilon)^{i}$  
-for a constant $\epsilon$ that will be determined later on.
 
-We further split each bucket, this time using the density of each pair.
-\todo{
-Make sure the number of density buckets is constant and does not depend on n, 
-for example if there is an exponential difference between the smallest density and the largest. 
-} 
-We assume the maximum density is $1$ and we only consider pairs with density greater than 
-$\alpha$ (a constant to be determined later). 
-We divide each bucket into $-\log(\alpha)/\log(1 + \epsilon)$ smaller buckets where
-the $i$th bucket contains all the pairs with density between $\alpha (1 + \epsilon)^{i - 1}$
-and $\alpha (1 + \epsilon)^{i}$.
+Let $\omega$ be the value of the most valuable pair and $\epsilon$ be a constant to 
+be determined later.
+We divide the pairs into buckets where the $i$th bucket contains all the pairs with value
+between $0.38 (1 + \epsilon)^{i - 1}$ and $0.38 (1 + \epsilon)^{i}$.
+We only consider the smallest pair from each bucket.  
 
-From each small bucket we only consider a pair with minimum size (breaking tie arbitrarily). 
 Given such a pair, $P$, we construct a new Knapsack problem of budget $1 - c(P)$ and with 
 respect to the function $f_P$.
 We use the modified modified algorithm to obtain a $1-e^{-(1/2 + \eps)}$-approximation
