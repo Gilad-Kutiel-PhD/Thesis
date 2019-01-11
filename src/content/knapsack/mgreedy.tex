@@ -84,10 +84,10 @@ Modified Greedy Approximation Ratio
 		,$1 - e^{-\frac{1}{2}}$
 	}
 ]
-  \addplot[blue, dashed]{1-exp(-(0.5-x))};
-  \addplot[red, dotted]{(1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
-  \addplot[black, thick]{1-exp(-(0.5-x)) + (1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
-  \addplot[black, dashed]{1-exp(-0.5)};
+  \addplot[line blue]{1-exp(-(0.5-x))};
+  \addplot[line red]{(1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
+  \addplot[line brown]{1-exp(-(0.5-x)) + (1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
+  \addplot[line teal]{1-exp(-0.5)};
 \end{axis}
 \end{tikzpicture}
 \end{figure}
