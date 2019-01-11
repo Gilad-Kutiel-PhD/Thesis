@@ -21,18 +21,20 @@ where $\delta$ might be in the range $(0, 0.5)$.
 We argue that the following inequalities hold:
 
 \begin{align}
+\label{mgreedy:ineq1}
 c(A) \leq 0.5 - \delta 
 \\
+\label{mgreedy:ineq2}
 c(x) > 0.5 + \delta
 \\
+\label{mgreedy:ineq3}
 c(O \setminus x) \leq 0.5 - \delta
 \\
+\label{mgreedy:ineq4}
 c(B) > 2\delta
 \\
-f(x) < 1 - e^{-1/2}
-\\
 \label{ineq:T}
-f(O \setminus x | A) \geq e^{-1/2} - 1 + e^{-(1/2 - \delta)}
+f(O \setminus x | A) \geq f(O) - f(x) - f(A) \geq e^{-1/2} - 1 + e^{-(1/2 - \delta)}
 \\
 \label{ineq:B}
 f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)
@@ -40,7 +42,14 @@ f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)
 f(T) \geq f(A) + f(B|A)
 \end{align}
 
-\todo{explain the inequalities}.
+Where inequality \ref{mgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
+the fact that $x$ was dropped right after $A$ implies inequality \ref{mgreedy:ineq2},
+inequality \ref{mgreedy:ineq4} is due to inequalities \ref{mgreedy:ineq3} and 
+\ref{mgreedy:ineq2},
+inequality \ref{ineq:T} is due to submodularity of $f$, 
+inequality \ref{ineq:B} is due to Lemma~\ref{lemma:sub-main} and inequalities 
+\ref{mgreedy:ineq4} and \ref{mgreedy:ineq3}, 
+the last inequality is due to monotonicity and the definition of $f(B|A)$.   
 
 Substituting $f(A) = 1 - e^{-(1/2 - \delta)}$ 
 and $f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)$
@@ -72,32 +81,34 @@ Modified Greedy Approximation Ratio
 		$f(A)$
 		,$f(B|A)$
 		,$f(A) + f(B|A)$
+		,$1 - e^{-\frac{1}{2}}$
 	}
 ]
-  \addplot[blue, dashed, thin]{1-exp(-(0.5-x))};
-  \addplot[red, dotted, thin]{(1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
+  \addplot[blue, dashed]{1-exp(-(0.5-x))};
+  \addplot[red, dotted]{(1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
   \addplot[black, thick]{1-exp(-(0.5-x)) + (1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
+  \addplot[black, dashed]{1-exp(-0.5)};
 \end{axis}
 \end{tikzpicture}
 \end{figure}
 
-\textbf{Upper Bound}
-In \cite{khuller1999budgeted} it is claimed that the upper bound on the approximation ratio
-of the modified greedy algorithm is at most 0.44, but no explicit instance was given to 
-support this claim and we could not reproduce such an example.
-Here we give a simple example that bound the approximation ratio from above by $1-e^{-2/3}$, 
-leaving a gap between the lower and upper bounds.
-Consider an instance of the budgeted maximum coverage problem where the optimal cover consists
-of 3 disjoint subsets, $S_1, S_2, S_3$ each cover exactly third of the ground set. 
-In this example we assume a uniform weight function, and suppose the cost of each subsets of 
-the optimal solution is $1/3$. We now describe the subsets that the modified greedy algorithm
-may choose. Consider $k + 1$ disjoint subsets $T_1, \dots, T_{k + 1}$ where $c(T_i) = 2/3k$, 
-where subset $T_i$ covers $\frac{2}{3k}(1-\frac{2}{3k})^i$ fraction of the ground set and for
-every $i$ it holds that $|T_i \cap S_1| = |T_i \cap S_2| = |T_i \cap S_3|$.
-One can verify that the modified greedy algorithm might chose those sets leaving no budget for
-any of the optimal subsets. As $k$ approaches infinity the total value of those sets approches
-$1-e^{-2/3}$. 
-
-
-
-  
+% \textbf{Upper Bound}
+% In \cite{khuller1999budgeted} it is claimed that the upper bound on the approximation ratio
+% of the modified greedy algorithm is at most 0.44, but no explicit instance was given to 
+% support this claim and we could not reproduce such an example.
+% Here we give a simple example that bound the approximation ratio from above by $1-e^{-2/3}$, 
+% leaving a gap between the lower and upper bounds.
+% Consider an instance of the budgeted maximum coverage problem where the optimal cover consists
+% of 3 disjoint subsets, $S_1, S_2, S_3$ each cover exactly third of the ground set. 
+% In this example we assume a uniform weight function, and suppose the cost of each subsets of 
+% the optimal solution is $1/3$. We now describe the subsets that the modified greedy algorithm
+% may choose. Consider $k + 1$ disjoint subsets $T_1, \dots, T_{k + 1}$ where $c(T_i) = 2/3k$, 
+% where subset $T_i$ covers $\frac{2}{3k}(1-\frac{2}{3k})^i$ fraction of the ground set and for
+% every $i$ it holds that $|T_i \cap S_1| = |T_i \cap S_2| = |T_i \cap S_3|$.
+% One can verify that the modified greedy algorithm might chose those sets leaving no budget for
+% any of the optimal subsets. As $k$ approaches infinity the total value of those sets approches
+% $1-e^{-2/3}$. 
+% 
+% 
+% 
+%   
