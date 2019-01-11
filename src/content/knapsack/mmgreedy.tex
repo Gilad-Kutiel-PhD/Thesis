@@ -1,5 +1,8 @@
-We now consider the \emph{modified modified greedy} algorithm~\ref{alg:mmgreedy}
+The \emph{modified modified greedy} algorithm~\ref{alg:mmgreedy} 
 \footnote{A paraphraze on the ``ultimate ultimate weapon'' from \cite{ninjago2017}}
+is similar to the  modified greedy algorithm, 
+except it considers the best pair of element rather than the best singleton element.
+
 
 \begin{algorithm}[H]
 \label{alg:mmgreedy}
@@ -16,8 +19,7 @@ $S \leftarrow \text{greedy}(U, f, c)$
 \caption{Modified Modified Greedy Algorithm}
 \end{algorithm}
 
-We now analyze the modified modified greedy algorithm.
-
+We now analyze its performance.
 Let $\epsilon > 0$ a constant to be determined latter on, and let $T$ be the output of 
 the algorithm.
 
@@ -43,29 +45,44 @@ Let $y$ be the first such element, and let $B$ be the set of elements chosen by 
 algorithm right after dropping $x$ and just before dropping $y$.
 Also denote by $C$ the subset of cheap elements in $O$, 
 i.e. $C = \{e \in O : c(e) < 1/4 + \epsilon/2 - \delta/2\}$.
-
 We argue that the following inequalities hold:
 
 \begin{align}
+\label{mmgreedy:ineq1}
 c(A) \leq 0.5 + \epsilon - \delta 
 \\
+\label{mmgreedy:ineq2}
 c(x) > 0.5 -\epsilon + \delta
 \\
+\label{mmgreedy:ineq3}
 c(C) \leq 0.5 + \epsilon - \delta
 \\
+\label{mmgreedy:ineq4}
 f(C) \ge e^{-1/2 + \epsilon}
 \\
+\label{mmgreedy:ineq5}
 c(B) \ge 1/4 - 3\epsilon/2 + 3\delta/2
 \\
-f(B|A) \ge \left[
+\label{mmgreedy:ineq6}
+f(B|A) \ge 
+(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
+\left[
 e^{-(1/2 + \epsilon)}
 - (1 - e^{-(1/2 + \epsilon - \delta)})
 \right]
-(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
 \\
+\label{mmgreedy:ineq7}
 f(T) \geq \max_\epsilon \min \{1 - e^{-(0.5 + \epsilon)}, \min_{\delta} f(A) + f(B|A)\}
 \end{align}
-\todo{explain the inequalities}.
+
+Where inequality \ref{mmgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
+inequalities \ref{mmgreedy:ineq1}, \ref{mmgreedy:ineq2} with the definition of cheap
+element implies inequality \ref{mmgreedy:ineq5},
+inequality \ref{mmgreedy:ineq6} is due to Lemma~\ref{lemma:sub-main}, the definition
+of $f(B|A)$ and monotonicity.
+The last inequality capture the fact that either all elements in $O$ are smaller than
+$0.5 + \epsilon$ or there is one element in $O$ larger than $0.5 + \epsilon$.
+
 
 Substituting $f(A) = 1 - e^{-(1/2 + \epsilon - \delta)}$ into the last inequality, 
 using $f(B|A) \ge \left[
