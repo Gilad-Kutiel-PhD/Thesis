@@ -1,3 +1,21 @@
+We now consider the \emph{modified modified greedy} algorithm~\ref{alg:mmgreedy}
+\footnote{A paraphraze on the ``ultimate ultimate weapon'' from \cite{ninjago2017}}
+
+\begin{algorithm}[H]
+\label{alg:mmgreedy}
+
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+
+\Input{$U = \{e_1, \dots, e_n\}$, $f:2^U\to \mathbb{R}_+$, $c:U \to \mathbb{R}_+$}
+\Output{$S \subseteq U$}
+
+$S \leftarrow \text{greedy}(U, f, c)$
+\\
+\Return{$\arg\max\{S, \displaystyle{\arg\max_{e_1, e_2 \in U}}f(\{e_1, e_2\})\}$}
+\caption{Modified Modified Greedy Algorithm}
+\end{algorithm}
+
 We now analyze the modified modified greedy algorithm.
 
 Let $\epsilon > 0$ a constant to be determined latter on, and let $T$ be the output of 
