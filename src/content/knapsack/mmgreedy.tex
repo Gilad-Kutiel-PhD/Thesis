@@ -80,7 +80,7 @@ inequalities \ref{mmgreedy:ineq1}, \ref{mmgreedy:ineq2} with the definition of c
 element implies inequality \ref{mmgreedy:ineq5},
 inequality \ref{mmgreedy:ineq6} is due to Lemma~\ref{lemma:sub-main}, the definition
 of $f(B|A)$ and monotonicity.
-The last inequality capture the fact that either all elements in $O$ are smaller than
+The last inequality captures the fact that either all elements in $O$ are smaller than
 $0.5 + \epsilon$ or there is one element in $O$ larger than $0.5 + \epsilon$.
 
 
@@ -120,31 +120,31 @@ Modified Modified Greedy Approximation Ratio ($\epsilon = \eps$)
 	,legend entries={
 		$f(A)$
 		,$f(B|A)$
-		,$1-e^{-(0.5 + \epsilon)}$
 		,$f(A) + f(B|A)$
+		,$1-e^{-(0.5 + \epsilon)}$
 	}
 ]
-  \addplot[blue, dashed, thin]{1-exp(-(0.5 + \eps -x))};
-  \addplot[red, dotted, thin]{
+  \addplot[line blue]{1-exp(-(0.5 + \eps -x))};
+  \addplot[line red]{
   	(1 - exp(-(1 - 6 * \eps + 6 * x)/(2 + 4 * \eps - 4 * x)))
   	*
   	(exp(-(0.5 + \eps)) - 1 + exp(-(0.5 + \eps - x)))
   };
-  \addplot[black, dashed]{
-  	1-exp(-(0.5 + \eps))
-  };
-  \addplot[black, thick]{
+  \addplot[line teal]{
   	1-exp(-(0.5 + \eps -x))
   	+
   	(1 - exp(-(1 - 6 * \eps + 6 * x)/(2 + 4 * \eps - 4 * x)))
   	*
   	(exp(-(0.5 + \eps)) - 1 + exp(-(0.5 + \eps - x)))
   };
+  \addplot[line brown]{
+  	1-exp(-(0.5 + \eps))
+  };
 \end{axis}
 \end{tikzpicture}
 \end{figure}
 
-\paragraph{Upper Bound}
+\textbf{Upper Bound}
 We show that the approximation ratio of the modified modified greedy algorithm is at most $0.5$.
 To see this consider the following instance of the budgeted maximum coverage problem:
 Let the elements be $X = \{x_1, \dots, x_{2n}\}$, 
