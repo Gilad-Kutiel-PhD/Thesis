@@ -1,22 +1,7 @@
-In \cite{khuller1999budgeted} it was shown that by enumerating all the triplets over the 
-ground set and greedily adding elements to those seed sets one obtains a 
-$1-e^{-1}$-approximation algorithm.
-This result was also generalized to a general submodular functions in \cite{sviridenko2004note}.
-The running time of this algorithm is $O(n^5)$.
-Faster, $1 - \frac{1}{e} - \epsilon$-approximation algorithms
-are known \cite{Alina2017, badanidiyuru2014fast}. 
-The running time of these algorithms depend on $\epsilon$, 
-and, as the author mention, are impractical. 
-For example, the running time of the faster of the above algorithms for $\epsilon = 2^{-2}$ is
-$2^{2O(2^{8})}n\log^2n$ achieving approximation ratio of $\approx 0.38$.
-Here we describe a $0.48$-approximation algorithm with the same 
-asymptotic running time as the simple greedy algorithm and with reasonable constants.
-
-
 Before describing the algorithm we further analyze the performance of the greedy algorithm.
 Fix an optimal solution, $O$, and consider its two largest elements, $P = \{a, b\}$.
 Denote $x = f(P)$ so $f(O \setminus P | P) = 1 - x$.
-Now consider the third largest element in $O$, $c$, and denote $|c| = 1/3 - \delta$,
+Now consider the third largest element in $O$, $e$, and denote $w(e) = 1/3 - \delta$,
 and let $A$ be the output of the greedy algorithm, then we have the following theorem
 
 \begin{theorem}
@@ -34,6 +19,7 @@ The proof follows immediately from Lemma~\ref{lemma:sub-main}.
 As a corollary we have that:
 
 \begin{corollary}
+\label{corollary:smallx}
 If $x \leq \frac{1 - e^-{2/3}}{2 - e^{-1.5} - e^{-2/3}} \approx 0.39$ 
 then $f(A) \geq (1 - e^{-2/3})f(O)$.
 \end{corollary}
@@ -41,26 +27,26 @@ then $f(A) \geq (1 - e^{-2/3})f(O)$.
 We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
 This algorithm carefully selects a constant number of pairs of elements and greedily 
 add elements to them.
-
 We assume that the size of the knapsack is 1.
-Consider all pairs of elements, we describe now how to choose the relevant pairs.
+Consider all pairs of elements, we describe now how to choose the relevant ones.
 
 Let $\omega$ be the value of the most valuable pair and $\epsilon$ be a constant to 
 be determined later.
 We divide the pairs into buckets where the $i$th bucket contains all the pairs with value
-between $0.38 (1 + \epsilon)^{i - 1}$ and $0.38 (1 + \epsilon)^{i}$.
-We only consider the smallest pair from each bucket.  
+between $0.39 (1 + \epsilon)^{i - 1}$ and $0.39 (1 + \epsilon)^{i}$ 
+(the value 0.39 is drived from \ref{corollary:smallx}).
+We only consider the smallest pair from each bucket 
+(i.e. the pair that minizes the weight function in each bucket).  
 
 Given such a pair, $P$, we construct a new Knapsack problem of budget $1 - c(P)$ and with 
 respect to the function $f_P$.
 We use the modified modified algorithm to obtain a $1-e^{-(1/2 + \eps)}$-approximation
-solution to this problem and combine it with the pair to obtain a candidate 
+solution to this problem and combine it with the initial pair to obtain a (candidate) 
 solution to the original problem.
 
 The algorithm returns the best solution from the following candidates:
 \begin{enumerate}
   \item Best solution from the above candidates
-  \item The pair with  largest value among all pairs
   \item The solution of the simple greedy algorithm (starting from an empty set)
 \end{enumerate}       
 

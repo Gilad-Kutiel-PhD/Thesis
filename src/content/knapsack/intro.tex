@@ -31,9 +31,16 @@ gives that same guarantee for a general monotone submodular function and require
 $O(n^2)$ calls to the value oracle.
 In the above papers (and other papers as well), however, 
 there is a logical flaw in the analysis of this algorithm. 
-In this paper we proof this claim. 
+In this paper we prove this claim. 
 We also consider a modification of this algorithm with the same running time and show that it
 achieves a better approximation ratio.   
 
-\todo{elaborate}
-Some more related work~\cite{mirzasoleiman2015lazier,badanidiyuru2014fast}
+There are also $1 - \frac{1}{e} - \epsilon$-approximation algorithms
+\cite{Alina2017, badanidiyuru2014fast} with assymptotic running time 
+close to or even better than the greedy. 
+The running time of these algorithms, however, depends on $\epsilon$, and, 
+as one of the authors mentioned, are impractical. 
+For example, the running time of the faster of the above algorithms for $\epsilon = 2^{-2}$ is
+$2^{2O(2^{8})}n\log^2n$ achieving approximation ratio of $\approx 0.38$.
+Here we describe a $0.48$-approximation algorithm with the same 
+asymptotic running time as the simple greedy algorithm and with reasonable constants.
