@@ -20,3 +20,6 @@
 *#
 /out/
 /tmp/
+*.fls
+*.lof
+*.fdb_latexmk
