@@ -45,14 +45,14 @@ initialization: $S \leftarrow \emptyset$
  
 If the condition on line \ref{line:dropped} is evaluated to false we say that
 the algorithm \emph{dropped} the element $e'$.
-It can be shown that in general the performance of the greedy algorithm 
+It can be shown that in general the approximation ratio of the greedy algorithm 
 can be arbitrarily bad.
 
 Let $S$ be the output of the greedy algorithm, the \emph{Modified Greedy} algorithm 
 from \cite{khuller1999budgeted} and \cite{krause2005note} 
 returns the best among the output of the greedy algorithm and the best singleton, 
-that is $\arg\max\{S, \displaystyle{\arg\max_{e \in U}}f(\{e\})\}$,
-Algorithm~\ref{alg:mgreedy} depicts this algorithm.  
+that is $\arg\max\{S, \displaystyle{\arg\max_{e \in U}}f(\{e\})\}$.
+This algorithm is described in Algorithm~\ref{alg:mgreedy}.  
 
 \begin{algorithm}[H]
 \label{alg:mgreedy}

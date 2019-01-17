@@ -1,95 +1,104 @@
+We now analyze the approximation ratio of the
+Modified Greedy Algorithm~\ref{fig:mgreedy} was analyzed.
+Our analysis matches the approximation ratio that was stated in
+\cite{khuller1999budgeted} and \cite{krause2005note} where, we believe, 
+there is a logical flaw in the analysis.
+
+
 Let $O$ be an optimal set and recall that we assume that $f(O) = 1$.
-Let $T = \arg\max\{S, \displaystyle{\arg\max_{e \in U}}f(\{e\})\}$ 
-be the set returned by the modified greedy algorithm, 
-where $S$ is the set computed by the greedy algorithm~\ref{alg:greedy},
+Let $T = \arg\max\{S, \displaystyle{\arg\max_{e \in U}}f(\{e\})\}$
+be the set returned by the modified greedy algorithm,
+where $S$ is the set computed by the greedy algorithm,
 we prove the following theorem:
 
 \begin{theorem}
-$f(T) \geq (1 - e^{-1/2})$.
+	$f(T) \geq (1 - e^{-1/2})$.
 \end{theorem}
 
 \begin{proof}
-We can assume that $f(e) \leq 1 - e^{-1/2}$ for every $e \in U$ or otherwise the proof holds. 
-Note, also, that if $|O \setminus T| \leq 1$ then $f(T) \geq 0.5$. 
-Thus we assume the algorithm drops at least two elements from $O$ during its running. 
-Denote by $x$ and $y$ the first and second such elements respectively.
-Denote by $A$ the set of elements chosen by the algorithm just before dropping $x$ and by
-$B$ the set of elements chosen right after dropping $x$ and before dropping $y$.
-If $f(A) \geq 1 - e^{-1/2}$ the theorem holds, otherwise denote $f(A) = 1 - e^{-(1/2 - \delta)}$,
-where $\delta$ might be in the range $(0, 0.5)$.  
+	We can assume that $f(e) \leq 1 - e^{-1/2}$ for every $e \in U$ or otherwise the proof holds.
+	Note, also, that if $|O \setminus T| \leq 1$ then $f(T) \geq 0.5$.
+	Thus we assume the algorithm drops at least two elements from $O$ during its running.
+	Denote by $x$ and $y$ the first and second such elements respectively.
+	Denote by $A$ the set of elements chosen by the algorithm just before dropping $x$ and by
+	$B$ the set of elements chosen right after dropping $x$ and before dropping $y$.
+	If $f(A) \geq 1 - e^{-1/2}$ the theorem holds, otherwise denote $f(A) = 1 - e^{-(1/2 - \delta)}$,
+	where $\delta$ might be in the range $(0, 0.5)$.
 
-We argue that the following inequalities hold:
+	We argue that the following inequalities hold:
 
-\begin{align}
-\label{mgreedy:ineq1}
-c(A) \leq 0.5 - \delta 
-\\
-\label{mgreedy:ineq2}
-c(x) > 0.5 + \delta
-\\
-\label{mgreedy:ineq3}
-c(O \setminus x) \leq 0.5 - \delta
-\\
-\label{mgreedy:ineq4}
-c(B) > 2\delta
-\\
-\label{ineq:T}
-f(O \setminus x | A) \geq f(O) - f(x) - f(A) \geq e^{-1/2} - 1 + e^{-(1/2 - \delta)}
-\\
-\label{ineq:B}
-f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)
-\\
-f(T) \geq f(A) + f(B|A)
-\end{align}
+	\begin{align}
+		\label{mgreedy:ineq1}
+		c(A) \leq 0.5 - \delta
+		\\
+		\label{mgreedy:ineq2}
+		c(x) > 0.5 + \delta
+		\\
+		\label{mgreedy:ineq3}
+		c(O \setminus x) \leq 0.5 - \delta
+		\\
+		\label{mgreedy:ineq4}
+		c(B) > 2\delta
+		\\
+		\label{ineq:T}
+		f(O \setminus x | A) \geq f(O) - f(x) - f(A) \geq e^{-1/2} - 1 + e^{-(1/2 - \delta)}
+		\\
+		\label{ineq:B}
+		f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)
+		\\
+		f(T) \geq f(A) + f(B|A)
+	\end{align}
 
-Where inequality \ref{mgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
-the fact that $x$ was dropped right after $A$ implies inequality \ref{mgreedy:ineq2},
-inequality \ref{mgreedy:ineq4} is due to inequalities \ref{mgreedy:ineq3} and 
-\ref{mgreedy:ineq2},
-inequality \ref{ineq:T} is due to submodularity of $f$, 
-inequality \ref{ineq:B} is due to Lemma~\ref{lemma:sub-main} and inequalities 
-\ref{mgreedy:ineq4} and \ref{mgreedy:ineq3}, 
-the last inequality is due to monotonicity and the definition of $f(B|A)$.   
+	Where inequality \ref{mgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
+	the fact that $x$ was dropped right after $A$ implies inequality \ref{mgreedy:ineq2},
+	inequality \ref{mgreedy:ineq4} is due to inequalities \ref{mgreedy:ineq3} and
+	\ref{mgreedy:ineq2},
+	inequality \ref{ineq:T} is due to submodularity of $f$,
+	inequality \ref{ineq:B} is due to Lemma~\ref{lemma:sub-main} and inequalities
+	\ref{mgreedy:ineq4} and \ref{mgreedy:ineq3},
+	the last inequality is due to monotonicity and the definition of $f(B|A)$.
 
-Substituting $f(A) = 1 - e^{-(1/2 - \delta)}$ 
-and $f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)$
-into the last inequality gives the desired result as can be seen in Figure~\ref{fig:mgreedy}
+	Substituting $f(A) = 1 - e^{-(1/2 - \delta)}$
+	and $f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)$
+	into the last inequality gives the desired result as can be seen in Figure~\ref{fig:mgreedy}
 \end{proof}
 
+In \cite{khuller1999budgeted} it was claimed that 0.44 is an upper bound on the approximation ratio of this algorithm but no explicit example to support this claim was given and we could not recover such example.
+
 \begin{figure}
-\caption{
-\label{fig:mgreedy}
-Modified Greedy Approximation Ratio
-}
-\begin{tikzpicture}
-\begin{axis}[
-	width=\textwidth
-	,domain=0:0.49
-	,ymax=.7
-	,xmax=.51
-	,xlabel=$\delta$
-	,xtick distance=0.1
-	,ytick distance=0.1
-	,axis lines=left
-	,grid=both
-	,grid style={
-		draw=gray!20
+	\caption{
+		\label{fig:mgreedy}
+		Modified Greedy Approximation Ratio
 	}
-	,minor tick num=5
-	,legend pos=south west
-	,legend entries={
-		$f(A)$
-		,$f(B|A)$
-		,$f(A) + f(B|A)$
-		,$1 - e^{-\frac{1}{2}}$
-	}
-]
-  \addplot[line blue]{1-exp(-(0.5-x))};
-  \addplot[line red]{(1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
-  \addplot[line brown]{1-exp(-(0.5-x)) + (1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
-  \addplot[line teal]{1-exp(-0.5)};
-\end{axis}
-\end{tikzpicture}
+	\begin{tikzpicture}
+		\begin{axis}[
+				width=\textwidth
+				,domain=0:0.49
+				,ymax=.7
+				,xmax=.51
+				,xlabel=$\delta$
+				,xtick distance=0.1
+				,ytick distance=0.1
+				,axis lines=left
+				,grid=both
+				,grid style={
+						draw=gray!20
+					}
+				,minor tick num=5
+				,legend pos=south west
+				,legend entries={
+						$f(A)$
+						,$f(B|A)$
+						,$f(A) + f(B|A)$
+						,$1 - e^{-\frac{1}{2}}$
+					}
+			]
+			\addplot[line blue]{1-exp(-(0.5-x))};
+			\addplot[line red]{(1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
+			\addplot[line brown]{1-exp(-(0.5-x)) + (1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
+			\addplot[line teal]{1-exp(-0.5)};
+		\end{axis}
+	\end{tikzpicture}
 \end{figure}
 
 % \textbf{Upper Bound}
