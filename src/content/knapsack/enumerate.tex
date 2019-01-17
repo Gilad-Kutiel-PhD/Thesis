@@ -1,15 +1,17 @@
-Before describing the algorithm we further analyze the performance of the greedy algorithm.
-Fix an optimal solution, $O$, and consider its two largest elements, $P = \{a, b\}$.
-Denote $w = f(P)$ so $f(O \setminus P | P) = 1 - w$.
-Now consider the third largest element in $O$, $e$, and denote $w(e) = 1/3 - \delta$,
-and let $A$ be the output of the greedy algorithm, then we have the following theorem
+We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
+From now on we assume that an optimal solution contains an element larger than $1/3$ or otherwise, by Lemma~\ref{lemma:sub-main}, we can obtain such approximation ratio by the greedy algorithm.
+
+Before describing the algorithm we further analyze the performance of the greedy algorithm and show that, under some conditions, using the greedy algorithm is enough to obtain a $(1-e^{-2/3})$-approximation.
+Fix an optimal solution, $O$, and consider its two largest elements, $P$.
+Now consider the third largest element in $O$, and denote its size by $1/3 - \delta$.
+Finally let $A$ be the output of the greedy algorithm, then we have the following lemma
 
 \begin{lemma}
 	\label{eq:sub:greedy}
 	If the largest element in $O$ is bigger than $1/3$ then
 	\begin{align*}
-		f(A) & \geq (1-e^{-\frac{2/3 + \delta}{1 - 1/3 - (1/3 - \delta)}})(1 - x)
-		\\		& \geq (1 - e^{-1.5})(1 - w)
+		f(A) & \geq (1-e^{-\frac{2/3 + \delta}{1 - 1/3 - (1/3 - \delta)}})f(O|P)
+		\\		& \geq (1 - e^{-1.5})f(O|P)
 	\end{align*}
 \end{lemma}
 
@@ -20,59 +22,66 @@ and let $A$ be the output of the greedy algorithm, then we have the following th
 We have the following corollary:
 \begin{corollary}
 	\label{corollary:greedy-good}
-	If $w \leq \frac{e^{-2/3} - e^{-3/2}}{1 - e^{-3/2}} \approx 0.37$ then the greedy algorithm is a $(1 - e^{-2/3})$-approximation algorithm.
+	If $\frac{f(O|P)}{f(O)} \leq \frac{1-e^{-2/3}}{1-e^{-3/2}}$ then $f(A) \geq (1 - e^{-2/3})f(O)$.
 \end{corollary}
 
-We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
-This algorithm carefully selects a constant number of pairs of elements and greedily
+Rearranging the terms in \ref{corollary:greedy-good} we get an equivalent condition for the greedy algorithm to success, that is whenever $f(O|P) \leq \frac{1 - e^{-2/3}}{e^{-2/3} - e^{-3/2}}$.
+
+Let $P^*$ be the most valuable pair in the ground set.
+We show that if the value of $P^*$ is large enough compared to the value of $P$ and if the greedy algorithm fails to find a good solution then $P^*$ by itself is a good solution, formally:
+
+\begin{lemma}
+	\label{lemma:sub:alpha}
+	If $f(A) < (1 - e^{-2/3})f(O)$ then there is a constant $\alpha$ such that if $f(P) < \alpha f(P^*)$ then $f(P^*) \geq (1 - e^{-2/3})f(O)$.
+\end{lemma}
+
+\begin{proof}
+	By the assumptions and by Corollary \ref{corollary:greedy-good} we know that 
+	\begin{align}
+		f(O)	& = f(P) + f(O|P) 
+		\\ 		& < \alpha f(P^*) + \frac{1 - e^{-2/3}}{e^{-2/3} - e^{-3/2}} \alpha f(P)
+	\end{align}
+	So for $\alpha \leq \frac{e^{-2/3} - e^{-3/2}}{(1-e^{-2/3})(1-e^{-3/2})} \approx 0.77$ it holds that $f(P^*) \geq (1 - e^{-2/3})f(O)$.
+\end{proof}
+
+So far we argued that under certain conditions either the greedy algorithm or taking the most valuable pair from the ground set will result in a good solution. 
+We now develope that returns a good solution when those two algorithms fail.
+We refer to this algorithm as the \emph{Buckets Algorithm}.
+
+The Bucket Algorithm carefully selects a constant number of pairs of elements and greedily
 add elements to them.
 We assume that the size of the knapsack is 1.
 Consider all pairs of elements, we describe now how to choose the relevant ones.
 
-Let $w^*$ be the value of the most valuable pair and $\alpha$ and $\epsilon$ be constants to be determined later.
-We divide the pairs into $\log_{1 + \epsilon}\frac{1}{\alpha}$ buckets where the $i$th bucket contains all the pairs with value
-between $\alpha (1 + \epsilon)^{i - 1}$ and $\alpha (1 + \epsilon)^{i}$
-We only consider the smallest pair from each bucket
-(i.e. the pair that minimizes the cost function in each bucket).
+Let $\epsilon$ be constants to be determined later and $\alpha$ the constant determined in the proof of Lemma \ref{lemma:sub:alpha},
+we group the pairs into $\log_{1 + \epsilon}\frac{1}{\alpha}$ buckets where the $i$th bucket contains all the pairs with value
+between $\alpha (1 + \epsilon)^{i - 1}$ and $\alpha (1 + \epsilon)^{i}$.
+Note that, in general, there are pairs of elements that are not assigned to any of the buckets.
+Note also that if both the greedy algorithm and the best pair fail then $P$ was put in one of the buckets.
+From each bucket we only consider a smallest pair (breaking tie arbitrarily).
 
-Given such a pair, $P$, we construct a new Knapsack problem of budget $1 - c(P)$ and with respect to the function $f_P$.
+Given such a pair, $P'$, we construct a new Knapsack problem of budget $1 - c(P')$ and with respect to the function $f_{P'}$.
 We use the modified modified algorithm to obtain a $1-e^{-(1/2 + \eps)}$-approximation
 solution to this problem and combine it with the initial pair to obtain a (candidate)
 solution to the original problem.
-
-The algorithm returns the best solution from the following candidates:
-\begin{enumerate}
-	\item Most valuable pair
-	\item Best solution from the above candidates
-	\item The solution of the simple greedy algorithm (starting from an empty set)
-\end{enumerate}
-
-We would like to show that the approximation ratio of this algorithm is at least $(1 - e^{-2/3}$. 
-Fix an optimal solution, $O$, and consider two cases:
-\begin{enumerate}
-	\item $O$ has at least one element larger than $1/3$
-	\item All elements in $O$ are smaller or equal to $1/3$
-\end{enumerate}
-In the later case the proof follows immediately from Lemma~\ref{lemma:sub-main}.
-Now consider the first case and denote by $P$ the two largest elements in $O$,
-then we have the following Lemma.
+The bucket algorithm returns the best of those solutions.
 
 \begin{lemma}
-	If $P$ was assigned to one of the buckets then the above algorithm is $(1 - e^{-2/3})-approximation$ algorithm.
+	If $P$ was assigned to one of the buckets then the bucket algorithm is $(1 - e^{-2/3})-approximation$ algorithm.
 \end{lemma}
 
 \begin{proof}
 	Let $P'$ be the pair considered by the algorithm from the bucket of $P$then we know that:
 	\begin{enumerate}
 		\item $c(P') \leq c(P)$
-		\item $w(P') \geq \frac{1}{(1 + \epsilon)}w(P)$
+		\item $f(P') \geq \frac{1}{(1 + \epsilon)}w(P)$
 	\end{enumerate}
-	Let $S_{P'}$ be the solution produced by the algorithm from $P'$, and let $w = f(P)$, $w' = f(P')$,
+	Let $S_{P'}$ be the solution produced by the algorithm from $P'$,
 	then using Lemma~\ref{lemma:sub-main} and using the properties of $P$ we know that (for small enough $\epsilon$)
 	\begin{align}
 		\label{eq:sub:bucket}
-		f(S_{P'}) & \geq w' (1-e^{-(1/2 + \eps)})(1 - w - w')
-		\\ & \geq \frac{1}{(1 + \epsilon)}w + (1-e^{-(1/2 + \eps)})(1 - 2w)
+		f(S_{P'}) & \geq f(P') (1-e^{-(1/2 + \eps)})(1 - f(P) - f(P'))
+		\\ & \geq \frac{1}{(1 + \epsilon)}f(P) + (1-e^{-(1/2 + \eps)})(1 - 2f(P))
 	\end{align}
 	Setting $\epsilon$ to (say) $0.002$ and taking the maximum between \ref{eq:sub:bucket} and
 	\ref{eq:sub:greedy} completes the proof as can be seen in Figure~\ref{fig:sub:bucket}.
@@ -80,7 +89,13 @@ then we have the following Lemma.
 
 We now consider the case where $P$ did not fall into one of the buckets.
 Informally, this can happens only if the value of the most valuable pair is much larger than the value of $P$. 
-In this case, intuitively, the algorithm should returns a good solution because either the most valuable pair is good enough or otherwise the g
+In this case either we can use Corollary \ref{corollary:greedy-good} or the most valuable pair by itself is a good enough solution.
+The following Lemma formalize this.
+
+\begin{lemma}
+	For small enough $\alpha$ if $f(P) < \alpha f(P)$ then the approximation ratio of the algorithm is at least $(1 - )$
+	
+\end{lemma}
 
 \begin{figure}
 	\def\zeta{0.002}
@@ -117,3 +132,10 @@ In this case, intuitively, the algorithm should returns a good solution because 
 		\end{axis}
 	\end{tikzpicture}
 \end{figure}
+
+
+\begin{enumerate}
+	\item Most valuable pair
+	\item Best solution from the above candidates
+	\item The solution of the simple greedy algorithm (starting from an empty set)
+\end{enumerate}
