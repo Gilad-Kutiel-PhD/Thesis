@@ -126,11 +126,5 @@ Let $M$ be the solution returned by the modified modified algorithm and let $B$ 
 From the discussions above we have the following theorem:
 
 \begin{theorem}
-	Let $S$ be the best solution of
-	\begin{enumerate}
-		\item Most valuable pair
-		\item The solution of the simple greedy algorithm (starting from an empty set)
-		\item The solution of the bucket algorithm
-	\end{enumerate}
-	Then $f(S) \geq (1 - e^{-2/3})f(O)$.
+	$\arg\max\{M, B\} \geq (1 - e^{-2/3})f(O)$.
 \end{theorem}
