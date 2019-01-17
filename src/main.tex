@@ -1,19 +1,37 @@
 \nonstopmode
-\documentclass[a4paper,UKenglish]{lipics-v2019}
+\documentclass[a4paper,UKenglish,cleveref, autoref]{lipics-v2019}
 
-% \input{libs}
+\input{libs}
 % \input{tikz}
-% \input{def}
+\input{def}
 
 \title{Dummy title}
-\input{authors}
+\titlerunning{Dummy short title}
+
+\author{Ariel Kulik}{Department of Computer Science, Technion, Haifa, Israel}{gkutiel@cs.technion.ac.il}{}{}
+\author{Gilad Kutiel}{Department of Computer Science, Technion, Haifa, Israel}{arielk@cs.technion.ac.il}{}{}
+\author{Roy Schwartz}{Department of Computer Science, Technion, Haifa, Israel}{roy@cs.technion.ac.il}{}{}
+\authorrunning{J.\,Q. Public and J.\,R. Public}
+
+\Copyright{John Q. Public and Joan R. Public}
+
+\ccsdesc[100]{General and reference~General literature}
+\ccsdesc[100]{General and reference}
+
+\keywords{Dummy keyword}
+
+\category{}
+
+\relatedversion{}
+
+\supplement{}
 
 \begin{document}
 \maketitle
 
-% \input{content}
+\input{content}
 
-\bibliographystyle{plain}
+\bibliographystyle{plainurl}
 \bibliography{main}
 
 \end{document}
