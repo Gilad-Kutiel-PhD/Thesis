@@ -1,46 +1,48 @@
-In the \emph{Budgeted Maximum Cover} problem we are given a ground set of elements 
-$X = \{x_1, \dots, x_n\}$ and a collection of subsets over $X$, 
+In the \emph{Budgeted Maximum Cover} problem we are given a ground set of elements
+$X = \{x_1, \dots, x_n\}$ and a collection of subsets over $X$,
 $\mathcal{S} = \{S_1, \dots, S_m\}$.
-A cost function, $c:\mathcal{S} \to \mathbb{R}_+$ assigns cost to each set 
-and a weight function $w:X \to \mathbb{R}_+$ assigns weight to each element. 
-The goal is to find a collection of sets $\mathcal{S'} \subseteq \mathcal{S}$ such that the 
-total cost of the sets in the collection does not exceed a given budget, $B$, and the 
+A cost function, $c:\mathcal{S} \to \mathbb{R}_+$ assigns cost to each set
+and a weight function $w:X \to \mathbb{R}_+$ assigns weight to each element.
+The goal is to find a collection of sets $\mathcal{S'} \subseteq \mathcal{S}$ 
+such that the total cost of the sets in the collection does not exceed a given budget, 
+$B$, and the
 total weight of the elements covered by $\mathcal{S'}$ is maximal.
-Khuller et. al \cite{khuller1999budgeted} 
+Khuller et. al \cite{khuller1999budgeted}
 give a $(1-e^{-1})$-approximation algorithm for this problem and show that this
-is the best possible unless P = NP.   
+is the best possible unless P = NP.
 
-A set function $f$ is \emph{submodular} if $f(A \cap B) + f(A \cup B) \leq f(A) + f(B)$ 
-for every two sets in the domain of the function. A set function, $f$, is \emph{monotone} if 
+A set function $f$ is \emph{submodular} if $f(A \cap B) + f(A \cup B) \leq f(A) + f(B)$
+for every two sets in the domain of the function. A set function, $f$, 
+is \emph{monotone} if
 $f(A) \leq f(B)$ for every two sets, $A \subseteq B$, in the domain of the function.
-Given a set of elements $U = \{e_1, \dots, e_n\}$, a cost function, 
-$c:U \to \mathbb{R}_+$ and a monotone, submodular function, $f:2^U \to \mathbb{R}_+$ 
+Given a set of elements $U = \{e_1, \dots, e_n\}$, a cost function,
+$c:U \to \mathbb{R}_+$ and a monotone, submodular function, $f:2^U \to \mathbb{R}_+$
 the goal in the \emph{Submodular Function Under
-Knapsack Constraint Maximization} problem is to find a subset of $U$ with total cost that does not exceed
+    Knapsack Constraint Maximization} problem is to find a subset of $U$ with total cost that does not exceed
 a given budget, $B$, with maximal value with respect to $f$.
-This problem generalized the \emph{Budgeted Maximum Cover} problem. 
-Sviridenko \cite{sviridenko2004note} showed that the same algorithm presented by 
-Khuller et. al can be used to maximize general monotone submodular function 
+This problem generalized the \emph{Budgeted Maximum Cover} problem.
+Sviridenko \cite{sviridenko2004note} showed that the same algorithm presented by
+Khuller et. al can be used to maximize general monotone submodular function
 with the same guarantee.
-This algorithm requires $O(n^5)$ calls to the value oracle. 
+This algorithm requires $O(n^5)$ calls to the value oracle.
 
 A faster algorithm that runs in $O(n^2)$ time and achieves a $1 - e^{-1/2}$ approximation ratio
-was also presented in \cite{khuller1999budgeted}. 
-It was shown by Krause and Guestrin \cite{krause2005note} that the same algorithm 
-gives that same guarantee for a general monotone submodular function and requires only 
+was also presented in \cite{khuller1999budgeted}.
+It was shown by Krause and Guestrin \cite{krause2005note} that the same algorithm
+gives that same guarantee for a general monotone submodular function and requires only
 $O(n^2)$ calls to the value oracle.
-In the above papers (and other papers as well), however, 
-there is a logical flaw in the analysis of this algorithm. 
-In this paper we prove this claim. 
+In the above papers (and other papers as well), however,
+there is a logical flaw in the analysis of this algorithm.
+In this paper we prove this claim.
 We also consider a modification of this algorithm with the same running time and show that it
-achieves a better approximation ratio.   
+achieves a better approximation ratio.
 
 There are also $1 - \frac{1}{e} - \epsilon$-approximation algorithms
-\cite{Alina2017, badanidiyuru2014fast} with assymptotic running time 
-close to or even better than the greedy. 
-The running time of these algorithms, however, depends on $\epsilon$, and, 
-as one of the authors mentioned, are impractical. 
+\cite{Alina2017, badanidiyuru2014fast} with asymptotic running time
+close to or even better than the greedy.
+The running time of these algorithms, however, depends on $\epsilon$, and,
+as one of the authors mentioned, are impractical.
 For example, the running time of the faster of the above algorithms for $\epsilon = 2^{-2}$ is
 $2^{2O(2^{8})}n\log^2n$ achieving approximation ratio of $\approx 0.38$.
-Here we describe a $0.48$-approximation algorithm with the same 
+Here we describe a $0.48$-approximation algorithm with the same
 asymptotic running time as the simple greedy algorithm and with reasonable constants.
