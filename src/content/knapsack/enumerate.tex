@@ -1,6 +1,6 @@
 Before describing the algorithm we further analyze the performance of the greedy algorithm.
 Fix an optimal solution, $O$, and consider its two largest elements, $P = \{a, b\}$.
-Denote $x = f(P)$ so $f(O \setminus P | P) = 1 - x$.
+Denote $w = f(P)$ so $f(O \setminus P | P) = 1 - w$.
 Now consider the third largest element in $O$, $e$, and denote $w(e) = 1/3 - \delta$,
 and let $A$ be the output of the greedy algorithm, then we have the following theorem
 
@@ -9,7 +9,7 @@ and let $A$ be the output of the greedy algorithm, then we have the following th
 	If the largest element in $O$ is bigger than $1/3$ then
 	\begin{align*}
 		f(A) & \geq (1-e^{-\frac{2/3 + \delta}{1 - 1/3 - (1/3 - \delta)}})(1 - x)
-		\\		& \geq (1 - e^{-1.5})(1 - x)
+		\\		& \geq (1 - e^{-1.5})(1 - w)
 	\end{align*}
 \end{lemma}
 
@@ -17,17 +17,23 @@ and let $A$ be the output of the greedy algorithm, then we have the following th
 	The proof follows immediately from Lemma~\ref{lemma:sub-main}.
 \end{proof}
 
+We have the following corollary:
+\begin{corollary}
+	\label{corollary:greedy-good}
+	If $w \leq \frac{e^{-2/3} - e^{-3/2}}{1 - e^{-3/2}} \approx 0.37$ then the greedy algorithm is a $(1 - e^{-2/3})$-approximation algorithm.
+\end{corollary}
+
 We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
 This algorithm carefully selects a constant number of pairs of elements and greedily
 add elements to them.
 We assume that the size of the knapsack is 1.
 Consider all pairs of elements, we describe now how to choose the relevant ones.
 
-Let $\omega$ be the value of the most valuable pair and $\alpha$ and $\epsilon$ be constants to be determined later.
-We divide the pairs into buckets where the $i$th bucket contains all the pairs with value
+Let $w^*$ be the value of the most valuable pair and $\alpha$ and $\epsilon$ be constants to be determined later.
+We divide the pairs into $\log_{1 + \epsilon}\frac{1}{\alpha}$ buckets where the $i$th bucket contains all the pairs with value
 between $\alpha (1 + \epsilon)^{i - 1}$ and $\alpha (1 + \epsilon)^{i}$
 We only consider the smallest pair from each bucket
-(i.e. the pair that minimizes the weight function in each bucket).
+(i.e. the pair that minimizes the cost function in each bucket).
 
 Given such a pair, $P$, we construct a new Knapsack problem of budget $1 - c(P)$ and with respect to the function $f_P$.
 We use the modified modified algorithm to obtain a $1-e^{-(1/2 + \eps)}$-approximation
@@ -41,35 +47,40 @@ The algorithm returns the best solution from the following candidates:
 	\item The solution of the simple greedy algorithm (starting from an empty set)
 \end{enumerate}
 
-\begin{theorem}
-	The above algorithm is $(1 - e^{-2/3})-approximation$ algorithm.
-\end{theorem}
+We would like to show that the approximation ratio of this algorithm is at least $(1 - e^{-2/3}$. 
+Fix an optimal solution, $O$, and consider two cases:
+\begin{enumerate}
+	\item $O$ has at least one element larger than $1/3$
+	\item All elements in $O$ are smaller or equal to $1/3$
+\end{enumerate}
+In the later case the proof follows immediately from Lemma~\ref{lemma:sub-main}.
+Now consider the first case and denote by $P$ the two largest elements in $O$,
+then we have the following Lemma.
+
+\begin{lemma}
+	If $P$ was assigned to one of the buckets then the above algorithm is $(1 - e^{-2/3})-approximation$ algorithm.
+\end{lemma}
 
 \begin{proof}
-	Fix an optimal solution, $O$, and consider two cases:
+	Let $P'$ be the pair considered by the algorithm from the bucket of $P$then we know that:
 	\begin{enumerate}
-		\item $O$ has at least one element larger than $1/3$
-		\item All elements in $O$ are smaller or equal to $1/3$
+		\item $c(P') \leq c(P)$
+		\item $w(P') \geq \frac{1}{(1 + \epsilon)}w(P)$
 	\end{enumerate}
-	In the later case the proof follows immediately from Lemma~\ref{lemma:sub-main}.
-	Now consider the first case and denote by $P^*$ the two largest elements in $O$.
-	Let $P$ be the pair considered by the algorithm from the same bucket of $P^*$ (assume for now that indeed $P^*$ falls in one of the buckets)then we know
-	that:
-	\begin{enumerate}
-		\item $c(P) \leq c(P^*)$
-		\item $w(P) \geq (1 + \epsilon)^{-2}w(P^*)$
-	\end{enumerate}
-	Let $S_P$ be the solution produced by the algorithm from $P$, and let $\omega = \max\{f(P), f(P^*)\}$,
-	then using Lemma~\ref{lemma:sub-main} and using the properties of $P$ we know that
-	\begin{equation}
+	Let $S_{P'}$ be the solution produced by the algorithm from $P'$, and let $w = f(P)$, $w' = f(P')$,
+	then using Lemma~\ref{lemma:sub-main} and using the properties of $P$ we know that (for small enough $\epsilon$)
+	\begin{align}
 		\label{eq:sub:bucket}
-		f(S_P) \geq \frac{1}{(1 + \epsilon)}\omega + (1-e^{-(1/2 + \eps)})(1 - 2\omega)
-	\end{equation}
+		f(S_{P'}) & \geq w' (1-e^{-(1/2 + \eps)})(1 - w - w')
+		\\ & \geq \frac{1}{(1 + \epsilon)}w + (1-e^{-(1/2 + \eps)})(1 - 2w)
+	\end{align}
 	Setting $\epsilon$ to (say) $0.002$ and taking the maximum between \ref{eq:sub:bucket} and
 	\ref{eq:sub:greedy} completes the proof as can be seen in Figure~\ref{fig:sub:bucket}.
-
-	We now consider the case where $P$ was not assigned to any of the buckets...
 \end{proof}
+
+We now consider the case where $P$ did not fall into one of the buckets.
+Informally, this can happens only if the value of the most valuable pair is much larger than the value of $P$. 
+In this case, intuitively, the algorithm should returns a good solution because either the most valuable pair is good enough or otherwise the g
 
 \begin{figure}
 	\def\zeta{0.002}
