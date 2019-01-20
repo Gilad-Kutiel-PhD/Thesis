@@ -4,8 +4,8 @@
 \input{libs}
 \input{tikzset}
 \input{def}
-% \input{heb}
-% \input{rp}
+\input{heb}
+\input{rp}
 
 \begin{document}
 
@@ -37,27 +37,27 @@
 \bibliography{bib/2cr,bib/vpn,bib/carpool,bib/knapsack}
 \bibliographystyle{plain}
 
-% % HEBREW
-% \RPtrue
-% \pagenumbering{gobble}
-% 
-% % BINDING PAGE HEBREW
-% \input{binding-heb}
-% \newpage
-% 
-% % COVER PAGE HEBREW
-% \input{cover-heb}
-% \newpage
-% 
-% \pagenumbering{roman}
-% 
-% % ABSTRACT HEBREW
-% \begin{hebrew}
-% \chapter*{\texthebrew{תקציר}}
-% \end{hebrew}
-% \input{abstract-heb}
-% \newpage
-% 
-% \RPfalse
+% HEBREW
+\RPtrue
+\pagenumbering{gobble}
+
+% BINDING PAGE HEBREW
+\input{binding-heb}
+\newpage
+
+% COVER PAGE HEBREW
+\input{cover-heb}
+\newpage
+
+\pagenumbering{roman}
+
+% ABSTRACT HEBREW
+\begin{hebrew}
+\chapter*{\texthebrew{תקציר}}
+\end{hebrew}
+\input{abstract-heb}
+\newpage
+
+\RPfalse
 
 \end{document}
