@@ -4,8 +4,10 @@ The quality of an object is described by a function
 that assigns a numerical value to each of the objects and,
 depending on the type of the problem,
 we are looking for the object with maximum or minimum value.
-Usually we are given a compact description of the set of objects,
-for example, in the Minimum Spanning Tree problem we are given an
+Combinatorial optimization is used to calculate efficient resource allocation, optimize production operation and has many applications in machine learning, artificial intelligence, image processing and more.
+
+Usually, the set of objects to be considered is given in a compact representation.
+For example, in the Minimum Spanning Tree problem, we are given an
 edge weighted undirected graph and the goal is to find a spanning tree that minimizes
 the total weight of its edges.
 In general, there are exponential number (with respect to the size of the graph)
@@ -14,18 +16,28 @@ Scanning all the potential trees is inefficient and impractical.
 Fortunately, it is well known that a greedy algorithm -
 one that build a spanning tree iteratively by adding at each step the lightest edge that can be added to the tree -
 always find a minimum spanning tree.
-Unfortunately, lots of optimization problems belong NP-complete lots of them are fundamental.
-It is known that an efficient (polynomial) algorithm to one of those problems is in fact an efficient algorithm to all those problems.
-Yet, despite numerous effort over several decades, no such algorithm is known and it is even possible that none exists.
+
+Unfortunately, there are lots of optimization problems that are NP-complete lots of them are fundamental problems.
+It is known that an efficient (polynomial) algorithm to one NP-problem is in fact an efficient algorithm to all NP-complete problems.
+Yet, despite numerous effort over several decades, no such algorithm was found and it is even possible that none exists.
 Tues, we have to take a different approach to tackle such problems.
-Several approaches drew attention:
+Several approaches exist:
 \begin{description}
 \item[Heuristics] - Algorithms that employ a practical method based on intuition.
-Those algorithms not guaranteed to be optimal or efficient but usually are easy to implement and sometimes provide good solutions in practice.
+Those algorithms are not guaranteed to be optimal or efficient but usually are easy to implement and sometimes provide good solutions in practice.
 
-\item[Special cases] - Some times, while in the general case the problem is NP-hard, we can find efficient algorithms to more restricted cases of the problem.
+\item[Special cases] - Some times, while the problem is NP-complete, we can find efficient algorithms to more restricted cases of the problem.
 
 \item[Parameterized algorithms] - Those are algorithms whose running time is polynomial in the input size and also depend on some parameter of the input (e.g. the size of the optimal solution).
 The dependency on this parameter can be exponential or even worse.
 Those algorithms find an optimal solution and are efficient on certain inputs, tough we usually can not determine the running time of the algorithm for a certain input in advance.
+
+\item[Approximation algorithms] - Those are efficient algorithms that find an approximate solution.
+A $\alpha$-approximation algorithm is one that always find a solution with value that is at most (at least) $\alpha$ times the value of the optimal solution.
+Sometimes $\alpha$ can be a function of the input (e.g. its size).
 \end{description}
+
+In this thesis we consider four combinatorial optimization problems and develop approximation algorithms for them.
+For three of the problems we achieve the best approximation ratio that is known.
+For the other problem we present a good trade-off between the running time of the algorithm and its approximation ratio.
+
