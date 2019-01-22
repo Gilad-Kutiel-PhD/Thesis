@@ -1,0 +1,31 @@
+In combinatorial optimization we are looking for the best object from a given finite set of
+objects.
+The quality of an object is described by a function
+that assigns a numerical value to each of the objects and,
+depending on the type of the problem,
+we are looking for the object with maximum or minimum value.
+Usually we are given a compact description of the set of objects,
+for example, in the Minimum Spanning Tree problem we are given an
+edge weighted undirected graph and the goal is to find a spanning tree that minimizes
+the total weight of its edges.
+In general, there are exponential number (with respect to the size of the graph)
+of potential spanning trees to be considered.
+Scanning all the potential trees is inefficient and impractical.
+Fortunately, it is well known that a greedy algorithm -
+one that build a spanning tree iteratively by adding at each step the lightest edge that can be added to the tree -
+always find a minimum spanning tree.
+Unfortunately, lots of optimization problems belong NP-complete lots of them are fundamental.
+It is known that an efficient (polynomial) algorithm to one of those problems is in fact an efficient algorithm to all those problems.
+Yet, despite numerous effort over several decades, no such algorithm is known and it is even possible that none exists.
+Tues, we have to take a different approach to tackle such problems.
+Several approaches drew attention:
+\begin{description}
+\item[Heuristics] - Algorithms that employ a practical method based on intuition.
+Those algorithms not guaranteed to be optimal or efficient but usually are easy to implement and sometimes provide good solutions in practice.
+
+\item[Special cases] - Some times, while in the general case the problem is NP-hard, we can find efficient algorithms to more restricted cases of the problem.
+
+\item[Parameterized algorithms] - Those are algorithms whose running time is polynomial in the input size and also depend on some parameter of the input (e.g. the size of the optimal solution).
+The dependency on this parameter can be exponential or even worse.
+Those algorithms find an optimal solution and are efficient on certain inputs, tough we usually can not determine the running time of the algorithm for a certain input in advance.
+\end{description}
