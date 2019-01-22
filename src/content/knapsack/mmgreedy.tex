@@ -32,14 +32,14 @@ $f(S) \geq 1 - e^{-(1/2 + \epsilon)}$
 
 \def\eps{0.104}
 \begin{proof}
-We can assume that $f(\{e_1, e_2\}) \leq 1 - e^{-1/2 + \epsilon}$ 
+We can assume that $f(\{e_1, e_2\}) \leq (1 - e^{-1/2 + \epsilon})f(O)$ 
 for every $e_1, e_2 \in U$ or otherwise the proof holds.
-Note, also, that if $|O \setminus T| \leq 2$ then $f(T) \geq 0.5$.
+Note, also, that if $|O \setminus S| \leq 2$ then $f(T) \geq 0.5$.
 Thus we assume the algorithm drops at least three elements from $O$ during its running.
 Let $x$ be the first element in $O$ that was dropped by the algorithm, 
 and let $A$ be the set of elements chosen by the algorithm just before dropping $x$.
-If $f(A) \geq 1 - e^{-(1/2 + \epsilon)}$ the theorem holds, 
-otherwise denote $f(A) = 1 - e^{-(1/2 + \epsilon - \delta)}$.
+If $f(A) \geq (1 - e^{-(1/2 + \epsilon)})f(O)$ the theorem holds, 
+otherwise denote $f(A) = (1 - e^{-(1/2 + \epsilon - \delta)})f(O)$.
 We say that an element, $e$, is \emph{expensive} if $c(e) \ge 1/4 + \epsilon/2 - \delta/2$, 
 otherwise it is \emph{cheap}.
 Observe that $O$ contains at most two expensive elements, thus the algorithm drops 
@@ -60,11 +60,11 @@ c(x) > 0.5 -\epsilon + \delta
 \label{mmgreedy:ineq3}
 c(C) \leq 0.5 + \epsilon - \delta
 \\
-\label{mmgreedy:ineq4}
-f(C) \ge e^{-1/2 + \epsilon}
-\\
 \label{mmgreedy:ineq5}
 c(B) \ge 1/4 - 3\epsilon/2 + 3\delta/2
+\\
+\label{mmgreedy:ineq4}
+f(C) \ge e^{-1/2 + \epsilon}f(O)
 \\
 \label{mmgreedy:ineq6}
 f(B|A) \ge 
@@ -72,7 +72,7 @@ f(B|A) \ge
 \left[
 e^{-(1/2 + \epsilon)}
 - (1 - e^{-(1/2 + \epsilon - \delta)})
-\right]
+\right]f(O)
 \\
 \label{mmgreedy:ineq7}
 f(T) \geq \max_\epsilon \min \{1 - e^{-(0.5 + \epsilon)}, \min_{\delta} f(A) + f(B|A)\}
