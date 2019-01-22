@@ -80,7 +80,17 @@ then $f(A) \geq (1 - e^{-\frac{c(A)}{c(B)}})f(B)$.
 \end{lemma} 
 
 \begin{proof}
-Observe that 
+Consider the $i$th iteration and observe that 
+\begin{align}
+	\frac{f(e_i|A_{i-1})}{c(e_i)}c(B) 
+		& = \sum_{e \in B} \frac{f(e_i|A_{i-1})}{c(e_i)}c(e)
+	\\ 	& \geq \sum_{e \in B} \frac{f(e|A_{i-1})}{c(e)}c(e)
+	\\	& \geq f(B|A_{i-1})
+	\\ 	& \geq f(B) - f(A)
+\end{align}
+
+Thus $f(e_i|A_{i-1} \geq \frac{c(e_i)}{c(B)}(f(B) - f(A))$ and
+
 $$
 f(B) - f(A_i)  \leq (f(B) - f(A_{i - 1}))(1 - \frac{c(e_i)}{c(B)})
 $$
