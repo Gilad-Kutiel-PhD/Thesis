@@ -83,12 +83,15 @@ then $f(A) \geq (1 - e^{-\frac{c(A)}{c(B)}})f(B)$.
 Consider the $i$th iteration and observe that 
 \begin{align}
 	\frac{f(e_i|A_{i-1})}{c(e_i)}c(B) 
-		& = \sum_{e \in B} \frac{f(e_i|A_{i-1})}{c(e_i)}c(e)
+	& = \sum_{e \in B} \frac{f(e_i|A_{i-1})}{c(e_i)}c(e)
+	\label{ineq:main:greedy}
 	\\ 	& \geq \sum_{e \in B} \frac{f(e|A_{i-1})}{c(e)}c(e)
+	\label{ineq:main:sub}
 	\\	& \geq f(B|A_{i-1})
-	\\ 	& \geq f(B) - f(A)
+	\label{ineq:main:mon}
+	\\ 	& \geq f(B) - f(A_{i-1})
 \end{align}
-
+Where inequality \ref{ineq:main:greedy} is due to the greedy algorithm, inequality \ref{ineq:main:sub} is due to submodularity of $f$ and inequality \ref{ineq:main:mon} is due to monotonicity of $f$.
 Thus $f(e_i|A_{i-1} \geq \frac{c(e_i)}{c(B)}(f(B) - f(A))$ and
 
 $$
