@@ -87,13 +87,11 @@ The last inequality captures the fact that either all elements in $O$ are smalle
 $0.5 + \epsilon$ or there is one element in $O$ larger than $0.5 + \epsilon$.
 
 
-Substituting $f(A) = 1 - e^{-(1/2 + \epsilon - \delta)}$ into the last inequality, 
-using $f(B|A) \ge \left[
+Substituting $(f(A) = 1 - e^{-(1/2 + \epsilon - \delta)})f(O)$ into the last inequality, using $f(B|A) \ge \left[
 e^{-(1/2 + \epsilon)}
 - (1 - e^{-(1/2 + \epsilon - \delta)})
 \right]
-(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
-$,
+(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})f(O)$,
 and setting (say) $\epsilon = \eps$ gives the desired result 
 as can be seen in Figure~\ref{fig:mmgreedy}.
 
