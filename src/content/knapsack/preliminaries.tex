@@ -79,8 +79,8 @@ then $f(A) \geq (1 - e^{-\frac{c(A)}{c(B)}})f(B)$.
 \begin{proof}
 Consider the $i$th iteration and observe that 
 \begin{align}
-	\frac{f(e_i|A_{i-1})}{c(e_i)}c(B) 
-	& = \sum_{e \in B} \frac{f(e_i|A_{i-1})}{c(e_i)}c(e)
+	\frac{f(a_i|A_{i-1})}{c(a_i)}c(B) 
+	& = \sum_{e \in B} \frac{f(a_i|A_{i-1})}{c(a_i)}c(e)
 	\label{ineq:main:greedy}
 	\\ 	& \geq \sum_{e \in B} \frac{f(e|A_{i-1})}{c(e)}c(e)
 	\label{ineq:main:sub}
@@ -89,10 +89,10 @@ Consider the $i$th iteration and observe that
 	\\ 	& \geq f(B) - f(A_{i-1})
 \end{align}
 Where inequality \ref{ineq:main:greedy} is due to the greedy algorithm, inequality \ref{ineq:main:sub} is due to submodularity of $f$ and inequality \ref{ineq:main:mon} is due to monotonicity of $f$.
-Thus $f(e_i|A_{i-1} \geq \frac{c(e_i)}{c(B)}(f(B) - f(A))$ and
+Thus $f(a_i|A_{i-1} \geq \frac{c(a_i)}{c(B)}(f(B) - f(A))$ and
 
 $$
-f(B) - f(A_i)  \leq (f(B) - f(A_{i - 1}))(1 - \frac{c(e_i)}{c(B)})
+f(B) - f(A_i)  \leq (f(B) - f(A_{i - 1}))(1 - \frac{c(a_i)}{c(B)})
 $$
 and by induction
 $$
@@ -106,7 +106,7 @@ rearranging the terms and setting $i = k$ completes the proof.
 \end{proof}
 
 In particular, if $A$ is the set of elements chosen by the greedy algorithm in 
-the $k$ first iterations and let $B$ be any subset such that no element from $B$ was dropped
+the $k$ first iterations and $B$ is any subset such that no element from $B$ was dropped
 by the greedy algorithm, 
 then Lemma~\ref{lemma:sub-main} can be applied on $A$ and $B$.   
 
