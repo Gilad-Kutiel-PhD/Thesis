@@ -27,10 +27,10 @@ The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $1-e^{-1/2}$-
 	Denote by $A$ the set of elements chosen by the algorithm just before dropping $a$ and by
 	$B$ the set of elements chosen right after dropping $a$ and before dropping $b$.
 	If $f(A) \geq (1 - e^{-1/2})f(O)$ then the theorem holds.
-	Otherwise, denote by $f(A) = (1 - e^{-(1/2 - \delta)})f(O)$.
-	where $0 < \delta \leq \frac{1}{2}$.
+	Otherwise, denote by $f(A) = (1 - e^{-(1/2 - \delta)})f(O)$, where $0 < \delta \leq \frac{1}{2}$.
 
-	We argue that the following inequalities hold:
+	To prove the theorem we need to infer from the above bounds on both size anf value.
+	First, we focus on bounds on the size:
 
 	\begin{align}
 		\label{mgreedy:ineq1}
@@ -40,28 +40,35 @@ The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $1-e^{-1/2}$-
 		c(a) > (0.5 + \delta)c(O)
 		\\
 		\label{mgreedy:ineq3}
-		c(y) \leq (0.5 - \delta)c(O)
-		\\
+		c(b) \leq c(O \setminus x) \leq (0.5 - \delta)c(O)
+	\end{align}
+	% 
+	Where inequality \ref{mgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
+	inequality \ref{mgreedy:ineq2} is followed from the fact that $a$ was dropped by the greedy algorithm, inequality \ref{mgreedy:ineq4} is due to inequalities \ref{mgreedy:ineq3} and \ref{mgreedy:ineq2}.
+	The above inequalities imply a lower bound  on the size of $B$:
+	\begin{equation}
 		\label{mgreedy:ineq4}
 		c(B) > (2\delta)c(O)
-		\\
-		\label{ineq:T}
-		f(O \setminus x | A) \geq f(O) - f(x) - f(A) \geq (e^{-1/2} - 1 + e^{-(1/2 - \delta)})f(O)
-		\\
-		\label{ineq:B}
-		f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)
-		\\
-		f(T) \geq f(A) + f(B|A)
-	\end{align}
+	\end{equation}
 
-	Where inequality \ref{mgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
-	the fact that $a$ was dropped right after $A$ implies inequality \ref{mgreedy:ineq2},
-	inequality \ref{mgreedy:ineq4} is due to inequalities \ref{mgreedy:ineq3} and
-	\ref{mgreedy:ineq2},
-	inequality \ref{ineq:T} is due to submodularity of $f$,
-	inequality \ref{ineq:B} is due to Lemma~\ref{lemma:sub-main} and inequalities
-	\ref{mgreedy:ineq4} and \ref{mgreedy:ineq3},
-	the last inequality is due to monotonicity and the definition of $f(B|A)$.
+	Second, we focus on bounds on the value.
+	We need to lower bound of $O$ after $a$ is dropped with respect to $A$, i.e. $f(O \setminus x | A)$:
+	\begin{equation}
+		\label{ineq:T}
+		f(O \setminus a | A) \geq f(O) - f(a) - f(A) \geq (e^{-1/2} - 1 + e^{-(1/2 - \delta)})f(O).
+	\end{equation}
+	Where the inequality follows from submodularity and monotonicity of $f$.
+	Furthermore, we need to lower bound the value of the elements the greedy algorithm chooses after discarding $a$ and up to discarding $b$ with respect to $A$, i.e. 
+	\begin{equation}
+		\label{ineq:B}
+		f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A).
+	\end{equation}
+	Where this inequality is a result of applying Lemma~\ref{lemma:sub-main} on the sets $B$ and $O \setminus x$.
+
+	Finally, we lower bound the value of the modified greedy algorithm:
+	\begin{equation}
+		f(T) \geq f(A \cup B) = f(A) + f(B | A).
+	\end{equation}
 
 	Substituting $f(A) = (1 - e^{-(1/2 - \delta)})f(O)$
 	and $f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)$
