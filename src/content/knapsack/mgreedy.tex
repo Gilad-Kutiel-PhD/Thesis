@@ -18,9 +18,9 @@ we prove the following theorem:
 	We can assume that $f(e) \leq (1 - e^{-1/2})f(O)$ for every $e \in U$ or otherwise the proof holds.
 	Note, also, that if $|O \setminus S| \leq 1$ then $f(T) \geq 0.5f(O)$.
 	Thus we assume the algorithm drops at least two elements from $O$ during its running.
-	Denote by $x$ and $y$ the first and second such elements respectively.
-	Denote by $A$ the set of elements chosen by the algorithm just before dropping $x$ and by
-	$B$ the set of elements chosen right after dropping $x$ and before dropping $y$.
+	Denote by $a$ and $b$ the first and second such elements respectively.
+	Denote by $A$ the set of elements chosen by the algorithm just before dropping $a$ and by
+	$B$ the set of elements chosen right after dropping $a$ and before dropping $b$.
 	If $f(A) \geq (1 - e^{-1/2})f(O)$ the theorem holds, otherwise denote $f(A) = (1 - e^{-(1/2 - \delta)})f(O)$,
 	where $\delta$ might be in the range $(0, 0.5)$.
 
@@ -28,19 +28,19 @@ we prove the following theorem:
 
 	\begin{align}
 		\label{mgreedy:ineq1}
-		c(A) \leq 0.5 - \delta
+		c(A) \leq (0.5 - \delta)c(O)
 		\\
 		\label{mgreedy:ineq2}
-		c(x) > 0.5 + \delta
+		c(a) > (0.5 + \delta)c(O)
 		\\
 		\label{mgreedy:ineq3}
-		c(y) \leq 0.5 - \delta
+		c(y) \leq (0.5 - \delta)c(O)
 		\\
 		\label{mgreedy:ineq4}
-		c(B) > 2\delta
+		c(B) > (2\delta)c(O)
 		\\
 		\label{ineq:T}
-		f(O \setminus x | A) \geq f(O) - f(x) - f(A) \geq e^{-1/2} - 1 + e^{-(1/2 - \delta)}f(O)
+		f(O \setminus x | A) \geq f(O) - f(x) - f(A) \geq (e^{-1/2} - 1 + e^{-(1/2 - \delta)})f(O)
 		\\
 		\label{ineq:B}
 		f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)
@@ -49,7 +49,7 @@ we prove the following theorem:
 	\end{align}
 
 	Where inequality \ref{mgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
-	the fact that $x$ was dropped right after $A$ implies inequality \ref{mgreedy:ineq2},
+	the fact that $a$ was dropped right after $A$ implies inequality \ref{mgreedy:ineq2},
 	inequality \ref{mgreedy:ineq4} is due to inequalities \ref{mgreedy:ineq3} and
 	\ref{mgreedy:ineq2},
 	inequality \ref{ineq:T} is due to submodularity of $f$,
