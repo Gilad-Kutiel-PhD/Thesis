@@ -5,24 +5,30 @@ Our analysis matches the approximation ratio that was stated in
 there is a logical flaw in the analysis.
 
 
-Let $O$ be an optimal set, let $T = \arg\max\{S, \displaystyle{\arg\max_{e \in U}}f(e)\}$
-be the set returned by the modified greedy algorithm,
-where $S$ is the set computed by the greedy algorithm,
-we prove the following theorem:
+Let $O$ be an optimal set, and recall that $T$ is the output of the Modified Greedy algorithm.
+
+The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $1-e^{-1/2}$-approximation.
 
 \begin{theorem}
 	$f(T) \geq (1 - e^{-1/2})f(O)$.
 \end{theorem}
 
 \begin{proof}
-	We can assume that $f(e) \leq (1 - e^{-1/2})f(O)$ for every $e \in U$ or otherwise the proof holds.
-	Note, also, that if $|O \setminus S| \leq 1$ then $f(T) \geq 0.5f(O)$.
-	Thus we assume the algorithm drops at least two elements from $O$ during its running.
-	Denote by $a$ and $b$ the first and second such elements respectively.
+	We can assume that $f(\{e\}) \leq (1 - e^{-1/2})f(O)$ for every $e \in U$, otherwise the value of $e$, and hence of $T$, is large enough and the theorem holds.
+	Recall that by the definition of Algorithm~\ref{alg:mgreedy} $S$ is the output of the greedy algorithm, and let $e^*$ be the most valuable element.
+	Consider two cases depending on how many elements of $O$ are discarded by the greedy algorithm, i.e., $|O \setminus S$.
+	If $|O \setminus S \leq 1$, then 
+	$$
+	f(O) \leq f(O \cup S) \leq f(O \setminus S) + f(S) \leq f(e^*) + f(S).
+	$$
+	The above implies that either $f(S) \geq \frac{1}{2}f(O)$ or $f(e) \geq \frac{1}{2}f(O)$ concluding the proof.
+	Otherwise, $|O \setminus S| \geq 2$,
+	Denote by $a$ and $b$ the first and second elements of $O$ the greedy algorithm drops.
 	Denote by $A$ the set of elements chosen by the algorithm just before dropping $a$ and by
 	$B$ the set of elements chosen right after dropping $a$ and before dropping $b$.
-	If $f(A) \geq (1 - e^{-1/2})f(O)$ the theorem holds, otherwise denote $f(A) = (1 - e^{-(1/2 - \delta)})f(O)$,
-	where $\delta$ might be in the range $(0, 0.5)$.
+	If $f(A) \geq (1 - e^{-1/2})f(O)$ then the theorem holds.
+	Otherwise, denote by $f(A) = (1 - e^{-(1/2 - \delta)})f(O)$.
+	where $0 < \delta \leq \frac{1}{2}$.
 
 	We argue that the following inequalities hold:
 
