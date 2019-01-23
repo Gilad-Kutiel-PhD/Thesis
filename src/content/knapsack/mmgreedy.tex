@@ -1,6 +1,7 @@
-The modified greedy algorithm return the best solution between the greedy solution and the best singleton.
-Since scanning all pairs of elements rather than just singletons does not affect the running time of the modified greedy algorithm a natural question to ask is whether considering pairs of elements result in strictly better approximation ratio.
-Here we do not give a compleat answer to this question but we do able to give a better analysis to this algorithm. 
+The modified greedy algorithm returns the best solution between the greedy solution and the best singleton.
+Since scanning all pairs of elements rather than just singletons does not affect the running time of the modified greedy algorithm a natural question to ask is whether considering pairs of elements result in strictly better algorithm.
+Here we do not give a complete answer to this question but we are able to improve our analysis for this algorithm. 
+
 The \emph{modified modified greedy} algorithm~\ref{alg:mmgreedy} 
 \footnote{A paraphrase on the ``ultimate ultimate weapon'' from \cite{ninjago2017}}
 is similar to the  modified greedy algorithm, 
@@ -27,47 +28,47 @@ Let $\epsilon > 0$ a constant to be determined latter on, and let $T$ be the out
 the algorithm.
 
 \begin{theorem}
-$f(S) \geq 1 - e^{-(1/2 + \epsilon)}$
+$f(T) \geq 1 - e^{-(1/2 + \epsilon)}$
 \end{theorem}
 
 \def\eps{0.104}
 \begin{proof}
 We can assume that $f(\{e_1, e_2\}) \leq (1 - e^{-1/2 + \epsilon})f(O)$ 
 for every $e_1, e_2 \in U$ or otherwise the proof holds.
-Note, also, that if $|O \setminus S| \leq 2$ then $f(T) \geq 0.5$.
+Note, also, that if $|O \setminus S| \leq 2$ then $f(T) \geq 0.5f(O)$.
 Thus we assume the algorithm drops at least three elements from $O$ during its running.
-Let $x$ be the first element in $O$ that was dropped by the algorithm, 
-and let $A$ be the set of elements chosen by the algorithm just before dropping $x$.
+Let $a$ be the first element in $O$ that was dropped by the algorithm, 
+and let $A$ be the set of elements chosen by the algorithm just before dropping $a$.
 If $f(A) \geq (1 - e^{-(1/2 + \epsilon)})f(O)$ the theorem holds, 
 otherwise denote $f(A) = (1 - e^{-(1/2 + \epsilon - \delta)})f(O)$.
-We say that an element, $e$, is \emph{expensive} if $c(e) \ge 1/4 + \epsilon/2 - \delta/2$, 
+We say that an element, $e$, is \emph{expensive} if $c(e) \geq (1/4 + \epsilon/2 - \delta/2)c(O)$, 
 otherwise it is \emph{cheap}.
 Observe that $O$ contains at most two expensive elements, thus the algorithm drops 
 at least one cheap element from $O$. 
-Let $y$ be the first such element, and let $B$ be the set of elements chosen by the 
-algorithm right after dropping $x$ and just before dropping $y$.
+Let $b$ be the first such element, and let $B$ be the set of elements chosen by the 
+algorithm right after dropping $a$ and just before dropping $b$.
 Also denote by $C$ the subset of cheap elements in $O$, 
-i.e. $C = \{e \in O : c(e) < 1/4 + \epsilon/2 - \delta/2\}$.
+i.e. $C = \{e \in O : c(e) < (1/4 + \epsilon/2 - \delta/2)c(O)\}$.
 We argue that the following inequalities hold:
 
 \begin{align}
 \label{mmgreedy:ineq1}
-c(A) \leq 0.5 + \epsilon - \delta 
+c(A) \leq (0.5 + \epsilon - \delta)c(O)
 \\
 \label{mmgreedy:ineq2}
-c(x) > 0.5 -\epsilon + \delta
+c(x) > (0.5 -\epsilon + \delta)c(O)
 \\
 \label{mmgreedy:ineq3}
-c(C) \leq 0.5 + \epsilon - \delta
+c(C) \leq (0.5 + \epsilon - \delta)c(O)
 \\
 \label{mmgreedy:ineq5}
-c(B) \ge 1/4 - 3\epsilon/2 + 3\delta/2
+c(B) \geq (1/4 - 3\epsilon/2 + 3\delta/2)c(O)
 \\
 \label{mmgreedy:ineq4}
-f(C) \ge e^{-1/2 + \epsilon}f(O)
+f(C) \geq e^{-1/2 + \epsilon}f(O)
 \\
 \label{mmgreedy:ineq6}
-f(B|A) \ge 
+f(B|A) \geq 
 (1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
 \left[
 e^{-(1/2 + \epsilon)}
@@ -75,7 +76,7 @@ e^{-(1/2 + \epsilon)}
 \right]f(O)
 \\
 \label{mmgreedy:ineq7}
-f(T) \geq \max_\epsilon \min \{1 - e^{-(0.5 + \epsilon)}, \min_{\delta} f(A) + f(B|A)\}
+f(T) \geq \max_\epsilon \min \{(1 - e^{-(0.5 + \epsilon)})f(O), \min_{\delta} f(A) + f(B|A)\}
 \end{align}
 
 Where inequality \ref{mmgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
@@ -84,7 +85,7 @@ element implies inequality \ref{mmgreedy:ineq5},
 inequality \ref{mmgreedy:ineq6} is due to Lemma~\ref{lemma:sub-main}, the definition
 of $f(B|A)$ and monotonicity.
 The last inequality captures the fact that either all elements in $O$ are smaller than
-$0.5 + \epsilon$ or there is one element in $O$ larger than $0.5 + \epsilon$.
+$(0.5 + \epsilon)c(O)$ or there is one element in $O$ larger than $(0.5 + \epsilon)c(O)$.
 
 
 Substituting $(f(A) = 1 - e^{-(1/2 + \epsilon - \delta)})f(O)$ into the last inequality, using $f(B|A) \ge \left[
@@ -149,7 +150,7 @@ Modified Modified Greedy Approximation Ratio ($\epsilon = \eps$)
 We show that the approximation ratio of the modified modified greedy algorithm is at most $0.5$.
 To see this consider the following instance of the budgeted maximum coverage problem:
 Let the elements be $X = \{x_1, \dots, x_{2n}\}$, 
-and a collection of subsets over $X$, $\mathcal{S} = \{S_1, \dots, S_{n + 1}\} \cup \{S\}$,
+and a collection of subsets over $a$, $\mathcal{S} = \{S_1, \dots, S_{n + 1}\} \cup \{S\}$,
 where for each $1 \leq i \leq n + 1$, $S_i = \{x_i\}$, and $c(S_i) = 1$. 
 Also, set $S = \{x_{n + 2}, \dots, x_{2n}\}$, and $c(S) = n$.
 Finally, for each $x \in X$ set $w(x) = 1$ and set the budget for this instance to be $2n$.
