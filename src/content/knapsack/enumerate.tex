@@ -1,9 +1,9 @@
 We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
-From now on we assume that an optimal solution contains an element larger than $1/3$ or otherwise, by Lemma~\ref{lemma:sub-main}, we can obtain such approximation ratio by the greedy algorithm.
+From now on we assume that an optimal solution contains an element larger than $(1/3)c(O)$ or otherwise, by Lemma~\ref{lemma:sub-main}, we can obtain such approximation ratio by the greedy algorithm.
 
 We start by showing that,  under certain conditions, the modified modified algorithm achieves such approximation ratio.
 For the rest of this section we fix an optimal solution, $O$, and denote by $P$ its two largest elements.
-Now consider the third largest element in $O$, and denote its size by $1/3 - \delta$.
+Now consider the third largest element in $O$, and denote its size by $(1/3 - \delta)c(O)$.
 Finally let $A$ be the output of the greedy algorithm, then we have the following lemma
 
 \begin{lemma}
@@ -11,7 +11,7 @@ Finally let $A$ be the output of the greedy algorithm, then we have the followin
 	If the largest element in $O$ is bigger than $1/3$ then
 	\begin{align*}
 		f(A) & \geq (1-e^{-\frac{2/3 + \delta}{1 - 1/3 - (1/3 - \delta)}})f(O|P)
-		\\		& \geq (1 - e^{-1.5})f(O|P)
+		\\		& \geq (1 - e^{-3/2})f(O|P)
 	\end{align*}
 \end{lemma}
 
@@ -22,10 +22,8 @@ Finally let $A$ be the output of the greedy algorithm, then we have the followin
 We have the following corollary:
 \begin{corollary}
 	\label{corollary:greedy-good}
-	If $\frac{f(O|P)}{f(O)} \leq \frac{1-e^{-2/3}}{1-e^{-3/2}}$ then $f(A) \geq (1 - e^{-2/3})f(O)$.
+	If $f(O|P) \geq \frac{1-e^{-2/3}}{1-e^{-3/2}}f(O)$ then $f(A) \geq (1 - e^{-2/3})f(O)$.
 \end{corollary}
-
-Rearranging the terms in \ref{corollary:greedy-good} we get an equivalent condition for the greedy algorithm to success, that is whenever $f(O|P) \leq \frac{1 - e^{-2/3}}{e^{-2/3} - e^{-3/2}}$.
 
 Now, let $P^*$ be the most valuable pair in the ground set.
 We show that if the value of $P^*$ is large enough compared to the value of $P$ and if the greedy algorithm fails to find a good solution then $P^*$ by itself is a good solution, formally:
@@ -39,7 +37,7 @@ We show that if the value of $P^*$ is large enough compared to the value of $P$ 
 	By the assumptions and by Corollary \ref{corollary:greedy-good} we know that 
 	\begin{align}
 		f(O)	& = f(P) + f(O|P) 
-		\\ 		& < \alpha f(P^*) + \frac{1 - e^{-2/3}}{e^{-2/3} - e^{-3/2}} \alpha f(P)
+		\\ 		& < \alpha f(P^*) + \frac{1-e^{-2/3}}{1-e^{-3/2}}f(O)
 	\end{align}
 	So for $\alpha \leq \frac{e^{-2/3} - e^{-3/2}}{(1-e^{-2/3})(1-e^{-3/2})} \approx 0.77$ it holds that $f(P^*) \geq (1 - e^{-2/3})f(O)$.
 \end{proof}
@@ -53,13 +51,13 @@ Consider all pairs of elements, we describe now how to choose the relevant ones.
 
 Let $\epsilon$ be constants to be determined later and $\alpha$ the constant determined in the proof of Lemma \ref{lemma:sub:alpha},
 we group the pairs into $\log_{1 + \epsilon}\frac{1}{\alpha}$ buckets where the $i$th bucket contains all the pairs with value
-between $\alpha (1 + \epsilon)^{i - 1}$ and $\alpha (1 + \epsilon)^{i}$.
+between $\alpha (1 + \epsilon)^{i - 1}f(P^*)$ and $\alpha (1 + \epsilon)^{i}f(P^*)$.
 Note that, in general, there are pairs of elements that are not assigned to any of the buckets.
 Note also that if the modified modified algorithm fails then $P$ was put in one of the buckets.
 
 Now, from each bucket we only consider a smallest pair (breaking tie arbitrarily).
-Given such a pair, $P'$, we construct a new Knapsack problem of budget $1 - c(P')$ and with respect to the function $f_{P'}$.
-We use the modified modified algorithm to obtain a $1-e^{-(1/2 + \eps)}$-approximation
+Given such a pair, $P'$, we construct a new Knapsack problem of budget $\beta - c(P')$ and with respect to the function $f_{P'}$.
+We use the modified modified algorithm to obtain a $(1-e^{-(1/2 + \eps)})$-approximation
 solution to this problem and combine it with the initial pair to obtain a (candidate)
 solution to the original problem.
 The bucket algorithm returns the best of those solutions.
@@ -126,5 +124,5 @@ Let $M$ be the solution returned by the modified modified algorithm and let $B$ 
 From the discussions above we have the following theorem:
 
 \begin{theorem}
-	$\arg\max\{M, B\} \geq (1 - e^{-2/3})f(O)$.
+	$\displaystyle{\arg\max_{A \in \{M, B\}}}f(A) \geq (1 - e^{-2/3})f(O)$.
 \end{theorem}
