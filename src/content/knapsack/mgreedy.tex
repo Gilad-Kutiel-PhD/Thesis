@@ -1,13 +1,8 @@
-We now analyze the approximation ratio of the
-Modified Greedy Algorithm~\ref{fig:mgreedy}.
-Our analysis matches the approximation ratio that was stated in
-\cite{khuller1999budgeted} and \cite{krause2005note} where, we believe, 
-there is a logical flaw in the analysis.
-
+We analyze the Modified Greedy algorithm (Algorithm~\ref{alg:mgreedy}) of \cite{khuller1999budgeted}.
+Our analysis matches the $(1 - e^{-1/2})$-approximation claimed in \cite[]{khuller1999budgeted}, correcting the logical flaw in the analysis.
 
 Let $O$ be an optimal set, and recall that $T$ is the output of the Modified Greedy algorithm.
-
-The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $1-e^{-1/2}$-approximation.
+The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $(1-e^{-1/2})$-approximation.
 
 \begin{theorem}
 	$f(T) \geq (1 - e^{-1/2})f(O)$.
@@ -16,18 +11,19 @@ The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $1-e^{-1/2}$-
 \begin{proof}
 	We can assume that $f(\{e\}) \leq (1 - e^{-1/2})f(O)$ for every $e \in U$, otherwise the value of $e$, and hence of $T$, is large enough and the theorem holds.
 	Recall that by the definition of Algorithm~\ref{alg:mgreedy} $S$ is the output of the greedy algorithm, and let $e^*$ be the most valuable element.
-	Consider two cases depending on how many elements of $O$ are discarded by the greedy algorithm, i.e., $|O \setminus S$.
+	
+	Consider two cases depending on how many elements of $O$ are discarded by the greedy algorithm, i.e., $|O \setminus S|$.
 	If $|O \setminus S \leq 1$, then 
 	$$
 	f(O) \leq f(O \cup S) \leq f(O \setminus S) + f(S) \leq f(e^*) + f(S).
 	$$
-	The above implies that either $f(S) \geq \frac{1}{2}f(O)$ or $f(e) \geq \frac{1}{2}f(O)$ concluding the proof.
+	The above implies that either $f(S) \geq \frac{1}{2}f(O)$ or $f(e) \geq \frac{1}{2}f(O)$ concluding the proof for this case.
 	Otherwise, $|O \setminus S| \geq 2$,
 	Denote by $a$ and $b$ the first and second elements of $O$ the greedy algorithm drops.
 	Denote by $A$ the set of elements chosen by the algorithm just before dropping $a$ and by
 	$B$ the set of elements chosen right after dropping $a$ and before dropping $b$.
 	If $f(A) \geq (1 - e^{-1/2})f(O)$ then the theorem holds.
-	Otherwise, denote by $f(A) = (1 - e^{-(1/2 - \delta)})f(O)$, where $0 < \delta \leq \frac{1}{2}$.
+	Otherwise, $f(A) = (1 - e^{-(1/2 - \delta)})f(O)$ where $0 < \delta \leq \frac{1}{2}$.
 
 	To prove the theorem we need to infer from the above bounds on both size anf value.
 	First, we focus on bounds on the size:
@@ -40,11 +36,11 @@ The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $1-e^{-1/2}$-
 		c(a) > (0.5 + \delta)c(O)
 		\\
 		\label{mgreedy:ineq3}
-		c(b) \leq c(O \setminus x) \leq (0.5 - \delta)c(O)
+		c(b) \leq c(O \setminus a) \leq (0.5 - \delta)c(O)
 	\end{align}
 	% 
-	Where inequality \ref{mgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
-	inequality \ref{mgreedy:ineq2} is followed from the fact that $a$ was dropped by the greedy algorithm, inequality \ref{mgreedy:ineq4} is due to inequalities \ref{mgreedy:ineq3} and \ref{mgreedy:ineq2}.
+	Inequality \ref{mgreedy:ineq1} upper bounds the size of $A$ and follows from  Lemma~\ref{lemma:sub-main} since if it does not hold then $f(A) > (1 - e^{-1/2 - \delta})f(O)$.
+	Inequality \ref{mgreedy:ineq2} lower bound the size of $a$ and follows from the fact that $a$ was dropped by the greedy algorithm, i.e., $c(A \cup \{a\}) > \beta \geq c(O)$. Inequality \ref{mgreedy:ineq3} is due to inequality \ref{mgreedy:ineq2}, since $c(O \setminus \{a\}) = c(O) - c(a)$ and $\{b\} \subseteq O \setminus \{a\}$.
 	The above inequalities imply a lower bound  on the size of $B$:
 	\begin{equation}
 		\label{mgreedy:ineq4}
@@ -52,27 +48,33 @@ The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $1-e^{-1/2}$-
 	\end{equation}
 
 	Second, we focus on bounds on the value.
-	We need to lower bound of $O$ after $a$ is dropped with respect to $A$, i.e. $f(O \setminus x | A)$:
+	We need to lower bound of $O$ after $a$ is dropped with respect to $A$, i.e. $f(O \setminus a | A)$:
 	\begin{equation}
-		\label{ineq:T}
 		f(O \setminus a | A) \geq f(O) - f(a) - f(A) \geq (e^{-1/2} - 1 + e^{-(1/2 - \delta)})f(O).
 	\end{equation}
 	Where the inequality follows from submodularity and monotonicity of $f$.
 	Furthermore, we need to lower bound the value of the elements the greedy algorithm chooses after discarding $a$ and up to discarding $b$ with respect to $A$, i.e. 
-	\begin{equation}
+	
+	\begin{align}
 		\label{ineq:B}
-		f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A).
-	\end{equation}
-	Where this inequality is a result of applying Lemma~\ref{lemma:sub-main} on the sets $B$ and $O \setminus x$.
-
+		\nonumber
+		f(B|A)	& \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus a | A)
+		\\ 		& \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})(e^{-1/2} - 1 + e^{-(1/2 - \delta)})f(O).
+	\end{align}
+	
+	Inequality~\ref{ineq:B} follows from applying Lemma~\ref{lemma:sub-main} on the sets $B$ and $O \setminus a$.
+	
 	Finally, we lower bound the value of the modified greedy algorithm:
 	\begin{equation}
 		f(T) \geq f(A \cup B) = f(A) + f(B | A).
 	\end{equation}
-
-	Substituting $f(A) = (1 - e^{-(1/2 - \delta)})f(O)$
-	and $f(B|A) \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus x | A)$
-	into the last inequality gives the desired result as can be seen in Figure~\ref{fig:mgreedy}
+	
+	Substituting $f(A)$ with $(1 - e^{-(1/2 - \delta)})f(O)$ and lower bounding $f(B|A)$ using~\ref{ineq:B} results in the following:
+	\begin{equation}
+		\label{ineq:T}
+		f(T) \geq (1 - e^{-(1/2 - \delta)})f(O) + (1 - e^{-\frac{2\delta}{1/2 - \delta}})(e^{-1/2} - 1 + e^{-(1/2 - \delta)})f(O)
+	\end{equation}
+	One can verify that the expression in~\ref{ineq:T} is, indeed, at least $(1-e^{-1/2})f(O)$ for $0 < \delta \leq \frac{1}{2}$.
 \end{proof}
 
 In \cite{khuller1999budgeted} it was claimed that 0.44 is an upper bound on the approximation ratio of this algorithm but no explicit example to support this claim was given and we could not recover such an example.
