@@ -28,14 +28,16 @@ Let $\epsilon > 0$ a constant to be determined latter on, and let $T$ be the out
 the algorithm.
 
 \begin{theorem}
-$f(T) \geq 1 - e^{-(1/2 + \epsilon)}$
+There is a constant $\epsilon > 0$ such that $f(T) \geq 1 - e^{-(1/2 + \epsilon)}$.
 \end{theorem}
 
 \def\eps{0.104}
 \begin{proof}
 We can assume that $f(\{e_1, e_2\}) \leq (1 - e^{-1/2 + \epsilon})f(O)$ 
-for every $e_1, e_2 \in U$ or otherwise the proof holds.
-Note, also, that if $|O \setminus S| \leq 2$ then $f(T) \geq 0.5f(O)$.
+for every $e_1, e_2 \in U$, otherwise there are two elements, $e_1, e_2$, such that $f(\{e_1, e_2\}) \geq (1 - e^{-1/2 + \epsilon})f(O)$. 
+Since the algorithm considers these two elements the theorem holds.
+% 
+Once again, from the same argument as in the proof of Theorem~\ref{theorem:mgreedy} if $|O \setminus S| \leq 2$ then $f(T) \geq 0.5f(O)$.
 Thus we assume the algorithm drops at least three elements from $O$ during its running.
 Let $a$ be the first element in $O$ that was dropped by the algorithm, 
 and let $A$ be the set of elements chosen by the algorithm just before dropping $a$.
@@ -49,52 +51,62 @@ Let $b$ be the first such element, and let $B$ be the set of elements chosen by 
 algorithm right after dropping $a$ and just before dropping $b$.
 Also denote by $C$ the subset of cheap elements in $O$, 
 i.e. $C = \{e \in O : c(e) < (1/4 + \epsilon/2 - \delta/2)c(O)\}$.
-We argue that the following inequalities hold:
+Again, in order to proof the theorem, we infer bounds on size and value.
+We start by bounding the size:
 
 \begin{align}
 \label{mmgreedy:ineq1}
 c(A) \leq (0.5 + \epsilon - \delta)c(O)
 \\
 \label{mmgreedy:ineq2}
-c(x) > (0.5 -\epsilon + \delta)c(O)
+c(a) > (0.5 -\epsilon + \delta)c(O)
 \\
 \label{mmgreedy:ineq3}
 c(C) \leq (0.5 + \epsilon - \delta)c(O)
-\\
-\label{mmgreedy:ineq5}
-c(B) \geq (1/4 - 3\epsilon/2 + 3\delta/2)c(O)
-\\
-\label{mmgreedy:ineq4}
-f(C) \geq e^{-1/2 + \epsilon}f(O)
-\\
-\label{mmgreedy:ineq6}
-f(B|A) \geq 
-(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
-\left[
-e^{-(1/2 + \epsilon)}
-- (1 - e^{-(1/2 + \epsilon - \delta)})
-\right]f(O)
-\\
-\label{mmgreedy:ineq7}
-f(T) \geq \max_\epsilon \min \{(1 - e^{-(0.5 + \epsilon)})f(O), \min_{\delta} f(A) + f(B|A)\}
 \end{align}
 
-Where inequality \ref{mmgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
-inequalities \ref{mmgreedy:ineq1}, \ref{mmgreedy:ineq2} with the definition of cheap
-element implies inequality \ref{mmgreedy:ineq5},
-inequality \ref{mmgreedy:ineq6} is due to Lemma~\ref{lemma:sub-main}, the definition
-of $f(B|A)$ and monotonicity.
+Inequality \ref{mmgreedy:ineq1} upper bound the size of $A$ and is due to Lemma~\ref{lemma:sub-main} since if it does not hold then $f(A) > (1 - e^{-(1/2 + \epsilon - \delta)})f(O)$.
+Inequality \ref{mmgreedy:ineq2} lower bound the size of $a$ and is implied from the fact the $a$ was dropped by the greedy algorithm.
+Inequality~\ref{mmgreedy:ineq3} upper bound the size of the cheap elements and follows from the fact the $a$ is not cheap.
+% 
+The above inequalities derive a lower bound on the size of $B$:
+\begin{equation}
+	\label{mmgreedy:lower-bound-cB}
+	c(B) \geq (1/4 - 3\epsilon/2 + 3\delta/2)c(O)
+\end{equation}
+
+Now we bound value:
+
+\begin{align}
+	\label{mmgreedy:ineq4}
+	f(C) \geq e^{-1/2 + \epsilon}f(O)
+	\\
+	\label{mmgreedy:lower-bound-B-given-A}
+	f(B|A) \geq 
+	(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
+	\left[
+	e^{-(1/2 + \epsilon)}
+	- (1 - e^{-(1/2 + \epsilon - \delta)})
+	\right]f(O)
+	\\
+	\label{mmgreedy:ineq7}
+	f(T) \geq \max_\epsilon \min \{(1 - e^{-(0.5 + \epsilon)})f(O), \min_{\delta} f(A) + f(B|A)\}
+\end{align}
+
+Inequality~\ref{mmgreedy:ineq4} lower bounds the value of the cheap elements and it follows from the submodularity of $f$, the fact that there are at most two expensive elements in an optimal solution, and our assumption that their value is at most $(1 - e^{-1/2 + \epsilon})f(O)$.
+% 
+Inequality~\ref{mmgreedy:lower-bound-B-given-A} lower bounds the marginal value of $B$ with respect to $A$ and follows by applying Lemma~\ref{lemma:sub-main} on $B$ and $C$.
+% 
 The last inequality captures the fact that either all elements in $O$ are smaller than
 $(0.5 + \epsilon)c(O)$ or there is one element in $O$ larger than $(0.5 + \epsilon)c(O)$.
-
-
+% 
 Substituting $(f(A) = 1 - e^{-(1/2 + \epsilon - \delta)})f(O)$ into the last inequality, using $f(B|A) \ge \left[
 e^{-(1/2 + \epsilon)}
 - (1 - e^{-(1/2 + \epsilon - \delta)})
 \right]
 (1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})f(O)$,
 and setting (say) $\epsilon = \eps$ gives the desired result 
-as can be seen in Figure~\ref{fig:mmgreedy}.
+as one can verifies and as can be seen in Figure~\ref{fig:mmgreedy}.
 
 \end{proof}
 
