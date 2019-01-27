@@ -10,64 +10,71 @@ except it considers the best pair of element rather than the best singleton elem
 
 \begin{algorithm}[H]
 \label{alg:mmgreedy}
-
-\SetKwInOut{Input}{input}
-\SetKwInOut{Output}{output}
-
-\Input{$U = \{e_1, \dots, e_n\}$, $f:2^U\to \mathbb{R}_+$, $c:U \to \mathbb{R}_+$}
-\Output{$S \subseteq U$}
+\caption{Modified$^2$ Greedy$(U, f, c)$}
 
 $S \leftarrow \text{greedy}(U, f, c)$
 \\
-\Return{$\arg\max\{S, \displaystyle{\arg\max_{e_1, e_2 \in U}}f(\{e_1, e_2\})\}$}
-\caption{Modified Modified Greedy Algorithm}
+$T \leftarrow \arg\max\{S, \arg\max_{e_1, e_2 \in U}f(\{e_1, e_2\})\}$
+\\
+\Return{T}
 \end{algorithm}
 
 We now analyze its performance.
-Let $\epsilon > 0$ a constant to be determined latter on, and let $T$ be the output of 
-the algorithm.
 
 \begin{theorem}
-There is a constant $\epsilon > 0$ such that $f(T) \geq 1 - e^{-(1/2 + \epsilon)}$.
+	The Modified$^2$ Greedy (Algorithm~\ref{alg:mmgreedy}) achieves an approximation of $(1-e^{-(1/2 + \epsilon)})$ where $0 < e \leq 1/6$ is an absolute constant.
 \end{theorem}
 
 \def\eps{0.104}
 \begin{proof}
-We can assume that $f(\{e_1, e_2\}) \leq (1 - e^{-1/2 + \epsilon})f(O)$ 
-for every $e_1, e_2 \in U$, otherwise there are two elements, $e_1, e_2$, such that $f(\{e_1, e_2\}) \geq (1 - e^{-1/2 + \epsilon})f(O)$. 
-Since the algorithm considers these two elements the theorem holds.
+Let $\epsilon > 0$ an absolute constant to be determined later.
+If there is a pair of elements $e_1, e_2 \in U$ whose value is high enough, i.e., $f(\{e_1, e_2\}) \geq (1 - e^{-1/2 + \epsilon})f(O)$, the theorem follows.
+Thus, let us assume that $f(\{e_1, e_2\}) < (1 - e^{-1/2 + \epsilon})f(O)$ for every $e_1, e_2 \in U$.
+Similarly to the proof of Theorem~\ref{theorem:mgreedy}, we can assume that the greedy algorithm discards at least three elements from $O$, i.e., $|S \setminus O| \geq 3$.
+Otherwise, we are guaranteed that $f(T) \geq 0.5f(O)$.
 % 
-Once again, from the same argument as in the proof of Theorem~\ref{theorem:mgreedy} if $|O \setminus S| \leq 2$ then $f(T) \geq 0.5f(O)$.
-Thus we assume the algorithm drops at least three elements from $O$ during its running.
 Let $a$ be the first element in $O$ that was dropped by the algorithm, 
 and let $A$ be the set of elements chosen by the algorithm just before dropping $a$.
-If $f(A) \geq (1 - e^{-(1/2 + \epsilon)})f(O)$ the theorem holds, 
-otherwise denote $f(A) = (1 - e^{-(1/2 + \epsilon - \delta)})f(O)$.
-We say that an element, $e$, is \emph{expensive} if $c(e) \geq (1/4 + \epsilon/2 - \delta/2)c(O)$, 
-otherwise it is \emph{cheap}.
-Observe that $O$ contains at most two expensive elements, thus the algorithm drops 
-at least one cheap element from $O$. 
+% 
+If $f(A) \geq (1 - e^{-(1/2 + \epsilon)})f(O)$ the theorem holds.
+Otherwise denote $f(A) = (1 - e^{-(1/2 + \epsilon - \delta)})f(O)$ where $0 < \delta \leq 1/2 + \epsilon$.
+% 
+Lemma~\ref{lemma:sub-main} implies that: 
+\begin{equation}
+	\label{mmgreedy:ineq1}
+	c(A) \leq (0.5 + \epsilon - \delta)c(O),
+\end{equation}
+otherwise $f(A) > (1-e^{-(1/2 + \epsilon - \delta)})f(O)$.
+Moreover, since $a$ was dropped we confirm that:
+\begin{equation}
+	\label{mmgreedy:ineq2}
+	c(a) > (0.5 -\epsilon + \delta)c(O),
+\end{equation}
+since $c(A \cup \{a\}) > \beta \geq c(O)$.
+
+We say that an element, $e$, is \emph{big} if $c(e) \geq (1/4 + \epsilon/2 - \delta/2)c(O)$, 
+otherwise it is \emph{small}.
+Note that $a$ is big since $\epsilon \leq 1/6$ and $\delta > 0$.
+
+Note that $O\setminus\{a\}$ contains at most one big element (if that is not the case then the size of two big elements is at least $(1/2 + \epsilon - \delta)c(O)$), in contradiction to \ref{mmgreedy:ineq2}.
+
+, thus the algorithm drops 
+at least one small element from $O$. 
 Let $b$ be the first such element, and let $B$ be the set of elements chosen by the 
 algorithm right after dropping $a$ and just before dropping $b$.
-Also denote by $C$ the subset of cheap elements in $O$, 
+Also denote by $C$ the subset of small elements in $O$, 
 i.e. $C = \{e \in O : c(e) < (1/4 + \epsilon/2 - \delta/2)c(O)\}$.
 Again, in order to proof the theorem, we infer bounds on size and value.
 We start by bounding the size:
 
 \begin{align}
-\label{mmgreedy:ineq1}
-c(A) \leq (0.5 + \epsilon - \delta)c(O)
-\\
-\label{mmgreedy:ineq2}
-c(a) > (0.5 -\epsilon + \delta)c(O)
-\\
 \label{mmgreedy:ineq3}
 c(C) \leq (0.5 + \epsilon - \delta)c(O)
 \end{align}
 
 Inequality \ref{mmgreedy:ineq1} upper bound the size of $A$ and is due to Lemma~\ref{lemma:sub-main} since if it does not hold then $f(A) > (1 - e^{-(1/2 + \epsilon - \delta)})f(O)$.
 Inequality \ref{mmgreedy:ineq2} lower bound the size of $a$ and is implied from the fact the $a$ was dropped by the greedy algorithm.
-Inequality~\ref{mmgreedy:ineq3} upper bound the size of the cheap elements and follows from the fact the $a$ is not cheap.
+Inequality~\ref{mmgreedy:ineq3} upper bound the size of the small elements and follows from the fact the $a$ is not small.
 % 
 The above inequalities derive a lower bound on the size of $B$:
 \begin{equation}
@@ -93,7 +100,7 @@ Now we bound value:
 	f(T) \geq \max_\epsilon \min \{(1 - e^{-(0.5 + \epsilon)})f(O), \min_{\delta} f(A) + f(B|A)\}
 \end{align}
 
-Inequality~\ref{mmgreedy:ineq4} lower bounds the value of the cheap elements and it follows from the submodularity of $f$, the fact that there are at most two expensive elements in an optimal solution, and our assumption that their value is at most $(1 - e^{-1/2 + \epsilon})f(O)$.
+Inequality~\ref{mmgreedy:ineq4} lower bounds the value of the small elements and it follows from the submodularity of $f$, the fact that there are at most two big elements in an optimal solution, and our assumption that their value is at most $(1 - e^{-1/2 + \epsilon})f(O)$.
 % 
 Inequality~\ref{mmgreedy:lower-bound-B-given-A} lower bounds the marginal value of $B$ with respect to $A$ and follows by applying Lemma~\ref{lemma:sub-main} on $B$ and $C$.
 % 

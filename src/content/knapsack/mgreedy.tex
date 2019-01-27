@@ -6,7 +6,7 @@ The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $(1-e^{-1/2})
 
 \begin{theorem}
 	\label{theorem:mgreedy}
-	$f(T) \geq (1 - e^{-1/2})f(O)$.
+	The Modified Greedy (Algorithm~\ref{alg:mgreedy}) achieves an approximation of $1 - e^{-1/2}$.
 \end{theorem}
 
 \begin{proof}
@@ -58,12 +58,12 @@ The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $(1-e^{-1/2})
 	
 	\begin{align}
 		\label{ineq:B}
-		\nonumber
 		f(B|A)	& \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})f(O \setminus a | A)
 		\\ 		& \geq (1 - e^{-\frac{2\delta}{1/2 - \delta}})(e^{-1/2} - 1 + e^{-(1/2 - \delta)})f(O).
+		\nonumber
 	\end{align}
 	
-	Inequality~\ref{ineq:B} follows from applying Lemma~\ref{lemma:sub-main} on the sets $B$ and $O \setminus a$.
+	Inequality~\ref{ineq:B} follows from applying Lemma~\ref{lemma:sub-main} on the sets $B$ and $O \setminus a$, and considering the submodular function $f(X|A)$ for every $X \subseteq U$.
 	
 	Finally, we lower bound the value of the modified greedy algorithm:
 	\begin{equation}
