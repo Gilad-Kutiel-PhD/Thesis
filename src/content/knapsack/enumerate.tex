@@ -47,11 +47,13 @@ later on we will show that we can upper bound $i_{\max}$ with a small, absolute 
 Our algorithm~\ref{algorithm:bucket} returns the best among the solution of the Bucket procedure and the output of the Modified$^2$ Greedy algorithm.
 
 \begin{algorithm}
-	\label{algorithm:bucket}
-	\caption{TODO($U, f, c, \beta, \epsilon, w_{\min}$)}
+	\caption{
+		\label{algorithm:bucket}
+		TODO$U, f, c, \beta, \epsilon, w_{\min}$
+	}
 	$B \leftarrow \text{Bucket}(TODO)$
 	$M \leftarrow \text{Modified}^2(TODO)$
-	\Return \argmax
+	\Return $\argmax_{S \in \{B, M\}}f(S)$
 \end{algorithm}
 
 We now analyze the performance of the TODO algorithm.
