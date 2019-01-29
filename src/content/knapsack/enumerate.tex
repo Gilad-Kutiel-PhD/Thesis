@@ -1,17 +1,74 @@
-We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
-From now on we assume that an optimal solution contains an element larger than $(1/3)c(O)$ or otherwise, by Lemma~\ref{lemma:sub-main}, we can obtain such approximation ratio by the greedy algorithm.
+\def\pLarge{P_{\text{large}}}
+\def\pValuable{P_{\text{valuable}}}
 
-We start by showing that,  under certain conditions, the modified modified algorithm achieves such approximation ratio.
-For the rest of this section we fix an optimal solution, $O$, and denote by $P$ its two largest elements.
+We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
+The main procedure~\ref{procedure:bucket} of this algorithm  groups pairs of elements with similar value into (a constant number) buckets.
+Then, from each bucket, it takes the smallest pair (i.e. the pair that minimizes $c$) and, using the Modified$^2$ Greedy algorithm, extend into a candidate solution.
+Finally it returns the best solution among the above candidates.
+
+\begin{procedure}
+	\caption{Bucket($U, f, c, \beta, \epsilon, w_{\min}$)}
+	\label{procedure:bucket}
+	% Initialization
+	\tcp{Initialization}
+	$w_{\max} \leftarrow \max_{\{a, b\} \in U}f(\{a, b\})$
+	\\
+	$i_{\max} \leftarrow \ceil{\log_{1 + \epsilon}\frac{w_{\max}}{w_{\min}}\}}$
+	\\
+	\For{$i \in \{0,\dots,i_{\max}\}$}{
+		$P_i \leftarrow \emptyset$
+	}
+	% Bucketing
+	\tcp{Bucketing}
+	\For{$\{a,b\} \in U$}{
+		$P \leftarrow \{a,b\}$
+		\\
+		$i \leftarrow \floor{\log_{1 + \epsilon}\frac{f(P)}{w_{\min}}}$
+		\\
+		\eIf{$P_i = \emptyset$}{
+			$P_i \leftarrow P$
+		}{
+			$P_i \leftarrow \displaystyle{\argmin_{Q \in \{P_i, P\}}c(Q)}$
+		}
+	}
+	% Candidate Solutions
+	\tcp{Candidate Solutions}
+	\For{$i \in \{0,\dots,i_{\max}\}$}{
+		$S_i \leftarrow P_i \cup \text{Modified}^2\text{Greedy}(U \setminus P_i, f_{P_i}, c, \beta - c(P_i))$
+	}
+	$B \leftarrow \arg\max_{S_i}f(S_i)$
+	\\
+	\Return{B}
+\end{procedure}
+
+It is easy to see that the running time of the procedure is $O(i_{\max}n^2)$,
+later on we will show that we can upper bound $i_{\max}$ with a small, absolute constant.
+
+Our algorithm~\ref{algorithm:bucket} returns the best among the solution of the Bucket procedure and the output of the Modified$^2$ Greedy algorithm.
+
+\begin{algorithm}
+	\caption{
+		\label{algorithm:bucket}
+		TODO$U, f, c, \beta, \epsilon, w_{\min}$
+	}
+	$B \leftarrow \text{Bucket}(TODO)$
+	$M \leftarrow \text{Modified}^2(TODO)$
+	\Return $\argmax_{S \in \{B, M\}}f(S)$
+\end{algorithm}
+
+We now analyze the performance of the TODO algorithm.
+We start by showing that,  under certain conditions, the Modified$^2$ Greedy algorithm gives $1 - e^{-2/3}$-approximation ratio.
+From now on fix an optimal solution, $O$, and denote by $\pLarge$ its two largest elements.
+We also assume that an optimal solution contains an element larger than $(1/3)c(O)$, otherwise, by Lemma~\ref{lemma:sub-main}, we can obtain such approximation ratio by the greedy algorithm.
 Now consider the third largest element in $O$, and denote its size by $(1/3 - \delta)c(O)$.
-Finally let $A$ be the output of the greedy algorithm, then we have the following lemma
+Finally, let $S$ be the output of the greedy algorithm, then we have the following lemma
 
 \begin{lemma}
 	\label{eq:sub:greedy}
 	If the largest element in $O$ is bigger than $1/3$ then
 	\begin{align*}
-		f(A) & \geq (1-e^{-\frac{2/3 + \delta}{1 - 1/3 - (1/3 - \delta)}})f(O|P)
-		\\		& \geq (1 - e^{-3/2})f(O|P)
+		f(S) & \geq (1-e^{-\frac{2/3 + \delta}{1 - 1/3 - (1/3 - \delta)}})f(O|\pLarge)
+		\\		& \geq (1 - e^{-3/2})f(O|\pLarge)
 	\end{align*}
 \end{lemma}
 
@@ -19,64 +76,49 @@ Finally let $A$ be the output of the greedy algorithm, then we have the followin
 	The proof follows immediately from Lemma~\ref{lemma:sub-main}.
 \end{proof}
 
-We have the following corollary:
+The following corollary state a condition under which the greedy algorithm is good enough:
 \begin{corollary}
 	\label{corollary:greedy-good}
-	If $f(O|P) \geq \frac{1-e^{-2/3}}{1-e^{-3/2}}f(O)$ then $f(A) \geq (1 - e^{-2/3})f(O)$.
+	If $f(O|\pLarge) \geq \frac{1-e^{-2/3}}{1-e^{-3/2}}f(O)$ then $f(S) \geq (1 - e^{-2/3})f(O)$.
 \end{corollary}
 
-Now, let $P^*$ be the most valuable pair in the ground set.
-We show that if the value of $P^*$ is large enough compared to the value of $P$ and if the greedy algorithm fails to find a good solution then $P^*$ by itself is a good solution, formally:
+Now, let $\pValuable$ be the most valuable pair in the ground set.
+We show that if the value of $\pValuable$ is large enough compared to the value of $\pLarge$ and if the greedy algorithm fails to find a good solution then $\pValuable$ by itself is a good solution, formally:
 
 \begin{lemma}
 	\label{lemma:sub:alpha}
-	If $f(A) < (1 - e^{-2/3})f(O)$ then there is a constant $\alpha$ such that if $f(P) < \alpha f(P^*)$ then $f(P^*) \geq (1 - e^{-2/3})f(O)$.
+	If $f(S) < (1 - e^{-2/3})f(O)$ then there is a constant $0 < \alpha < 1$ such that if $f(\pLarge) < \alpha f(\pValuable)$ then $f(\pValuable) \geq (1 - e^{-2/3})f(O)$.
 \end{lemma}
 
 \begin{proof}
 	By the assumptions and by Corollary \ref{corollary:greedy-good} we know that 
 	\begin{align}
-		f(O)	& = f(P) + f(O|P) 
-		\\ 		& < \alpha f(P^*) + \frac{1-e^{-2/3}}{1-e^{-3/2}}f(O)
+		f(O)	& = f(\pLarge) + f(O|\pLarge) 
+		\\ 		& < \alpha f(\pValuable) + \frac{1-e^{-2/3}}{1-e^{-3/2}}f(O)
 	\end{align}
-	So for $\alpha \leq \frac{e^{-2/3} - e^{-3/2}}{(1-e^{-2/3})(1-e^{-3/2})} \approx 0.77$ it holds that $f(P^*) \geq (1 - e^{-2/3})f(O)$.
+	So for $\alpha \leq \frac{e^{-2/3} - e^{-3/2}}{(1-e^{-2/3})(1-e^{-3/2})} \approx 0.77$ it holds that $f(\pValuable) \geq (1 - e^{-2/3})f(O)$.
 \end{proof}
 
-We now develope another algorithm that returns a good solution when niter of the above conditions hold.
-We refer to this algorithm as the \emph{Buckets Algorithm}.
-
-The Bucket Algorithm carefully selects a constant number of pairs of elements and greedily add elements to them.
-We assume that the size of the knapsack is 1.
-Consider all pairs of elements, we describe now how to choose the relevant ones.
-
-Let $\epsilon$ be constants to be determined later and $\alpha$ the constant determined in the proof of Lemma \ref{lemma:sub:alpha},
-we group the pairs into $\log_{1 + \epsilon}\frac{1}{\alpha}$ buckets where the $i$th bucket contains all the pairs with value
-between $\alpha (1 + \epsilon)^{i - 1}f(P^*)$ and $\alpha (1 + \epsilon)^{i}f(P^*)$.
-Note that, in general, there are pairs of elements that are not assigned to any of the buckets.
-Note also that if the modified modified algorithm fails then $P$ was put in one of the buckets.
-
-Now, from each bucket we only consider a smallest pair (breaking tie arbitrarily).
-Given such a pair, $P'$, we construct a new Knapsack problem of budget $\beta - c(P')$ and with respect to the function $f_{P'}$.
-We use the modified modified algorithm to obtain a $(1-e^{-(1/2 + \eps)})$-approximation
-solution to this problem and combine it with the initial pair to obtain a (candidate)
-solution to the original problem.
-The bucket algorithm returns the best of those solutions.
-Let $M$ be the solution returned by the modified modified algorithm and let $B$ be the solution returned by the bucket algorithm then we have:
-
+We show that either the 
 \begin{lemma}
+	\label{lemma:mmgreedy-or-bucket}
 	If $f(M) < (1 - e^{-2/3})f(O)$ then $f(B) \geq (1 - e^{-2/3})f(O)$
 \end{lemma}
 
 \begin{proof}
-	Let $P'$ be the pair considered by the algorithm from the bucket of $P$ then we know that:
+	Let $P'$ be the pair considered by the algorithm from the bucket of $\pLarge$ then we know that:
 	\begin{enumerate}
-		\item $c(P') \leq c(P)$
-		\item $f(P') \geq \frac{1}{(1 + \epsilon)}w(P)$
+		\item $c(P') \leq c(\pLarge)$
+		\item $f(P') \geq \frac{1}{(1 + \epsilon)}w(\pLarge)$
 	\end{enumerate}
-	Let $S_{P'}$ be the solution produced by the algorithm from $P'$,
-	then using Lemma~\ref{lemma:sub-main} and using the properties of $P$ we know that (for small enough $\epsilon$)
+	Let $S_{i'}$ be the solution produced by the Bucket procedure from $P'$,
+	then using Lemma~\ref{lemma:sub-main} and using the properties of $\pLarge$ we know that:
 	\begin{align}
-		f(S_{P'}) & \geq f(P') + (1-e^{-(1/2 + \eps)})(1 - f(P) - f(P'))
+		f(S_{P'}) 
+		& 
+		\geq f(P') + (1-e^{-(1/2 + \eps)})f(O \setminus \pLarge \setminus P')
+		\\ & 
+		\geq f(P') + (1-e^{-(1/2 + \eps)})(1 - f(\pLarge) - f(P'))
 		\\ & 
 		\geq \frac{1}{(1 + \epsilon)}f(P) + (1-e^{-(1/2 + \eps)})(1 - 2f(P))
 		\label{eq:sub:bucket}
@@ -84,6 +126,16 @@ Let $M$ be the solution returned by the modified modified algorithm and let $B$ 
 	Setting $\epsilon$ to (say) $0.002$ and taking the maximum between \ref{eq:sub:bucket} and
 	\ref{eq:sub:greedy} completes the proof as can be seen in Figure~\ref{fig:sub:bucket}.
 \end{proof}
+
+From the discussions above we have the following theorem:
+
+\begin{theorem}
+	The TODO algorithm is $(1 - e^{-2/3})$-approximation.
+\end{theorem}
+
+\paragraph{Running Time:}
+The Bucket procedure dominate the running time of the TODO algorithm, and, as mentioned above, its running time is $O(i_{\max}n^2)$.
+The proofs of Lemma~\ref{lemma:sub:alpha} and from the proof of Lemma~\ref{lemma:mmgreedy-or-bucket} implies that when running the Bucket procedure it is enough to set $w_min = 0.77f(\pValuable)$ and to set $\epsilon = 0.002$ which upper bound $i_{\max}$ by 132.
 
 \begin{figure}
 	\def\zeta{0.002}
@@ -120,9 +172,3 @@ Let $M$ be the solution returned by the modified modified algorithm and let $B$ 
 		\end{axis}
 	\end{tikzpicture}
 \end{figure}
-
-From the discussions above we have the following theorem:
-
-\begin{theorem}
-	$\displaystyle{\arg\max_{\mathclap{A \in \{M, B\}}}}f(A) \geq (1 - e^{-2/3})f(O)$.
-\end{theorem}

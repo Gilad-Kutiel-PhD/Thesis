@@ -10,93 +10,128 @@ except it considers the best pair of element rather than the best singleton elem
 
 \begin{algorithm}[H]
 \label{alg:mmgreedy}
+\caption{Modified$^2$ Greedy$(U, f, c, \beta)$}
 
-\SetKwInOut{Input}{input}
-\SetKwInOut{Output}{output}
-
-\Input{$U = \{e_1, \dots, e_n\}$, $f:2^U\to \mathbb{R}_+$, $c:U \to \mathbb{R}_+$}
-\Output{$S \subseteq U$}
-
-$S \leftarrow \text{greedy}(U, f, c)$
+$S \leftarrow \text{greedy}(U, f, c, \beta)$
 \\
-\Return{$\arg\max\{S, \displaystyle{\arg\max_{e_1, e_2 \in U}}f(\{e_1, e_2\})\}$}
-\caption{Modified Modified Greedy Algorithm}
+$T \leftarrow \arg\max\{S, \arg\max_{e_1, e_2 \in U}f(\{e_1, e_2\})\}$
+\\
+\Return{T}
 \end{algorithm}
 
 We now analyze its performance.
-Let $\epsilon > 0$ a constant to be determined latter on, and let $T$ be the output of 
-the algorithm.
 
 \begin{theorem}
-$f(T) \geq 1 - e^{-(1/2 + \epsilon)}$
+	\label{theorem:mmgreedy}
+	The Modified$^2$ Greedy (Algorithm~\ref{alg:mmgreedy}) achieves an approximation of $(1-e^{-(1/2 + \epsilon)})$ where $0 < e \leq 1/6$ is an absolute constant.
 \end{theorem}
 
 \def\eps{0.104}
 \begin{proof}
-We can assume that $f(\{e_1, e_2\}) \leq (1 - e^{-1/2 + \epsilon})f(O)$ 
-for every $e_1, e_2 \in U$ or otherwise the proof holds.
-Note, also, that if $|O \setminus S| \leq 2$ then $f(T) \geq 0.5f(O)$.
-Thus we assume the algorithm drops at least three elements from $O$ during its running.
+Let $\epsilon > 0$ an absolute constant to be determined later.
+If there is a pair of elements $e_1, e_2 \in U$ whose value is high enough, i.e., $f(\{e_1, e_2\}) \geq (1 - e^{-1/2 + \epsilon})f(O)$, the theorem follows.
+Thus, let us assume that $f(\{e_1, e_2\}) < (1 - e^{-1/2 + \epsilon})f(O)$ for every $e_1, e_2 \in U$.
+Similarly to the proof of Theorem~\ref{theorem:mgreedy}, we can assume that the greedy algorithm discards at least three elements from $O$, i.e., $|S \setminus O| \geq 3$.
+Otherwise, we are guaranteed that $f(T) \geq 0.5f(O)$.
+% 
 Let $a$ be the first element in $O$ that was dropped by the algorithm, 
 and let $A$ be the set of elements chosen by the algorithm just before dropping $a$.
-If $f(A) \geq (1 - e^{-(1/2 + \epsilon)})f(O)$ the theorem holds, 
-otherwise denote $f(A) = (1 - e^{-(1/2 + \epsilon - \delta)})f(O)$.
-We say that an element, $e$, is \emph{expensive} if $c(e) \geq (1/4 + \epsilon/2 - \delta/2)c(O)$, 
-otherwise it is \emph{cheap}.
-Observe that $O$ contains at most two expensive elements, thus the algorithm drops 
-at least one cheap element from $O$. 
+% 
+If $f(A) \geq (1 - e^{-(1/2 + \epsilon)})f(O)$ the theorem holds.
+Otherwise denote $f(A) = (1 - e^{-(1/2 + \epsilon - \delta)})f(O)$ where $0 < \delta \leq 1/2 + \epsilon$.
+% 
+Lemma~\ref{lemma:sub-main} implies that: 
+\begin{equation}
+	\label{mmgreedy:ineq1}
+	c(A) \leq (0.5 + \epsilon - \delta)c(O),
+\end{equation}
+otherwise $f(A) > (1-e^{-(1/2 + \epsilon - \delta)})f(O)$.
+Moreover, since $a$ was dropped we confirm that:
+\begin{equation}
+	\label{mmgreedy:ineq2}
+	c(a) > (0.5 -\epsilon + \delta)c(O),
+\end{equation}
+since $c(A \cup \{a\}) > \beta \geq c(O)$.
+
+We say that an element, $e$, is \emph{big} if $c(e) \geq (1/4 + \epsilon/2 - \delta/2)c(O)$, 
+otherwise it is \emph{small}.
+Note that $a$ is big since $\epsilon \leq 1/6$ and $\delta > 0$.
+
+Note that $O\setminus\{a\}$ contains at most one big element (if that is not the case then the size of two big elements is at least $(1/2 + \epsilon - \delta)c(O)$), in contradiction to \ref{mmgreedy:ineq2}.
+Thus, since the greedy algorithm dropped at least three elements, it must be the case that at least one of them is cheap.
 Let $b$ be the first such element, and let $B$ be the set of elements chosen by the 
 algorithm right after dropping $a$ and just before dropping $b$.
-Also denote by $C$ the subset of cheap elements in $O$, 
+Also denote by $C$ the subset of small elements in $O$, 
 i.e. $C = \{e \in O : c(e) < (1/4 + \epsilon/2 - \delta/2)c(O)\}$.
-We argue that the following inequalities hold:
+We note that:
 
-\begin{align}
-\label{mmgreedy:ineq1}
-c(A) \leq (0.5 + \epsilon - \delta)c(O)
-\\
-\label{mmgreedy:ineq2}
-c(x) > (0.5 -\epsilon + \delta)c(O)
-\\
+\begin{equation}
 \label{mmgreedy:ineq3}
-c(C) \leq (0.5 + \epsilon - \delta)c(O)
-\\
-\label{mmgreedy:ineq5}
-c(B) \geq (1/4 - 3\epsilon/2 + 3\delta/2)c(O)
-\\
-\label{mmgreedy:ineq4}
-f(C) \geq e^{-1/2 + \epsilon}f(O)
-\\
-\label{mmgreedy:ineq6}
-f(B|A) \geq 
-(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
-\left[
-e^{-(1/2 + \epsilon)}
-- (1 - e^{-(1/2 + \epsilon - \delta)})
-\right]f(O)
-\\
-\label{mmgreedy:ineq7}
-f(T) \geq \max_\epsilon \min \{(1 - e^{-(0.5 + \epsilon)})f(O), \min_{\delta} f(A) + f(B|A)\}
-\end{align}
+c(C) \leq (0.5 + \epsilon - \delta)c(O),
+\end{equation}
+since $a$ is expensive.
+% 
+The above inequalities derive a lower bound on the size of $B$:
+\begin{equation}
+	\label{mmgreedy:lower-bound-cB}
+	c(B) \geq (1/4 - 3\epsilon/2 + 3\delta/2)c(O)
+\end{equation}
 
-Where inequality \ref{mmgreedy:ineq1} is due to Lemma~\ref{lemma:sub-main},
-inequalities \ref{mmgreedy:ineq1}, \ref{mmgreedy:ineq2} with the definition of cheap
-element implies inequality \ref{mmgreedy:ineq5},
-inequality \ref{mmgreedy:ineq6} is due to Lemma~\ref{lemma:sub-main}, the definition
-of $f(B|A)$ and monotonicity.
-The last inequality captures the fact that either all elements in $O$ are smaller than
-$(0.5 + \epsilon)c(O)$ or there is one element in $O$ larger than $(0.5 + \epsilon)c(O)$.
+Now we bound value.
+First, we wish to lower bound $f(C)$.
+Since $O$ contains at most two big elements, and the fact that the value of any pair of elements cannot exeed $(1 - e^{-(1/2 + \epsilon)})f(O)$, we can conclude that $f(C) \geq e^{-(1/2 + \epsilon)}$ (follows from the submodularity of $f$).
 
+To lower bound the marginal value of $B$ with respect to $A$ we apply Lemma~\ref{lemma:sub-main} on $B$ and $C$ and choose the submodular function to be $f(X|A)$ for every $X \subseteq U$.
+This gives us the following:
+\begin{equation}
+	\label{mmgreedy:lower-bound-B-given-A}
+	f(B|A) \geq 
+	(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
+	\left[
+	e^{-(1/2 + \epsilon)}
+	- (1 - e^{-(1/2 + \epsilon - \delta)})
+	\right]f(O)
+\end{equation}
 
-Substituting $(f(A) = 1 - e^{-(1/2 + \epsilon - \delta)})f(O)$ into the last inequality, using $f(B|A) \ge \left[
-e^{-(1/2 + \epsilon)}
-- (1 - e^{-(1/2 + \epsilon - \delta)})
-\right]
-(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})f(O)$,
-and setting (say) $\epsilon = \eps$ gives the desired result 
-as can be seen in Figure~\ref{fig:mmgreedy}.
+Finally, we would like to lower bound $f(T)$.
+Note that if $f(A) \geq (1 - e^{-(1/2 + \epsilon)})f(O)$ we can lower bound $f(T)$ by $(1 - e^{-(1/2 + \epsilon)})f(O)$ and otherwise
+\begin{multline}
+	f(A \cup B)  
+	= 
+	f(A) + f(B|A) 
+	\geq 
+	\\
+	(1-e^{-(1/2 + \epsilon - \delta)})f(O) 
+	\\
+	+ 
+	(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
+	\left[
+	e^{-(1/2 + \epsilon)}
+	- (1 - e^{-(1/2 + \epsilon - \delta)})
+	\right]f(O)
+\end{multline} 
 
+Thus, for a given fixed $\\min epsilon > 0$ we have
+\begin{equation}
+	f(T) \geq \min \begin{cases}
+		(1 - e^{-(1/2 + \epsilon)})
+		\\
+			\displaystyle{\min_{\delta}}
+			(1-e^{-(1/2 + \epsilon - \delta)})f(O) 
+			+ 
+			\\ 
+			(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
+			\left[
+			e^{-(1/2 + \epsilon)}
+			- (1 - e^{-(1/2 + \epsilon - \delta)})
+			\right]f(O)
+	\end{cases}
+\end{equation}
+for $0 < \delta \leq 1/2 + \epsilon$.
+Optimizing over $0 < \epsilon \leq 1/6$ we get that $\epsilon = \text{TODO}$ and $\delta = \text{TODo}$.
 \end{proof}
+
+\paragraph{Remark:} From the proof of Theorem~\ref{theorem:mmgreedy} we obtain an approximation of $(1 - e^{-1/2 + \eps})$.
 
 \begin{figure}
 \caption{
@@ -147,7 +182,7 @@ Modified Modified Greedy Approximation Ratio ($\epsilon = \eps$)
 \end{figure}
 
 \textbf{Upper Bound}
-We show that the approximation ratio of the modified modified greedy algorithm is at most $0.5$.
+We show that the approximation ratio of the modified$^2$ greedy algorithm is at most $0.5$.
 To see this consider the following instance of the budgeted maximum coverage problem:
 Let the elements be $X = \{x_1, \dots, x_{2n}\}$, 
 and a collection of subsets over $a$, $\mathcal{S} = \{S_1, \dots, S_{n + 1}\} \cup \{S\}$,
@@ -156,6 +191,8 @@ Also, set $S = \{x_{n + 2}, \dots, x_{2n}\}$, and $c(S) = n$.
 Finally, for each $x \in X$ set $w(x) = 1$ and set the budget for this instance to be $2n$.
 One can verify that the modified modified algorithm will return a solution of value $n + 1$
 While taking $S$ along with any other $n$ subsets yields a solution of value $2n - 1$.  
+
+Note that this upper bound is also applicable for a modified$^k$ greedy algorithm for any $k$, i.e. the algorithm that returns the best among the greedy solution and the best $k$-tuple of elements.
 
 
 

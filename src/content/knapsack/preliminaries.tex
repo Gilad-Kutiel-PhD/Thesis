@@ -16,7 +16,7 @@ The greedy algorithm from \cite{khuller1999budgeted} and \cite{krause2005note}
 is described in Algorithm \ref{alg:greedy}.
 
 \begin{algorithm}[H]
-\caption{Greedy$(U, f, c)$}
+\caption{Greedy$(U, f, c, \beta)$}
 \label{alg:greedy}
 
 initialization: $S \leftarrow \emptyset$
@@ -26,7 +26,7 @@ initialization: $S \leftarrow \emptyset$
 	\\
 	$U \leftarrow U \setminus \{e'\}$
 	\\
-	\If{$c(S \cup \{e'\})\leq 1$}{
+	\If{$c(S \cup \{e'\})\leq \beta$}{
 	\label{line:dropped}
 		$S \leftarrow S \cup \{e'\}$
 	}
