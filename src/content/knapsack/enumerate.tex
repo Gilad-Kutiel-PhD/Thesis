@@ -1,10 +1,6 @@
 We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
 From now on we assume that an optimal solution contains an element larger than $(1/3)c(O)$ or otherwise, by Lemma~\ref{lemma:sub-main}, we can obtain such approximation ratio by the greedy algorithm.
 
-The Bucket Algorithm~\ref{alg:bucket} divide all pairs of elements into (a constant number) buckets.
-Then, from each bucket, it takes the smallest pair (i.e. the pair that minimizes $c$) and completes it using the Modified$^2$ Greedy algorithm.
-Finally it returns the best solution among the above solution and the solution of the Modified$^2$ Greedy algorithm starting from an empty set.
-
 \begin{algorithm}
 	\label{alg:bucket}
 	\caption{Bucket$(U, f, c, \beta, w_{\min}, \epsilon)$}
@@ -13,7 +9,6 @@ Finally it returns the best solution among the above solution and the solution o
 	\For{$i \in \{0,\dots,\log_{1 + \epsilon}\frac{w_{\max}}{w_{\min}}\}$}{
 		$P_i \leftarrow \emptyset$
 	}
-	\\
 	\For{$P = \{a,b\} \in U$}{
 		$i \leftarrow \floor{\log_{1 + \epsilon}\frac{f(P)}{w_{\min}}}$
 		\\
@@ -23,7 +18,6 @@ Finally it returns the best solution among the above solution and the solution o
 			$P_i \leftarrow \displaystyle{\argmin_{Q \in \{P_i, P\}}c(Q)}$
 		}
 	}
-	\\
 	\For{$P_i$}{
 		$S_i \leftarrow P_i \cup \text{Modified}^2\text{Greedy}(U \setminus P_i, f_{P_i}, c, \beta - c(P_i))$
 	}
@@ -33,6 +27,10 @@ Finally it returns the best solution among the above solution and the solution o
 	\\
 	\Return{T}
 \end{algorithm}
+
+The Bucket Algorithm~\ref{alg:bucket} divide all pairs of elements into (a constant number) buckets.
+Then, from each bucket, it takes the smallest pair (i.e. the pair that minimizes $c$) and completes it using the Modified$^2$ Greedy algorithm.
+Finally it returns the best solution among the above solution and the solution of the Modified$^2$ Greedy algorithm starting from an empty set.
 
 To analyze the performance of the Bucket algorithm we start by showing that,  under certain conditions, the Modified$^2$ Greedy algorithm gives $1 - e^{-2/3}$-approximation ratio.
 For the rest of this section we fix an optimal solution, $O$, and denote by $P$ its two largest elements.
