@@ -49,7 +49,7 @@ Our algorithm~\ref{algorithm:bucket} returns the best among the solution of the 
 \begin{algorithm}
 	\caption{
 		\label{algorithm:bucket}
-		TODO$U, f, c, \beta, \epsilon, w_{\min}$
+		TODO($U, f, c, \beta, \epsilon, w_{\min}$)
 	}
 	$B \leftarrow \text{Bucket}(TODO)$
 	$M \leftarrow \text{Modified}^2(TODO)$
@@ -57,33 +57,35 @@ Our algorithm~\ref{algorithm:bucket} returns the best among the solution of the 
 \end{algorithm}
 
 We now analyze the performance of the TODO algorithm.
-We start by showing that,  under certain conditions, the Modified$^2$ Greedy algorithm gives $1 - e^{-2/3}$-approximation ratio.
+We start by showing that,  under certain conditions, the Modified$^2$ Greedy algorithm gives $(1 - e^{-2/3})$-approximation ratio.
 From now on fix an optimal solution, $O$, and denote by $\pLarge$ its two largest elements.
 We also assume that an optimal solution contains an element larger than $(1/3)c(O)$, otherwise, by Lemma~\ref{lemma:sub-main}, we can obtain such approximation ratio by the greedy algorithm.
 Now consider the third largest element in $O$, and denote its size by $(1/3 - \delta)c(O)$.
 Finally, let $S$ be the output of the greedy algorithm, then we have the following lemma
 
-\begin{lemma}
+Now consider the set of elements $O \setminus \pLarge$.
+Its value is at least $f(O|\pLarge)$ and its size is at most $1 - \frac{1}{3} - (\frac{1}{3} - \delta)$.
+Observe also that the size of the set of elements considered by a Greedy algorithm before dropping an element from $O \setminus \pLarge$ is at least $\frac{2}{3} + \delta$.
+Using Lemma~\ref{lemma:sub-main} we have the following corollary:
+
+\begin{corollary}
 	\label{eq:sub:greedy}
 	If the largest element in $O$ is bigger than $1/3$ then
 	\begin{align*}
 		f(S) & \geq (1-e^{-\frac{2/3 + \delta}{1 - 1/3 - (1/3 - \delta)}})f(O|\pLarge)
 		\\		& \geq (1 - e^{-3/2})f(O|\pLarge)
 	\end{align*}
-\end{lemma}
+\end{corollary}
 
-\begin{proof}
-	The proof follows immediately from Lemma~\ref{lemma:sub-main}.
-\end{proof}
+Now we want to find how large $f(O|\pLarge)$ compared to $f(O)$ needs to be so that the solution of the Greedy algorithm is good enough, i.e. a $(1-e^{-2/3})$-approximation.
 
-The following corollary state a condition under which the greedy algorithm is good enough:
 \begin{corollary}
 	\label{corollary:greedy-good}
 	If $f(O|\pLarge) \geq \frac{1-e^{-2/3}}{1-e^{-3/2}}f(O)$ then $f(S) \geq (1 - e^{-2/3})f(O)$.
 \end{corollary}
 
 Now, let $\pValuable$ be the most valuable pair in the ground set.
-We show that if the value of $\pValuable$ is large enough compared to the value of $\pLarge$ and if the greedy algorithm fails to find a good solution then $\pValuable$ by itself is a good solution, formally:
+We show that if the value of $\pValuable$ is large enough compared to the value of $\pLarge$ and if the greedy algorithm fails to find a good solution, i.e. the condition in Corollary~\ref{corollary:greedy-good} does not hold, then the value of $\pValuable$ is large enough, formally:
 
 \begin{lemma}
 	\label{lemma:sub:alpha}
@@ -99,7 +101,8 @@ We show that if the value of $\pValuable$ is large enough compared to the value 
 	So for $\alpha \leq \frac{e^{-2/3} - e^{-3/2}}{(1-e^{-2/3})(1-e^{-3/2})} \approx 0.77$ it holds that $f(\pValuable) \geq (1 - e^{-2/3})f(O)$.
 \end{proof}
 
-We show that either the 
+We show that at least one of the solutions - the one returned by the Modified$^2$ Greedy algorithm and the one returned by the Bucket procedure - is good enough, i.e. is a $(1 - e^{-2/3})$- approximation.
+
 \begin{lemma}
 	\label{lemma:mmgreedy-or-bucket}
 	If $f(M) < (1 - e^{-2/3})f(O)$ then $f(B) \geq (1 - e^{-2/3})f(O)$
