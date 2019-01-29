@@ -2,21 +2,20 @@ The modified greedy algorithm returns the best solution between the greedy solut
 Since scanning all pairs of elements rather than just singletons does not affect the running time of the modified greedy algorithm a natural question to ask is whether considering pairs of elements result in strictly better algorithm.
 Here we do not give a complete answer to this question but we are able to improve our analysis for this algorithm. 
 
-The \emph{modified modified greedy} algorithm~\ref{alg:mmgreedy} 
-\footnote{A paraphrase on the ``ultimate ultimate weapon'' from \cite{ninjago2017}}
+The \emph{Modified$^2$ Greedy} algorithm~\ref{alg:mmgreedy} 
 is similar to the  modified greedy algorithm, 
 except it considers the best pair of element rather than the best singleton element.
 
 
-\begin{algorithm}[H]
-\label{alg:mmgreedy}
-\caption{Modified$^2$ Greedy$(U, f, c, \beta)$}
-
-$S \leftarrow \text{greedy}(U, f, c, \beta)$
-\\
-$T \leftarrow \arg\max\{S, \arg\max_{e_1, e_2 \in U}f(\{e_1, e_2\})\}$
-\\
-\Return{T}
+\begin{algorithm}
+	$S \leftarrow \text{greedy}(U, f, c, \beta)$
+	\\
+	$T \leftarrow \arg\max\{S, \arg\max_{e_1, e_2 \in U}f(\{e_1, e_2\})\}$
+	\\
+	\Return{T}
+	% 
+	\caption{Modified$^2$ Greedy$(U, f, c, \beta)$}
+	\label{alg:mmgreedy}
 \end{algorithm}
 
 We now analyze its performance.

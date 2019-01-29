@@ -2,13 +2,12 @@
 \def\pValuable{P_{\text{valuable}}}
 
 We now present a $(1-e^{-2/3})$-approximation algorithm that runs in $O(n^2)$ time.
-The main procedure~\ref{procedure:bucket} of this algorithm  groups pairs of elements with similar value into (a constant number) buckets.
+The core of this algorithm is the \ref{procedure:bucket} procedure.
+This procedure groups pairs of elements with similar value into (a constant number of) buckets.
 Then, from each bucket, it takes the smallest pair (i.e. the pair that minimizes $c$) and, using the Modified$^2$ Greedy algorithm, extend into a candidate solution.
 Finally it returns the best solution among the above candidates.
 
 \begin{procedure}
-	\caption{Bucket($U, f, c, \beta, \epsilon, w_{\min}$)}
-	\label{procedure:bucket}
 	% Initialization
 	\tcp{Initialization}
 	$w_{\max} \leftarrow \max_{\{a, b\} \in U}f(\{a, b\})$
@@ -21,8 +20,10 @@ Finally it returns the best solution among the above candidates.
 	% Bucketing
 	\tcp{Bucketing}
 	\For{$\{a,b\} \in U$}{
+		\label{line:p}
 		$P \leftarrow \{a,b\}$
 		\\
+		\label{line:i}
 		$i \leftarrow \floor{\log_{1 + \epsilon}\frac{f(P)}{w_{\min}}}$
 		\\
 		\eIf{$P_i = \emptyset$}{
@@ -39,21 +40,24 @@ Finally it returns the best solution among the above candidates.
 	$B \leftarrow \arg\max_{S_i}f(S_i)$
 	\\
 	\Return{B}
+	% 
+	\caption{Bucket($U, f, c, \beta, \epsilon, w_{\min}$)}
+	\label{procedure:bucket}
 \end{procedure}
 
+The value of $i$ in line~\ref{line:i} of the procedure is the \emph{bucket} of $P$ from line~\ref{line:p} of the procedure.
 It is easy to see that the running time of the procedure is $O(i_{\max}n^2)$,
 later on we will show that we can upper bound $i_{\max}$ with a small, absolute constant.
 
 Our algorithm~\ref{algorithm:bucket} returns the best among the solution of the Bucket procedure and the output of the Modified$^2$ Greedy algorithm.
 
 \begin{algorithm}
-	\caption{
-		\label{algorithm:bucket}
-		TODO($U, f, c, \beta, \epsilon, w_{\min}$)
-	}
 	$B \leftarrow \text{Bucket}(TODO)$
 	$M \leftarrow \text{Modified}^2(TODO)$
 	\Return $\argmax_{S \in \{B, M\}}f(S)$
+	% 
+	\caption{TODO($U, f, c, \beta, \epsilon, w_{\min}$)}
+	\label{algorithm:bucket}
 \end{algorithm}
 
 We now analyze the performance of the TODO algorithm.
@@ -109,25 +113,26 @@ We show that at least one of the solutions - the one returned by the Modified$^2
 \end{lemma}
 
 \begin{proof}
-	Let $P'$ be the pair considered by the algorithm from the bucket of $\pLarge$ then we know that:
+	Let $P_j$ be the pair considered by the algorithm from the bucket of $\pLarge$ then we know that:
 	\begin{enumerate}
-		\item $c(P') \leq c(\pLarge)$
-		\item $f(P') \geq \frac{1}{(1 + \epsilon)}w(\pLarge)$
+		\item $c(P_j) \leq c(\pLarge)$
+		\item $f(P_j) \geq \frac{1}{(1 + \epsilon)}w(\pLarge)$
 	\end{enumerate}
-	Let $S_{i'}$ be the solution produced by the Bucket procedure from $P'$,
+	Let $S_{j}$ be the solution produced by the Bucket procedure from $P_j$,
 	then using Lemma~\ref{lemma:sub-main} and using the properties of $\pLarge$ we know that:
 	\begin{align}
-		f(S_{P'}) 
-		& 
-		\geq f(P') + (1-e^{-(1/2 + \eps)})f(O \setminus \pLarge \setminus P')
+		f(S_{j}) 
+		&
+		\geq f(P_i) + f(\text{Modified}^2(O \setminus P_j), f_{P_j}, c, \beta - c(P_j))
 		\\ & 
-		\geq f(P') + (1-e^{-(1/2 + \eps)})(1 - f(\pLarge) - f(P'))
+		\geq f(P_j) + (1-e^{-(1/2 + \eps)})f(O \setminus \pLarge | P_j)
 		\\ & 
-		\geq \frac{1}{(1 + \epsilon)}f(P) + (1-e^{-(1/2 + \eps)})(1 - 2f(P))
+		\geq f(P_j) + (1-e^{-(1/2 + \eps)})(f(O) - f(\pLarge) - f(P_j))
+		\\ & 
+		\geq \frac{1}{(1 + \epsilon)}f(\pLarge) + (f(O)-e^{-(1/2 + \eps)})(1 - 2f(\pLarge))
 		\label{eq:sub:bucket}
 	\end{align}
-	Setting $\epsilon$ to (say) $0.002$ and taking the maximum between \ref{eq:sub:bucket} and
-	\ref{eq:sub:greedy} completes the proof as can be seen in Figure~\ref{fig:sub:bucket}.
+	Setting $\epsilon$ to (say) $0.002$ and taking the maximum between~\ref{eq:sub:bucket} and Corollary~\ref{eq:sub:greedy} completes the proof as can be seen in Figure~\ref{fig:sub:bucket}.
 \end{proof}
 
 From the discussions above we have the following theorem:
