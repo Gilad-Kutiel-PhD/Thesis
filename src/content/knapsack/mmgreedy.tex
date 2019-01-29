@@ -10,9 +10,9 @@ except it considers the best pair of element rather than the best singleton elem
 
 \begin{algorithm}[H]
 \label{alg:mmgreedy}
-\caption{Modified$^2$ Greedy$(U, f, c)$}
+\caption{Modified$^2$ Greedy$(U, f, c, \beta)$}
 
-$S \leftarrow \text{greedy}(U, f, c)$
+$S \leftarrow \text{greedy}(U, f, c, \beta)$
 \\
 $T \leftarrow \arg\max\{S, \arg\max_{e_1, e_2 \in U}f(\{e_1, e_2\})\}$
 \\
