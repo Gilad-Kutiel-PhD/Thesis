@@ -222,7 +222,7 @@ When running the Bucket procedure with $w_{\min} = 0.77f(\pVal)$ and $\epsilon =
 					}
 			]
 			\addplot[blue, dashed]{
-				exp(-(0.5 + \eps))/1.008*x + (1 - exp(-\gamma)) * (1 - x)};
+				exp(-(0.5 + \eps))/1.008*x + (1 - exp(-(0.5 + \eps))) * (1 - x)};
 			\addplot[red, dotted]{(1 - exp(-1.5)) * (1 - x)};
 			\addplot[green]{(1 - exp(-2/3))};
 		\end{axis}
