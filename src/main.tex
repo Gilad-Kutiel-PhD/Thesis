@@ -1,62 +1,18 @@
-\nonstopmode
-\documentclass[]{report}
+\documentclass[a4paper,UKenglish]{lipics-v2016}
 
 \input{libs}
-\input{tikzset}
+\input{tikz}
 \input{def}
-\input{heb}
-\input{rp}
+
+\input{title}
+\input{authors}
 
 \begin{document}
+\maketitle
 
-\pagenumbering{gobble}
+% \input{content}
 
-% % BINDING PAGE
-% \input{binding}
-% \newpage
-
-% % COVER PAGE
-% \input{cover}
-% \newpage
-
-\pagenumbering{arabic}
-
-
-% \tableofcontents
-% \listoffigures
-
-% \newpage
-
-% \chapter*{Abstract}
-% \input{abstract}
-
-
-\input{content}
-
-\bibliography{bib/2cr,bib/vpn,bib/carpool,bib/knapsack}
 \bibliographystyle{plain}
-
-% % HEBREW
-% \RPtrue
-% \pagenumbering{gobble}
-
-% % BINDING PAGE HEBREW
-% \input{binding-heb}
-% \newpage
-
-% % COVER PAGE HEBREW
-% \input{cover-heb}
-% \newpage
-
-% \pagenumbering{roman}
-
-% % ABSTRACT HEBREW
-% \begin{hebrew}
-% \chapter*{\texthebrew{תקציר}}
-% \end{hebrew}
-% \input{abstract-heb}
-% \newpage
-
-% \RPfalse
+\bibliography{main}
 
 \end{document}
