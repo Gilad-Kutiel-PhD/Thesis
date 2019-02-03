@@ -1,3 +1,13 @@
+The study of combinatorial optimization problems with a submodular objective has attracted much attention in the last decade. 
+A set function $f:2^\mathcal{N} \to \mathbb{R}_+$ over a ground set $\mathcal{N}$ is called \emph{submodular} if it has the \emph{diminishing returns} property:
+$f(A \cup \{a\}) - f(A) \geq f(B \cup \{a\}) - f(B)$ for every $A \subseteq B \subseteq \mathcal{N}$ and $a \in \mathcal{N} \setminus B$\footnote{
+    An equivalent definition is: $f(A) + f(B) \geq f(A \cup B) + f(A \cup B)$ for every $A,B \in \mathcal{N}$.
+}
+Submodular functions capture the principle of economy of scale, prevalent in bothe theory and real world applications.
+Thus, it is no surprise that combinatorial optimization problems with a submodular objective arise in numerous disciplines, e.g., machine learning and data mining~\cite{bach2013learning,bordeaux2014tractability}, algorithmic game theory and social networks~\cite{dughmi2009revenue,hartline2008optimal,he2015stability,kempe2003maximizing,schulz2013approximating}, and economics~\cite{ahmed2011maximizing}.
+Additionally, many classical problems in combinatorial optimization are in fact submodular in nature, e.g., maximum cut and maximum directed cut~\cite{goemans1995improved,}
+
+
 In the \emph{Budgeted Maximum Cover} problem we are given a ground set of elements
 $X = \{x_1, \dots, x_n\}$ and a collection of subsets over $X$,
 $\mathcal{S} = \{S_1, \dots, S_m\}$.
