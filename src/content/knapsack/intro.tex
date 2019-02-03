@@ -5,7 +5,11 @@ $f(A \cup \{a\}) - f(A) \geq f(B \cup \{a\}) - f(B)$ for every $A \subseteq B \s
 }
 Submodular functions capture the principle of economy of scale, prevalent in bothe theory and real world applications.
 Thus, it is no surprise that combinatorial optimization problems with a submodular objective arise in numerous disciplines, e.g., machine learning and data mining~\cite{bach2013learning,bordeaux2014tractability}, algorithmic game theory and social networks~\cite{dughmi2009revenue,hartline2008optimal,he2015stability,kempe2003maximizing,schulz2013approximating}, and economics~\cite{ahmed2011maximizing}.
-Additionally, many classical problems in combinatorial optimization are in fact submodular in nature, e.g., maximum cut and maximum directed cut~\cite{goemans1995improved,}
+Additionally, many classical problems in combinatorial optimization are in fact submodular in nature, e.g., maximum cut and maximum directed cut~\cite{goemans1995improved,Halperin:2001:CAA:365411.365412,Hastad:2001:OIR:502090.502098,Karp1972,Khot05optimalinapproximability}, maximum coverage~\cite{Feige:1998:TLN:285055.285059,KHULLER199939}, generalized assignment problem~\cite{Chekuri06apolynomial,Cohen06anefficient,Feige2006ApproximationAF,Fleischer:2006:TAA:1109557.1109624}, maximum bisection~\cite{DBLP:journals/talg/AustrinBG16,DBLP:journals/algorithmica/FriezeJ97}, and facility location~\cite{DBLP:journals/dam/AgeevS99,CORNUEJOLS1977163,doi:10.1287/mnsc.23.8.789}.
+
+In this paper we consider the problems of maximizing a monotone\footnote{
+    $f$ is monotone if $f(S) \leq f(T)$ for every $S \subseteq T \subseteq \mathcal{N}$.
+}
 
 
 In the \emph{Budgeted Maximum Cover} problem we are given a ground set of elements
@@ -64,3 +68,4 @@ For example, the running time of the later algorithm for $\epsilon = 2^{-2}$ is
 $2^{2O(2^{8})}n\log^2n$ achieving approximation ratio of $\approx 0.38$.
 Here we develop a $(1 - e^{-2/3}) \approx 0.48$-approximation algorithm with the same
 asymptotic running time as the simple greedy algorithm and with reasonable constants.
+
