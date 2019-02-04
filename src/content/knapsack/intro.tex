@@ -15,17 +15,20 @@ $X = \{x_1, \dots, x_n\}$, a submodular function $f:2^X \to \mathbb{R}_+$, and a
 The goal is to find a subset of elements that maximizes $f$ such that the total cost of the elements in the subset does not exceed a given budget, 
 $\beta$.
 
-Maximizing a monotone submodular function under a knapsack constraint generalized the budgeted maximum coverage problem~\cite{khuller1999budgeted} and has applications such as document summarization~\cite{lin2010multi}...TODO
+Maximizing a monotone submodular function under a knapsack constraint generalized the budgeted maximum coverage problem~\cite{khuller1999budgeted} and has applications such as document summarization~\cite{lin2010multi} and maximizing entropy in discrete graphical models~\cite{krause2005note}.
 
 
 \paragraph*{Previous Work}
-Khuller et. al \cite{khuller1999budgeted}
-gave a $(1-e^{-1})$-approximation algorithm for this problem and showed that this
-is the best possible unless P = NP.
+Nemhauser et al. considered the problem of maximizing a monotone submodular function under cardinality constant \cite{Nemhauser1978}.
+They proved that the greedy algorithm (one that iteratively construct a solution by selecting each time the best element) gives $(1 - e^{-1})$ approximation.
+Khuller et. al considered the Budgeted Maximum Coverage problem\cite{khuller1999budgeted}.
+A coverage objective is a special case of submodular objective.
+They gave a $(1-e^{-1})$-approximation algorithm for this problem and showed that this is the best possible unless P = NP.
 Sviridenko \cite{sviridenko2004note} showed that the same algorithm presented by
 Khuller et. al can be used to maximize a general monotone submodular function
 with the same guarantee.
 This algorithm requires $O(n^5)$ calls to the value oracle and might be impractical for real world applications~\cite{lin2010multi}.
+
 A faster algorithm that runs in $O(n^2)$ time and achieves a $1 - e^{-1/2}$ approximation ratio was also presented in \cite{khuller1999budgeted}.
 It was shown by Krause and Guestrin \cite{krause2005note} that the same algorithm
 gives the same guarantee for a general monotone submodular function and requires only $O(n^2)$ calls to the value oracle.
@@ -34,22 +37,16 @@ Badanidiyuru and Vondr´ak developed a $1 - \frac{1}{e} - \epsilon$-approximatio
 algorithms that runs in 
 $O(n^2(\frac{1}{\epsilon}\log n)^\text{poly}(\frac{1}{\epsilon}))$ time 
 \cite{badanidiyuru2014fast}.
-Ene and Nguyen developed an even faster algorithm that runs in 
-$\frac{1}{\epsilon}^{O(1/\epsilon^4)}n \log^2 n$ time
-\cite{Alina2017}.
-These algorithms, however, 
-as the authors of the latter one mentioned, are impractical.
+Ene and Nguyen developed an even faster algorithm that runs in $\frac{1}{\epsilon}^{O(1/\epsilon^4)}n \log^2 n$ time \cite{Alina2017}.
+These algorithms, however, as mentioned by the authors, are impractical.
 For example, the running time of the latter algorithm for $\epsilon = 2^{-2}$ is
 $2^{2O(2^{8})}n\log^2n$ achieving approximation ratio of $\approx 0.38$.
-Here we develop a $(1 - e^{-2/3}) \approx 0.48$-approximation algorithm with the same
 
-This algorithm .
+% In the above papers (and other papers as well), however,
+% there is a logical flaw in the analysis of this algorithm.
+% In this paper we prove this claim.
+% We also consider a modification of this algorithm with the same running time and show that it
+% achieves a better approximation ratio.
 
-In the above papers (and other papers as well), however,
-there is a logical flaw in the analysis of this algorithm.
-In this paper we prove this claim.
-We also consider a modification of this algorithm with the same running time and show that it
-achieves a better approximation ratio.
-
-asymptotic running time as the simple greedy algorithm and with reasonable constants.
+% asymptotic running time as the simple greedy algorithm and with reasonable constants.
 
