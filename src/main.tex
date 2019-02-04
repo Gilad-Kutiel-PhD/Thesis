@@ -33,12 +33,140 @@
     We consider the problem of maximizing a monotone submodular function under a knapsack constraint.
     We propose a simple and fast algorithm to the problem that runs in $O(n^2)$ time (with very small constants) and achieves a $(1-e^{-2/3})$ approximation.
     As a side effect of our work we fix a logical flaw in the analysis of the ModifiedGreedy algorithm for this problem as appeared in \cite{khuller1999budgeted} and \cite{krause2005note}.
-    We also analyze the Modified$^2$Greedy algorithm and able to show a better lower bound to its approximation ratio compared to the ModifiedGreedy algorithm.
+    We also analyze the Modified$^2$Greedy algorithm and show that it might achieves a better approximation than the ModifiedGreedy algorithm.
 \end{abstract}
 
 \input{content}
 
 \bibliographystyle{plainurl}
 \bibliography{bib/knapsack}
+
+\appendix
+
+\begin{figure}[H]
+	\caption{
+		\label{fig:mgreedy}
+		Modified Greedy Approximation Ratio
+	}
+	\begin{tikzpicture}
+		\begin{axis}[
+                width=\textwidth
+				,domain=0:0.49
+				,ymax=.7
+				,xmax=.51
+				,xlabel=$\delta$
+				,xtick distance=0.1
+				,ytick distance=0.1
+				,axis lines=left
+				,grid=both
+				,grid style={
+						draw=gray!20
+					}
+				,minor tick num=5
+				,legend pos=south west
+				,legend entries={
+						$f(A)$
+						,$f(B|A)$
+						,$f(A) + f(B|A)$
+						,$1 - e^{-\frac{1}{2}}$
+					}
+			]
+			\addplot[line blue]{1-exp(-(0.5-x))};
+			\addplot[line red]{(1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
+			\addplot[line brown]{1-exp(-(0.5-x)) + (1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
+			\addplot[line teal]{1-exp(-0.5)};
+		\end{axis}
+	\end{tikzpicture}
+\end{figure}
+
+\begin{figure}[H]
+    \caption{
+    \label{fig:mmgreedy}
+    Modified Modified Greedy Approximation Ratio ($\epsilon = \eps$)
+    }
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=\textwidth
+        ,domain=0:0.49
+        ,ymax=.7
+        ,xmax=.51
+        ,xlabel=$\delta$
+        ,xtick distance=0.1
+        ,ytick distance=0.1
+        ,axis lines=left
+        ,grid=both
+        ,grid style={
+            draw=gray!20
+        }
+        ,minor tick num=5
+        ,legend pos=south west
+        ,legend entries={
+            $f(A)$
+            ,$f(B|A)$
+            ,$f(A) + f(B|A)$
+            ,$1-e^{-(0.5 + \epsilon)}$
+        }
+    ]
+      \addplot[line blue]{1-exp(-(0.5 + \eps -x))};
+      \addplot[line red]{
+          (1 - exp(-(1 - 6 * \eps + 6 * x)/(2 + 4 * \eps - 4 * x)))
+          *
+          (exp(-(0.5 + \eps)) - 1 + exp(-(0.5 + \eps - x)))
+      };
+      \addplot[line teal]{
+          1-exp(-(0.5 + \eps -x))
+          +
+          (1 - exp(-(1 - 6 * \eps + 6 * x)/(2 + 4 * \eps - 4 * x)))
+          *
+          (exp(-(0.5 + \eps)) - 1 + exp(-(0.5 + \eps - x)))
+      };
+      \addplot[line brown]{
+          1-exp(-(0.5 + \eps))
+      };
+    \end{axis}
+    \end{tikzpicture}
+    \end{figure}
+    
+    
+    \begin{figure}[H]
+        \caption{
+            \label{fig:sub:bucket}
+            Bucket Algorithm - Approximation Ratio
+        }
+        \begin{tikzpicture}
+            \begin{axis}[
+                    width=\textwidth
+                    ,domain=0:1
+                    ,ymax=.55
+                    ,ymin=0.3
+                    % 	,xmax=.51
+                    ,xlabel=$\rho{=}\frac{f(\pLarge)}{f(O)}$
+                    ,ylabel=Approximation Ratio
+                    ,xtick distance=0.1
+                    ,ytick distance=0.1
+                    ,axis lines=left
+                    ,grid=both
+                    ,grid style={
+                            draw=gray!20
+                        }
+                    ,minor tick num=5
+                    ,legend pos=south west
+                    ,legend entries={
+                            Bucket Algorithm
+                            ,Greedy Algorithm
+                            ,$(1 - e^{-2/3})$
+                        }
+                ]
+                \addplot[blue, dashed]{
+                    exp(-(0.5 + \eps))/1.008*x + (1 - exp(-(0.5 + \eps))) * (1 - x)};
+                \addplot[red, dotted]{(1 - exp(-1.5)) * (1 - x)};
+                \addplot[green]{(1 - exp(-2/3))};
+            \end{axis}
+        \end{tikzpicture}
+    \end{figure}
+    
+
+
+
 
 \end{document}

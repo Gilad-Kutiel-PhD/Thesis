@@ -132,54 +132,6 @@ Optimizing over $0 < \epsilon \leq 1/6$ we get that $\epsilon = \text{TODO}$ and
 
 \paragraph{Remark:} From the proof of Theorem~\ref{theorem:mmgreedy} we obtain an approximation of $(1 - e^{-1/2 + \eps})$.
 
-\begin{figure}
-\caption{
-\label{fig:mmgreedy}
-Modified Modified Greedy Approximation Ratio ($\epsilon = \eps$)
-}
-\begin{tikzpicture}
-\begin{axis}[
-	width=\textwidth
-	,domain=0:0.49
-	,ymax=.7
-	,xmax=.51
-	,xlabel=$\delta$
-	,xtick distance=0.1
-	,ytick distance=0.1
-	,axis lines=left
-	,grid=both
-	,grid style={
-		draw=gray!20
-	}
-	,minor tick num=5
-	,legend pos=south west
-	,legend entries={
-		$f(A)$
-		,$f(B|A)$
-		,$f(A) + f(B|A)$
-		,$1-e^{-(0.5 + \epsilon)}$
-	}
-]
-  \addplot[line blue]{1-exp(-(0.5 + \eps -x))};
-  \addplot[line red]{
-  	(1 - exp(-(1 - 6 * \eps + 6 * x)/(2 + 4 * \eps - 4 * x)))
-  	*
-  	(exp(-(0.5 + \eps)) - 1 + exp(-(0.5 + \eps - x)))
-  };
-  \addplot[line teal]{
-  	1-exp(-(0.5 + \eps -x))
-  	+
-  	(1 - exp(-(1 - 6 * \eps + 6 * x)/(2 + 4 * \eps - 4 * x)))
-  	*
-  	(exp(-(0.5 + \eps)) - 1 + exp(-(0.5 + \eps - x)))
-  };
-  \addplot[line brown]{
-  	1-exp(-(0.5 + \eps))
-  };
-\end{axis}
-\end{tikzpicture}
-\end{figure}
-
 \textbf{Upper Bound}
 We show that the approximation ratio of the modified$^2$ greedy algorithm is at most $0.5$.
 To see this consider the following instance of the budgeted maximum coverage problem:

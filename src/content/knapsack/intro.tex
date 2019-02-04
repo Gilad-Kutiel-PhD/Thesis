@@ -42,11 +42,8 @@ These algorithms, however, as mentioned by the authors, are impractical.
 For example, the running time of the latter algorithm for $\epsilon = 2^{-2}$ is
 $2^{2O(2^{8})}n\log^2n$ achieving approximation ratio of $\approx 0.38$.
 
-% In the above papers (and other papers as well), however,
-% there is a logical flaw in the analysis of this algorithm.
-% In this paper we prove this claim.
-% We also consider a modification of this algorithm with the same running time and show that it
-% achieves a better approximation ratio.
-
-% asymptotic running time as the simple greedy algorithm and with reasonable constants.
-
+\paragraph*{Our Result}
+We consider the problem of maximizing a monotone submodular function under a knapsack constraint.
+We present a simple and fast algorithm to the problem that runs in $O(^2)$ time (with very small constants) and achieves $(1 - e^{2/3}) \approx 0.48$ approximation.
+As a side effect of our work we fix a logical flaw in the analysis of the ModifiedGreedy algorithm as appeared in~\cite{khuller1999budgeted} and \cite{krause2005note}.
+We also analyze the Modified$^2$Greedy algorithm and show that it might achieves a better approximation than the ModifiedGreedy algorithm.

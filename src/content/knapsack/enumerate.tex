@@ -192,39 +192,3 @@ Finally, We show that executing \BOTAlg{} with $\epsilon = 0.008$ and $w_{\min} 
 The Bucket procedure dominate the running time of the \BOTAlg, and, as mentioned above, its running time is $O(i_{\max}n^2)$.
 When running the Bucket procedure with $w_{\min} = 0.77f(\pVal)$ and $\epsilon = 0.008$ (as suggested by Theorem~\ref{theorem:mmgreedy-or-bucket}) we get that $i_{\max} = 33$.
 
-\begin{figure}
-	\caption{
-		\label{fig:sub:bucket}
-		Bucket Algorithm - Approximation Ratio
-	}
-	\begin{tikzpicture}
-		\begin{axis}[
-				width=\textwidth
-				,domain=0:1
-				,ymax=.55
-				,ymin=0.3
-				% 	,xmax=.51
-				,xlabel=$\rho{=}\frac{f(\pLarge)}{f(O)}$
-				,ylabel=Approximation Ratio
-				,xtick distance=0.1
-				,ytick distance=0.1
-				,axis lines=left
-				,grid=both
-				,grid style={
-						draw=gray!20
-					}
-				,minor tick num=5
-				,legend pos=south west
-				,legend entries={
-						Bucket Algorithm
-						,Greedy Algorithm
-						,$(1 - e^{-2/3})$
-					}
-			]
-			\addplot[blue, dashed]{
-				exp(-(0.5 + \eps))/1.008*x + (1 - exp(-(0.5 + \eps))) * (1 - x)};
-			\addplot[red, dotted]{(1 - exp(-1.5)) * (1 - x)};
-			\addplot[green]{(1 - exp(-2/3))};
-		\end{axis}
-	\end{tikzpicture}
-\end{figure}

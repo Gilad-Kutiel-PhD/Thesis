@@ -80,42 +80,6 @@ The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $(1-e^{-1/2})
 
 In \cite{khuller1999budgeted} it was claimed that 0.44 is an upper bound on the approximation ratio of this algorithm but no explicit example to support this claim was given and we could not recover such an example.
 
-\begin{figure}
-	\caption{
-		\label{fig:mgreedy}
-		Modified Greedy Approximation Ratio
-	}
-	\begin{tikzpicture}
-		\begin{axis}[
-				width=\textwidth
-				,domain=0:0.49
-				,ymax=.7
-				,xmax=.51
-				,xlabel=$\delta$
-				,xtick distance=0.1
-				,ytick distance=0.1
-				,axis lines=left
-				,grid=both
-				,grid style={
-						draw=gray!20
-					}
-				,minor tick num=5
-				,legend pos=south west
-				,legend entries={
-						$f(A)$
-						,$f(B|A)$
-						,$f(A) + f(B|A)$
-						,$1 - e^{-\frac{1}{2}}$
-					}
-			]
-			\addplot[line blue]{1-exp(-(0.5-x))};
-			\addplot[line red]{(1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
-			\addplot[line brown]{1-exp(-(0.5-x)) + (1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
-			\addplot[line teal]{1-exp(-0.5)};
-		\end{axis}
-	\end{tikzpicture}
-\end{figure}
-
 % \textbf{Upper Bound}
 % In \cite{khuller1999budgeted} it is claimed that the upper bound on the approximation ratio
 % of the modified greedy algorithm is at most 0.44, but no explicit instance was given to 
