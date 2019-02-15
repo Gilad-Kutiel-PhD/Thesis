@@ -25,3 +25,4 @@
 *.fdb_latexmk
 !src/lipics-logo-bw.pdf
 !src/cc-by.pdf
+.dropbox
