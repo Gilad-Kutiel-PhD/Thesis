@@ -33,7 +33,7 @@ Thus, let us assume that $f(\{e_1, e_2\}) < (1 - e^{-1/2 + \epsilon})f(O)$ for e
 Similarly to the proof of Theorem~\ref{theorem:mgreedy}, we can assume that the greedy algorithm discards at least three elements from $O$, i.e., $|S \setminus O| \geq 3$.
 Otherwise, we are guaranteed that $f(T) \geq 0.5f(O)$.
 % 
-Let $a$ be the first element in $O$ that was dropped by the algorithm, 
+Let $a$ be the first element in $O$ that was dropped by the algorithm, i.e. the first time the condition on line~\ref{line:dropped} was false,
 and let $A$ be the set of elements chosen by the algorithm just before dropping $a$.
 % 
 If $f(A) \geq (1 - e^{-(1/2 + \epsilon)})f(O)$ the theorem holds.
@@ -57,7 +57,7 @@ otherwise it is \emph{small}.
 Note that $a$ is big since $\epsilon \leq 1/6$ and $\delta > 0$.
 
 Note that $O\setminus\{a\}$ contains at most one big element (if that is not the case then the size of two big elements is at least $(1/2 + \epsilon - \delta)c(O)$), in contradiction to \ref{mmgreedy:ineq2}.
-Thus, since the greedy algorithm dropped at least three elements, it must be the case that at least one of them is cheap.
+Thus, since the greedy algorithm dropped at least three elements from $O$, it must be the case that at least one of them is small.
 Let $b$ be the first such element, and let $B$ be the set of elements chosen by the 
 algorithm right after dropping $a$ and just before dropping $b$.
 Also denote by $C$ the subset of small elements in $O$, 
@@ -68,7 +68,7 @@ We note that:
 \label{mmgreedy:ineq3}
 c(C) \leq (0.5 + \epsilon - \delta)c(O),
 \end{equation}
-since $a$ is expensive.
+since $a$ is big.
 % 
 The above inequalities derive a lower bound on the size of $B$:
 \begin{equation}
