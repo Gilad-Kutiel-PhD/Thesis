@@ -94,23 +94,21 @@ This gives us the following:
 
 Finally, we would like to lower bound $f(T)$.
 Note that if $f(A) \geq (1 - e^{-(1/2 + \epsilon)})f(O)$ we can lower bound $f(T)$ by $(1 - e^{-(1/2 + \epsilon)})f(O)$ and otherwise
-\begin{multline}
+\begin{align}
 	f(A \cup B)  
-	= 
+	& = \nonumber
 	f(A) + f(B|A) 
-	\geq 
-	\\
+	\\ & \geq 
 	(1-e^{-(1/2 + \epsilon - \delta)})f(O) 
-	\\
 	+ 
 	(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
 	\left[
 	e^{-(1/2 + \epsilon)}
 	- (1 - e^{-(1/2 + \epsilon - \delta)})
 	\right]f(O)
-\end{multline} 
+\end{aling} 
 
-Thus, for a given fixed $\\min epsilon > 0$ we have
+Thus, for a given fixed $\epsilon > 0$ we have
 \begin{equation}
 	f(T) \geq \min \begin{cases}
 		(1 - e^{-(1/2 + \epsilon)})
@@ -118,7 +116,6 @@ Thus, for a given fixed $\\min epsilon > 0$ we have
 			\displaystyle{\min_{\delta}}
 			(1-e^{-(1/2 + \epsilon - \delta)})f(O) 
 			+ 
-			\\ 
 			(1-e^{-\frac{1-6\epsilon+6\delta}{2+4\epsilon-4\delta}})
 			\left[
 			e^{-(1/2 + \epsilon)}
