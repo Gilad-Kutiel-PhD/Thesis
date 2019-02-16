@@ -13,14 +13,14 @@ The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $(1-e^{-1/2})
 	We can assume that $f(\{e\}) \leq (1 - e^{-1/2})f(O)$ for every $e \in U$, otherwise the value of $e$, and hence of $T$, is large enough and the theorem holds.
 	Recall that by the definition of Algorithm~\ref{alg:mgreedy} $S$ is the output of the greedy algorithm, and let $e^*$ be the most valuable element.
 	
-	Consider two cases depending on how many elements of $O$ are discarded by the greedy algorithm, i.e., $|O \setminus S|$.
-	If $|O \setminus S \leq 1$, then 
+	Consider two cases depending on how many elements of $O$ are dropped by the greedy algorithm, i.e., $|O \setminus S|$.
+	If $|O \setminus S| \leq 1$, then 
 	$$
 	f(O) \leq f(O \cup S) \leq f(O \setminus S) + f(S) \leq f(e^*) + f(S).
 	$$
 	The above implies that either $f(S) \geq \frac{1}{2}f(O)$ or $f(e) \geq \frac{1}{2}f(O)$ concluding the proof for this case.
 	Otherwise, $|O \setminus S| \geq 2$,
-	Denote by $a$ and $b$ the first and second elements of $O$ the greedy algorithm drops.
+	Denote by $a$ and $b$ the first and second elements of $O$ the greedy algorithm drops, i.e. $a$ is the considered element at the first time the condition on line~\ref{line:dropped} in Algorithm~\ref{alg:greedy} is evaluated to false and $b$ is the considered element the second time this condition is evaluated to false.
 	Denote by $A$ the set of elements chosen by the algorithm just before dropping $a$ and by
 	$B$ the set of elements chosen right after dropping $a$ and before dropping $b$.
 	If $f(A) \geq (1 - e^{-1/2})f(O)$ then the theorem holds.

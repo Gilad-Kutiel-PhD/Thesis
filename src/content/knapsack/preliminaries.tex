@@ -83,26 +83,26 @@ Where inequality \ref{ineq:main:cond} is due to the condition in the lemma, ineq
 Thus, from the above we get that:
 
 $$
-f(B) - f(A_i)  \leq (f(B) - f(A_{i - 1}))
-\left(1 - \frac{c(a_i)}{c(B)}\right).
+f(Y) - f(X_i)  \leq (f(Y) - f(X_{i - 1}))
+\left(1 - \frac{c(a_i)}{c(Y)}\right).
 $$
 Hence,
 $$
-f(B) - f(A_i)  \leq f(B) \prod_{j = 1}^{i}
-\left(1 - \frac{c(e_j)}{c(B)}\right).
+f(Y) - f(X_i)  \leq f(Y) \prod_{j = 1}^{i}
+\left(1 - \frac{c(a_j)}{c(Y)}\right).
 $$
 Applying inequality $1 - x \leq e^{-x}$ we get that:
 $$
-f(B) - f(A_i)  \leq f(B) 
-\left(e^{-\sum_{j = 1}^{i}\frac{c(e_j)}{c(B)}}\right).
+f(Y) - f(X_i)  \leq f(Y) 
+\left(e^{-\sum_{j = 1}^{i}\frac{c(e_j)}{c(Y)}}\right).
 $$
 Rearranging the terms and setting $i = k$ completes the proof.
 \end{proof}
 
-In particular, if $A$ is the set of elements chosen by the greedy algorithm in 
-the $k$ first iterations and $B$ is any subset such that no element from $B$ was dropped
+In particular, if $X$ is the set of elements chosen by the greedy algorithm in 
+the $k$ first iterations and $Y$ is any subset such that no element from $Y$ was dropped
 by the greedy algorithm, 
-then Lemma~\ref{lemma:sub-main} can be applied on $A$ and $B$.   
+then Lemma~\ref{lemma:sub-main} can be applied on $X$ and $Y$.   
 
 
 
