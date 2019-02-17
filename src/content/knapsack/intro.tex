@@ -1,7 +1,7 @@
 Submodularity is a fundamental mathematical notion that captures the concept of economy of scale and is prevalent in many areas of science and technology.
-Given a ground set $X$ a set function $f:2^X \to \mathbb{R}_+$ over $X$ is called \emph{submodular} if it has the \emph{diminishing returns} property:
-$f(A \cup \{a\}) - f(A) \geq f(B \cup \{a\}) - f(B)$ for every $A \subseteq B \subseteq X$ and $a \in X \setminus B$.\footnote{
-    An equivalent definition is: $f(A) + f(B) \geq f(A \cup B) + f(A \cup B)$ for every $A,B \in X$.
+Given a ground set $U$ a set function $f:2^U \to \mathbb{R}_+$ over $U$ is called \emph{submodular} if it has the \emph{diminishing returns} property:
+$f(A \cup \{a\}) - f(A) \geq f(B \cup \{a\}) - f(B)$ for every $A \subseteq B \subseteq U$ and $a \in U \setminus B$.\footnote{
+    An equivalent definition is: $f(A) + f(B) \geq f(A \cup B) + f(A \cup B)$ for every $A,B \in U$.
 }
 Submodular functions naturally arise in different disciplines such as combinatorics, graph theory, probability, game theory, and economics.
 Some well known examples include coverage functions, cuts in graphs and hypergraphs, matroid rank functions, entropy, and budget additive functions.
@@ -29,21 +29,21 @@ This need stems from the sheer scale of the applicability of submodular maximiza
 %%Additionally, many classical problems in combinatorial optimization are in fact submodular in nature, e.g., maximum cut and maximum directed cut~\cite{goemans1995improved,Halperin:2001:CAA:365411.365412,Hastad:2001:OIR:502090.502098,Karp1972,Khot05optimalinapproximability}, maximum coverage~\cite{Feige:1998:TLN:285055.285059,KHULLER199939}, generalized assignment problem~\cite{Chekuri06apolynomial,Cohen06anefficient,Feige2006ApproximationAF,Fleischer:2006:TAA:1109557.1109624}, maximum bisection~\cite{DBLP:journals/talg/AustrinBG16,DBLP:journals/algorithmica/FriezeJ97}, and facility location~\cite{DBLP:journals/dam/AgeevS99,CORNUEJOLS1977163,doi:10.1287/mnsc.23.8.789}.
 
 In this paper we consider the problems of maximizing a monotone\footnote{
-    $f$ is monotone if $f(S) \leq f(T)$ for every $S \subseteq T \subseteq X$.
+    $f$ is monotone if $f(S) \leq f(T)$ for every $S \subseteq T \subseteq U$.
 } submodular function given a knapsack constraint.
 %{\color{red}{ROY: ADD APPLICATIONS SPECIFIC TO OUR PROBLEM HERE WITH A SHORT EXPLANATION}}.
 In this problem we are given a ground set
-$X$ of size $n$, a monotone submodular function $f:2^X \to \mathbb{R}_+$, a cost function $c:X \to \mathbb{R}_+$, and a budget $\beta$.
+$U$ of size $n$, a monotone submodular function $f:2^U \to \mathbb{R}_+$, a cost function $c:U \to \mathbb{R}_+$, and a budget $\beta$.
 The goal is to find a subset of elements $S$ that maximizes $f(S)$ such that the total cost of the elements in $S$ does not exceed the budget, {\em i.e.}, $\sum _{x\in S}c(x)\leq \beta$.
 For abbreviation we denote this problem by \SK.
 Besides being a natural problem on its own right, capturing the classic Knapsack problem, \SK admits practical applications, {\em e.g.}, entropy maximization in graphical models \cite{krause2005note}, and document summarization \cite{LB10}.
 In this work we aim to find {\em fast} and {\em simple} algorithms for the \SK problem.
 
-We assume the standard value oracle model, where the algorithm can access the objective $f$ via queries of the form: ``what is $f(S)$?'' for every $S\subseteq X$.
+We assume the standard value oracle model, where the algorithm can access the objective $f$ via queries of the form: ``what is $f(S)$?'' for every $S\subseteq U$.
 The running time of the algorithm is measured by the number of value queries it performs.
 
 Building upon the work of Khuller {\em et. al.} \cite{khuller1999budgeted}, Sviridenko \cite{sviridenko2004note} presented a tight approximation of $(1-\nicefrac[]{1}{e})\approx 0.632$ for \SK.
-The algorithm of \cite{sviridenko2004note} returns the best of all subsets of $X$ of size at most three, where each subset of size three is greedily extended by the standard greedy rule that maximizes the ``bang per buck''.
+The algorithm of \cite{sviridenko2004note} returns the best of all subsets of $U$ of size at most three, where each subset of size three is greedily extended by the standard greedy rule that maximizes the ``bang per buck''.
 This results in an impractical algorithm whose running time is $O(n^5)$.
 A fast algorithm whose running time is just that of the greedy algorithm, {\em i.e.}, $O(n^2)$, was given by \cite{khuller1999budgeted} and it achieves a worse approximation of $(1-e^{-\nicefrac[]{1}{2}})\approx 0.393$.\footnote{Khuller {\em et. al.} \cite{khuller1999budgeted} considered the special case where the objective is a coverage function. This was later extended by Krause and Guestrin \cite{krause2005note} and Lin and Bilmes \cite{LB10} to a general monotone submodular objective.}
 
@@ -87,26 +87,26 @@ This results in an approximation of $(1-\nicefrac[]{1}{e}-\nicefrac[]{1}{4})$, w
 
 \paragraph*{Our Results}
 First, we present a remarkably simple algorithm that chooses the best between the greedy algorithm and the best pair of elements.
-Our algorithm retains the same running time of $O(n^2)$ as the fast algorithm of \cite{khuller1999budgeted}, but achieves an improved approximation guarantee of $\approx 0.4534$ (whereas the fast algorithm of \cite{khuller1999budgeted} provided a guarantee of $1-e^{-\nicefrac{1}{2}}\approx 0.393$).
+Our algorithm retains the same running time of $O(n^2)$ as the greedy algorithm and the fast algorithm of \cite{khuller1999budgeted}, but achieves an improved approximation guarantee of $\approx 0.4534$ (whereas the fast algorithm of \cite{khuller1999budgeted} provided a guarantee of only $1-e^{-\nicefrac{1}{2}}\approx 0.393$).
 \begin{theorem}\label{thrm:ModifiedSquared}
 The \SK problem admits an algorithm that runs in time $O(n^2)$ and achieves an approximation of $0.4534$.
 \end{theorem}
-While proving Theorem \ref{thrm:ModifiedSquared}, we discovered that the proof of the fast algorithm of \cite{khuller1999budgeted} is incorrect \cite{naor}.
-We rectify this and present a different argument that proves the claimed guarantee of \cite{khuller1999budgeted}.
+While proving Theorem \ref{thrm:ModifiedSquared}, we discovered that the proof that the fast algorithm of \cite{khuller1999budgeted} achieves an approximation guarantee of $(1-e^{-\nicefrac[]{1}{2}})$ is incorrect \cite{naor}.
+We also rectify this and present a different argument that proves the claimed guarantee of \cite{khuller1999budgeted}.
 
 Second, we present a general method for ``amplifying'' algorithms for \SK.
 Specifically, given any black box algorithm that obtains an approximation guarantee of $r$ and a number $k\in \mathbb{N}$ of executions, we show how to obtain a new algorithm for \SK with a better approximation than $r$ and a running time that equals $k$ times the running time of the black box algorithm plus an additional running time of $3n^2/2$.
 This is summarized in the following theorem.
 \begin{theorem}\label{thrm:Amplification}
 Let $\mathcal{A}$ be an algorithm for the \SK problem achieving an approximation of $r$, where $r< \nicefrac[]{1}{2}$.
-Let $k\geq 3$.
-Then there exists an algorithm that runs in time $3n^2/2$ plus $k$ times the running time of $\mathcal{A}$ and achieves an approximation of $(1-e^{-\beta ^*})$, where:
+Let $k\geq \max \{2, \frac{1}{3\log_2(\nicefrac[]{1}{r} -1 ) }+1 \}$.
+Then there exists an algorithm that runs in time $3n^2/2+n$ plus $k$ times the running time of $\mathcal{A}$ and achieves an approximation of $(1-e^{-\alpha^*})$, where:
 \begin{enumerate}
-\item $\beta ^* = \max _{0\leq \beta \leq \ln{2}} \left\{ \min \left\{ 1-e^{-\beta},D(\beta)+(1-r)\left( \frac{2+\varepsilon}{1+\varepsilon ^*} (1-D(\beta)) -1\right)\right\}\right\}$.
-\item $ D(\beta)=(1-e^{-\beta})/B(\beta)$.
-\item $\varepsilon ^* = 2^{-\frac{\log _2 {A(\beta)}}{k-2}}-1$.
-\item $ A(\beta) = \frac{1}{1-e^{-\beta}}-\frac{1}{B(\beta)}$.
-\item $ B(\beta)=1-e^{-\frac{\beta}{2\beta - 1}}$.
+\item $\alpha ^* = \max _{\nicefrac[]{2}{3}\leq \alpha \leq \ln{2}} \left\{ \min \left\{ 1-e^{-\alpha},D(\alpha)+(1-r)\left( \frac{2+\varepsilon ^*}{1+\varepsilon ^*} (1-D(\alpha)) -1\right)\right\}\right\}$.
+\item $ D(\alpha)=(1-e^{-\alpha})/B(\alpha)$.
+\item $\varepsilon ^* = 2^{-\frac{\log _2 {A(\alpha)}}{k-1}}-1$.
+\item $ A(\alpha) = \frac{1}{1-e^{-\alpha}}-\frac{1}{B(\alpha)}$.
+\item $ B(\alpha)=1-e^{-\frac{\alpha}{2\alpha - 1}}$.
 \end{enumerate}
 \end{theorem}
 
@@ -124,7 +124,7 @@ For example, one can achieve an approximation of $(1-e^{-\nicefrac[]{2}{3}})\app
 %We rectify this and present a different argument that proves the claimed guarantee of \cite{khuller1999budgeted}.
 
 \paragraph*{Our Techniques}
-{\color{red}{TBD}} 
+{\color{red}{TBD}}
 
 \paragraph*{Related Work}
 {\color{red}{TBD}}
