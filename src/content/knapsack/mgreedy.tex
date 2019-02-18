@@ -6,15 +6,15 @@ Let $O$ be an optimal solution, and recall that $T$ is the output of Algorithm~\
 %We analyze the Modified Greedy algorithm (Algorithm~\ref{alg:mgreedy}) of \cite{khuller1999budgeted}.
 %Our analysis matches the $(1 - e^{-1/2})$-approximation claimed in \cite[]{khuller1999budgeted}, correcting the logical flaw in the analysis.
 
-Let $O$ be an optimal set, and recall that $T$ is the output of the Modified Greedy algorithm.
-The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $(1-e^{-1/2})$-approximation.
+%Let $O$ be an optimal set, and recall that $T$ is the output of the Modified Greedy algorithm.
+%The following theorem proves that Algorithm~\ref{alg:mgreedy} is a $(1-e^{-1/2})$-approximation.
 
-\begin{theorem}
-	\label{theorem:mgreedy}
-	The Modified Greedy algorithm (Algorithm~\ref{alg:mgreedy}) achieves an approximation of $(1 - e^{-1/2})$ for the \SK problem.
-\end{theorem}
+%\begin{theorem}
+%	\label{theorem:mgreedy}
+%	The Modified Greedy algorithm (Algorithm~\ref{alg:mgreedy}) achieves an approximation of $(1 - e^{-1/2})$ for the \SK problem.
+%\end{theorem}
 
-\begin{proof}
+\begin{proof}[Proof of Theorem \ref{thrm:CorrectModifiedGreedy}]
 	We can assume that $f(e) \leq (1 - e^{-1/2})f(O)$ for every $e \in U$, otherwise the value of $e$, and hence of $T$, is large enough and the theorem holds.
 	Recall that by the definition of Algorithm~\ref{alg:mgreedy} $S$ is the output of the greedy algorithm, and let $e^*$ be the most valuable element.
 	

@@ -86,48 +86,87 @@ This results in an approximation of $(1-\nicefrac[]{1}{e}-\nicefrac[]{1}{4})$, w
 %$2^{2O(2^{8})}n\log^2n$ achieving approximation ratio of $\approx 0.38$.
 
 \paragraph*{Our Results}
-First, we present a remarkably simple algorithm that chooses the best between the greedy algorithm and the best pair of elements.
-Our algorithm retains the same running time of $O(n^2)$ as the greedy algorithm and the fast algorithm of \cite{khuller1999budgeted}, but achieves an improved approximation guarantee of $\approx 0.4534$ (whereas the fast algorithm of \cite{khuller1999budgeted} provided a guarantee of only $1-e^{-\nicefrac{1}{2}}\approx 0.393$).
-\begin{theorem}\label{thrm:ModifiedSquared}
-The \SK problem admits an algorithm that runs in time $O(n^2)$ and achieves an approximation of $0.4534$.
-\end{theorem}
-While proving Theorem \ref{thrm:ModifiedSquared}, we discovered that the proof that the fast algorithm of \cite{khuller1999budgeted} achieves an approximation guarantee of $(1-e^{-\nicefrac[]{1}{2}})$ is incorrect \cite{naor}.
-We also rectify this and present a different argument that proves the claimed guarantee of \cite{khuller1999budgeted}.
+Our results can be partitioned into two parts: $(1)$ fast and simple combinatorial algorithms for \SK; and $(2)$ a general method for ``amplifying'' any algorithm for \SK by improving its approximation factor while losing little in the running time.
 
-Second, we present a general method for ``amplifying'' algorithms for \SK.
-Specifically, given any black box algorithm that obtains an approximation guarantee of $r$ and a number $k\in \mathbb{N}$ of executions, we show how to obtain a new algorithm for \SK with a better approximation than $r$ and a running time that equals $k$ times the running time of the black box algorithm plus an additional running time of $3n^2/2$.
+\noindent {\bf{Fast and Simple Combinatorial Algorithms:}} We note that the proof that the fast algorithm of \cite{khuller1999budgeted} (named Modified Greedy by the authors) achieves an approximation guarantee of $(1-e^{-\nicefrac[]{1}{2}})$ is incorrect \cite{naor}.
+We rectify this and note that a correct proof requires a different argument than the one appearing in \cite{khuller1999budgeted}.
+This is summarized in the following theorem.
+\begin{theorem}\label{thrm:CorrectModifiedGreedy}
+The Modified Greedy algorithm of Kuller {\em et. al.} \cite{khuller1999budgeted} for the \SK problem achieves an approximation of $(1-e^{-\nicefrac[]{1}{2}})$.
+\end{theorem}
+Building upon the correct proof of Theorem \ref{thrm:CorrectModifiedGreedy}, we present a remarkably simple algorithm that chooses the best between the greedy algorithm and the best pair of elements.
+Our algorithm retains the same running time of $O(n^2)$ as the greedy algorithm and the Modified Greedy algorithm of \cite{khuller1999budgeted}, but achieves an improved approximation guarantee of $\approx 0.453647$ (whereas the Modified Greedy algorithm provides a guarantee of only $1-e^{-\nicefrac{1}{2}}\approx 0.393$).
+In fact, the running time of our algorithm is $3n^2/2+n$.
+This is summarized in the following theorem.
+\begin{theorem}\label{thrm:ModifiedSquared}
+The \SK problem admits an algorithm that runs in time $O(n^2)$ and achieves an approximation of $0.453647$.
+\end{theorem}
+%While proving Theorem \ref{thrm:ModifiedSquared}, we discovered that the proof that the fast algorithm of \cite{khuller1999budgeted} achieves an approximation guarantee of $(1-e^{-\nicefrac[]{1}{2}})$ is incorrect \cite{naor}.
+%We also rectify this and present a different argument that proves the claimed guarantee of \cite{khuller1999budgeted}.
+
+\noindent {\bf{Amplification:}} We present a general method for ``amplifying'' algorithms for \SK.
+Specifically, given any black box algorithm $\mathcal{A}$ that obtains an approximation guarantee of $r$ and a number $k\in \mathbb{N}$ of executions, we show how to obtain a new algorithm for \SK with a better approximation than $r$ and a running time that equals $k$ times the running time of the black box algorithm plus an additional running time of $3n^2/2+n$.
 This is summarized in the following theorem.
 \begin{theorem}\label{thrm:Amplification}
 Let $\mathcal{A}$ be an algorithm for the \SK problem achieving an approximation of $r$, where $r< \nicefrac[]{1}{2}$.
-Let $k\geq \max \{2, \frac{1}{3\log_2(\nicefrac[]{1}{r} -1 ) }+1 \}$.
-Then there exists an algorithm that runs in time $3n^2/2+n$ plus $k$ times the running time of $\mathcal{A}$ and achieves an approximation of $(1-e^{-\alpha^*})$, where:
+Let $k\geq \max \left\{2, -\frac{\log_2(A(\ln 2))}{\log_2(\nicefrac[]{1}{r} -1 ) }+1 \right\}$.
+Then there exists an algorithm that runs in time $3n^2/2+n$ plus $k$ times the running time of $\mathcal{A}$ and achieves an approximation of $r^*$, where:
 \begin{enumerate}
-\item $\alpha ^* = \max _{\nicefrac[]{2}{3}\leq \alpha \leq \ln{2}} \left\{ \min \left\{ 1-e^{-\alpha},D(\alpha)+(1-r)\left( \frac{2+\varepsilon ^*}{1+\varepsilon ^*} (1-D(\alpha)) -1\right)\right\}\right\}$.
+\item $r^* = \max _{\nicefrac[]{2}{3}\leq \alpha \leq \ln{2}} \left\{ \min \left\{ 1-e^{-\alpha},D(\alpha)+(1-r)\left( \frac{2+\nu(\alpha)}{1+\nu(\alpha)} (1-D(\alpha)) -1\right)\right\}\right\}$.
 \item $ D(\alpha)=(1-e^{-\alpha})/B(\alpha)$.
-\item $\varepsilon ^* = 2^{-\frac{\log _2 {A(\alpha)}}{k-1}}-1$.
+\item ${\color{red}{\nu(\alpha )}} = 2^{-\frac{\log _2 {A(\alpha)}}{k-1}}-1$.
 \item $ A(\alpha) = \frac{1}{1-e^{-\alpha}}-\frac{1}{B(\alpha)}$.
-\item $ B(\alpha)=1-e^{-\frac{\alpha}{2\alpha - 1}}$.
+\item $ B(\alpha)=1-e^{-\frac{1}{\alpha}}$.
 \end{enumerate}
 \end{theorem}
 
-Theorems \ref{thrm:ModifiedSquared} and \ref{thrm:Amplification} enable us to derive fast algorithms for \SK, by applying the ``amplification'' of Theorem \ref{thrm:Amplification} repeatedly several times.
-For example, one can achieve an approximation of $(1-e^{-\nicefrac[]{2}{3}})\approx 0.4866$ in time {\color{red}{???}}.
+Given any black box algorithm $\mathcal{A}$ for \SK Theorem \ref{thrm:Amplification} can be used to answer two interesting questions: $(1)$ given an upper on the running time of the algorithm what is the best approximation that can be obtained using our amplification framework? $(2)$ given a target approximation guarantee what is the required running time using our amplification framework?
+For example, choosing the black box algorithm $\mathcal{A}$ to be the algorithm whose existence is guaranteed by Theorem \ref{thrm:ModifiedSquared}, amplifying it with $k=6$ we can obtain an algorithm achieving an improved approximation of $0.48$ whose running time is $21n^2/2+7n$.
+Moreover, one can repeatedly apply the amplification, each time with a suitable choice of $k$, obtaining an approximation guarantee that approaches $\nicefrac[]{1}{2}$. 
 
-%We present a fast and simple algorithm for \SK which retains the fast running time of the greedy algorithm, {\em i.e.}, $O(n^2)$, and achieves an improved approximation guarantee of $(1-e^{-\nicefrac[]{2}{3}})\approx 0.4866$, improving upon the fast algorithm of Khuller {\em et. al.} \cite{khuller1999budgeted}.
-%%We aim to find a {\em fast} and {\em simple} algorithm for the problem of maximizing a monotone submodular function given a knapsack constraint.
-%%We present an algorithm whose running time is that of the greedy algorithm, {\em i.e.}, $O(n^2)$, matching the running time of the fast algorithm of \cite{khuller1999budgeted}, and achieving an improved approximation of $(1-e^{-\nicefrac[]{2}{3}})\approx 0.487$.
-%%This is summarized in the following theorem.
-%\begin{theorem}\label{thrm:OurAlgorithm}
-%There exists an algorithm for the \SK problem achieving an approximation of $(1-e^{-\nicefrac[]{2}{3}})$ whose running time is $O(n ^2)$.
-%\end{theorem}
-%Along the way, we discovered that the proof of the fast algorithm of \cite{khuller1999budgeted} is incorrect \cite{naor}.
-%We rectify this and present a different argument that proves the claimed guarantee of \cite{khuller1999budgeted}.
+%Theorem \ref{thrm:Amplification} allows us to amplify any algorithm, in particular the algorithm whose existence is guaranteed in Theorem \ref{thrm:ModifiedSquared}.
+%Two interesting conclusion, for example, that can be derived from Theorems \ref{thrm:Amplification} and \ref{thrm:ModifiedSquared} are: $(1)$ applying the amplification with $k=6$ to the algorithm whose existence is guaranteed in Theorem \ref{thrm:ModifiedSquared} results in an improved approximation of $0.48$ and a running time of 
+%
+%Theorems \ref{thrm:ModifiedSquared} and \ref{thrm:Amplification} enable us to derive fast algorithms for \SK, by applying the ``amplification'' of Theorem \ref{thrm:Amplification} repeatedly several times.
+%For example, one can achieve an approximation of $(1-e^{-\nicefrac[]{2}{3}})\approx 0.4866$ in time {\color{red}{???}}.
+%
+%%We present a fast and simple algorithm for \SK which retains the fast running time of the greedy algorithm, {\em i.e.}, $O(n^2)$, and achieves an improved approximation guarantee of $(1-e^{-\nicefrac[]{2}{3}})\approx 0.4866$, improving upon the fast algorithm of Khuller {\em et. al.} \cite{khuller1999budgeted}.
+%%%We aim to find a {\em fast} and {\em simple} algorithm for the problem of maximizing a monotone submodular function given a knapsack constraint.
+%%%We present an algorithm whose running time is that of the greedy algorithm, {\em i.e.}, $O(n^2)$, matching the running time of the fast algorithm of \cite{khuller1999budgeted}, and achieving an improved approximation of $(1-e^{-\nicefrac[]{2}{3}})\approx 0.487$.
+%%%This is summarized in the following theorem.
+%%\begin{theorem}\label{thrm:OurAlgorithm}
+%%There exists an algorithm for the \SK problem achieving an approximation of $(1-e^{-\nicefrac[]{2}{3}})$ whose running time is $O(n ^2)$.
+%%\end{theorem}
+%%Along the way, we discovered that the proof of the fast algorithm of \cite{khuller1999budgeted} is incorrect \cite{naor}.
+%%We rectify this and present a different argument that proves the claimed guarantee of \cite{khuller1999budgeted}.
 
 \paragraph*{Our Techniques}
-{\color{red}{TBD}}
+We adopt a purely combinatorial approach, thus deviating from the recent line of work of \cite{badanidiyuru2014fast,Alina2017}.
+Both our results, an improved fast and simple algorithm as well as the amplification, are inspired by the tight (but slow) algorithm of \cite{khuller1999budgeted,sviridenko2004note} for \SK.
+We require two new insights that allow us to obtain our results.
+
+The first insight relates to how algorithms for \SK can be analyzed.
+At the heart of the analysis of the tight (but slow) algorithm of \cite{khuller1999budgeted,sviridenko2004note} lies the observation that as long as no element of the optimal solution was dropped by the greedy ``bang per buck'' algorithm\footnote{The greedy ``bang per buck'' is formally described in Section \ref{sec:Preliminaries}}, value is accumulated at a rate that depends on the fraction of the budget $\beta$ that was used so far.
+Formally, if the greedy ``bang per buck'' uses a fraction $\alpha$ of the budget and it did not drop any element that belongs to the optimal solution so far, then its value is at least a fraction of $(1-e^{-\alpha})$ of the value of the optimal solution.
+Once the first element of the optimal solution is dropped, no further analysis of the algorithm is given in \cite{khuller1999budgeted,sviridenko2004note}.
+
+We present an improved approach to analyzing the greedy ``bang per buck'' algorithm and show that in certain cases value can still be accumulated even after elements of the optimal solution were dropped.
+This plays a crucial role in all of our results: $(1)$ a correct proof to the fast algorithm of \cite{khuller1999budgeted} (Theorem \ref{thrm:CorrectModifiedGreedy}); $(2)$ an improved fast and simple algorithm (Theorem \ref{thrm:ModifiedSquared}); and $(3)$ our amplification framework (Theorem \ref{thrm:Amplification}).
+
+The second insight relates to the design of the amplification framework.
+The tight (but slow) algorithm of \cite{khuller1999budgeted,sviridenko2004note} needs to find a small (of size at most three) subset of the most valuable elements in the optimal solution, and extend it by the greedy ``bang per buck'' algorithm.
+This is done by simple enumeration over all small subsets, thus resulting in a tight (but slow) algorithm that runs in $ O(n^5)$ time.
+The crucial point in the analysis is that the algorithm needs to find the {\em exact} subset.
+Hence, since the optimal solution is not known, enumeration is used over the $O(n^3)$ such subsets.
+
+We, on the other hand, adopt a different approach where it is enough to find a small subset that is {\em comparable} in both value and cost to the most valuable small subset in the optimal solution.
+We show that there is only a {\em constant} number of such comparable small subsets.
+This allows us, when combined with the first insight, to devise our method for amplifying any algorithm for the \SK problem: improving its approximation factor with only a small loss in the running time.
 
 \paragraph*{Related Work}
-{\color{red}{TBD}}
+{\color{red}{TBD: add the special case of a cardinality constraint, and the general matroid constraint (continuous greedy). Add Ariel's work on a constant number of packing constraints.}}
 
 \paragraph*{Paper Organization}
-{\color{red}{TBD}}
+Section \ref{sec:Preliminaries} contains needed notations and description of previous algorithms.
+Section \ref{sec:ModifiedGreedy} contains a correct proof of the fast algorithm of Khuller {\em et. al.} \cite{khuller1999budgeted}, whereas Section \ref{sec:Modified2Greedy} contains our improved fast algorithm.
+Lastly, Section \ref{sec:Amplification} describes our amplification method. 
