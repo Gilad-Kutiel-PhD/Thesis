@@ -92,7 +92,7 @@ $$ A(\alpha) = \frac{1}{1-e^{-\alpha}}-\frac{1}{B(\alpha)}$$
 	If $O\setminus \pLarge \subseteq G$, then
 	$f(G)+ f(\pVal)\geq f(O\setminus \pLarge) + f(\pLarge) \geq f(O)$.
 	Therefore $f(G)\geq \frac{f(O)}{2}$ or $f(\pVal)\geq \frac{f(O)}{2}$ 
-	and we get than the Lemma holds (note that $\alpha \leq ln 2$ and therefore
+	thus the Lemma holds (note that $\alpha \leq ln 2$ and therefore
 	$1-e^{-\alpha} < \frac{1}{2}$). Thus we can assume that 
 	$O\setminus \pLarge \nsubseteq G$.
 	
@@ -110,7 +110,7 @@ $$ A(\alpha) = \frac{1}{1-e^{-\alpha}}-\frac{1}{B(\alpha)}$$
 
 	Let $\beta M$ be the size of the third largest element in $O$.
 	As the size of the largest element in $O$ is $\beta L$, 
-	using a simple argument we get, $M\leq M(L)$ when $M(L)= \min \{\frac{1-L}{2}, L\}$. Since 
+	using a simple argument we get, $M\leq M(L)$ where $M(L)= \min \{\frac{1-L}{2}, L\}$. Since 
 	$O\setminus \pLarge \nsubseteq G$, there must be an element from $O \setminus \pLarge$ the greedy in line \ref{amplify:greedy} drops. Since all the elements 
 	in $O\setminus \pLarge$ are of size at most $\beta M$ the knapsack must 
 	already have elements of size $\beta (1-M)$ at the first time an element from $O\setminus \pLarge$ is dropped. Also, $c(O\setminus \pLarge) \leq \beta(1-L -M)$, therefore by Lemma \ref{lemma:sub-main} we get that 
@@ -201,17 +201,17 @@ B(\alpha ) D(\alpha ) f(O)
 			\begin{align*}
 			f(S_{i}) 
 			&
-			\geq& f(P_i) + f(Q_i|P_i)
+			\geq f(P_i) + f(Q_i|P_i)
 			\\ & 
-			\geq& f(P_i) + r f(O \setminus \pLarge | P_i)
+			\geq f(P_i) + r f(O \setminus \pLarge | P_i)
 			\\ & 
-			\geq& f(P_i) + r(f(O) - f(\pLarge) - f(P_i))
+			\geq f(P_i) + r(f(O) - f(\pLarge) - f(P_i))
 			\\ &
-			=& (1-r)f(P_i) + r(f(O) - f(\pLarge))
+			= (1-r)f(P_i) + r(f(O) - f(\pLarge))
 			\\ & 
-			\geq& \frac{1-r}{1 + \epsilon}f(\pLarge) + r(f(O) - f(\pLarge))
+			\geq \frac{1-r}{1 + \epsilon}f(\pLarge) + r(f(O) - f(\pLarge))
 			\\ &
-			= &\left(
+			= \left(
 			\frac{(2 + \epsilon)}{(1 + \epsilon)}(1-r) - 1
 			\right)
 			f(\pLarge)
