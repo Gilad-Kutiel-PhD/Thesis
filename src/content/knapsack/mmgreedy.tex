@@ -15,7 +15,7 @@ We prove that Algorithm \ref{alg:mmgreedy} achieves the guarantee claimed in The
 \begin{algorithm}
 	$S \leftarrow \text{greedy}(U, f, c, \beta)$
 	\\
-	$T \leftarrow \arg\max\{S, \argmax \{ f(\{ e1,e2\}):e1,e2\in U\}$
+	$T \leftarrow \arg\max\{S, \argmax \{ f(\{ e1,e2\}):e1,e2\in U, c(\{e_1, e_2\} ) \leq \beta \} \}$
 	\\
 	\Return{T}
 	%
@@ -28,7 +28,7 @@ Let $0<\varepsilon \leq \nicefrac[]{1}{6}$ be an absolute constant to be determi
 If there is a pair of elements $e_1, e_2 \in U$ whose value is high enough, {\em i.e.}, $f(\{e_1, e_2\}) \geq (1 - e^{-(\nicefrac[]{1}{2} + \varepsilon)})f(O)$, then the theorem follows.
 Thus, let us assume that $f(\{e_1, e_2\}) < (1 - e^{-(\nicefrac[]{1}{2} + \varepsilon)})f(O)$ for every pair of elements $e_1, e_2 \in U$.
 
-Similarly to the proof of Theorem~\ref{theorem:mgreedy}, we can assume that the greedy algorithm discards at least three elements from $O$, {\em i.e.}, $|S \setminus O| \geq 3$.
+Similarly to the proof of Theorem~\ref{thrm:CorrectModifiedGreedy}, we can assume that the greedy algorithm discards at least three elements from $O$, {\em i.e.}, $|S \setminus O| \geq 3$.
 Otherwise, we are guaranteed that $f(T) \geq \nicefrac[]{1}{2}\cdot f(O)$.
 Let $a$ be the first element in $O$ that was dropped by the algorithm, {\em i.e.}, the first time the condition in line~\ref{line:dropped} was false, and let $A$ be the set of elements chosen by the algorithm just before dropping $a$.
 If $f(A) \geq (1 - e^{-(\nicefrac[]{1}{2} + \varepsilon)})f(O)$ the theorem holds.
@@ -102,17 +102,17 @@ Otherwise,
 \end{align}
 Thus, for a given fixed $\varepsilon > 0$ we have:
 \begin{equation}
-	f(T) \geq \min \begin{cases}
-		(1 - e^{-(1/2 + \varepsilon)})f(O)
+	\frac{f(T)}{f(O)} \geq  \min \begin{cases}
+		(1 - e^{-(1/2 + \varepsilon)})
 		\\
 			\displaystyle{\min_{\delta}}\left\{
-			(1-e^{-(\nicefrac[]{1}{2} + \varepsilon - \delta)})f(O)
+			(1-e^{-(\nicefrac[]{1}{2} + \varepsilon - \delta)})
 			+
 			(1-e^{-\frac{1-6\varepsilon+6\delta}{2+4\varepsilon-4\delta}})
 			\left[
 			e^{-(\nicefrac[]{1}{2} + \varepsilon)}
 			- (1 - e^{-(\nicefrac[]{1}{2} + \varepsilon - \delta)})
-			\right]f(O)\right\},
+			\right]\right\}
 	\end{cases}
 \end{equation}
 %\begin{equation}

@@ -1,7 +1,16 @@
 We note that the proof given by Khuller {\em et. al.} \cite{khuller1999budgeted} that the Modified Greedy algorithm (Algorithm~\ref{alg:mgreedy}) provides an approximation of $ (1-e^{-\nicefrac[]{1}{2}})$ for \SK is flawed.
-{\color{red}{The flaw originates from applying Lemma~\ref{lemma:sub-main} incorrectly for a set for which the greedy algorithm (Algorithm~\ref{alg:greedy}) might have dropped elements. 
+{{The flaw originates from applying Lemma~\ref{lemma:sub-main} incorrectly for a set for which the greedy algorithm (Algorithm~\ref{alg:greedy}) might have dropped elements.
 See the last statement in the proof of Theorem 3 in~\cite{khuller1999budgeted} (page 42, right column, line 10 from the bottom).}}
-We note that in order to give a correct proof for the performance of the algorithm a somewhat different argument is required.
+To give a correct proof we incorporate a new insight to
+previous techniques for analyzing of the greedy algorithm
+(e.g \cite{khuller1999budgeted} and \cite{LB10}). While previous approaches only
+showed lower
+bounds on the value of elements selected by the greedy before an
+ element from the optimal solution has been dropped, we
+further look into the value attained by the algorithm after
+an element from the optimal solution has been dropped.
+%We note that in order to give a correct proof for the performance of the algorithm a somewhat different argument is required.
+
 Let $O$ be an optimal solution, and recall that $T$ is the output of Algorithm~\ref{alg:mgreedy}.
 
 %We analyze the Modified Greedy algorithm (Algorithm~\ref{alg:mgreedy}) of \cite{khuller1999budgeted}.
@@ -45,6 +54,8 @@ Let $O$ be an optimal solution, and recall that $T$ is the output of Algorithm~\
 		c(b) \leq c(O \setminus a) \leq (\nicefrac[]{1}{2} - \delta)c(O)
 	\end{align}
 	Inequality \eqref{mgreedy:ineq1} upper bounds the size of $A$ and follows from  Lemma~\ref{lemma:sub-main} since if it does not hold then $f(A) > (1 - e^{-(1/2 - \delta)})f(O)$.
+%Specifically, if $c(A) > (\nicefrac[]{1}{2} - \delta)c(O) $ one can apply Lemma~\ref{lemma:sub-main} on $A$ and $O$.
+%Note that all conditions of Lemma~\ref{lemma:sub-main} are satisfied by the definition of $A$ and thus it can be applied in this case.
 	Inequality \eqref{mgreedy:ineq2} lower bound the size of $a$ and follows from the fact that $a$ was dropped by the greedy algorithm, {\em i.e.}, $c(A \cup \{a\}) > \beta \geq c(O)$. Inequality \eqref{mgreedy:ineq3} is due to inequality \eqref{mgreedy:ineq2}, since $c(O \setminus \{a\}) = c(O) - c(a)$ and $\{b\} \subseteq O \setminus \{a\}$.
 	The above inequalities imply a lower bound  on the size of $B$:
 	\begin{equation}

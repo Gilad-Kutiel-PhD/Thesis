@@ -10,7 +10,7 @@ Additionally, submodular functions play a major role in many real world applicat
 Combinatorial optimization problems with a submodular objective have been the focus of intense research in the last decade as such problems provide a unifying framework that captures many fundamental problems in the theory of algorithms and numerous real world practical applications.
 Examples of the former include, {\em e.g.}, Max-CUT and Max-DiCUT \cite{FG95,GW95,HZ01,H01,K72,KKMO07,LLZ02,TSSW00}, Max-$k$-Coverage \cite{F98,SW11,V01}, Max-Bisection \cite{ABG13,FJ97,HZ02,Y01}, Generalized-Assignment \cite{CK05,CKR06,FGMS06,FV06}, and Max-Facility-Location \cite{AS99,CFN77a,CFN77b}\footnote{Many of the above mentioned problems can also be found in introductory books to approximation algorithms \cite{SW11,V01}.}, whereas examples of the latter include, {\em e.g.}, pollution detection \cite{KLGVF08}, gang violence reduction \cite{SSPB14}, outbreak detection in networks \cite{LKGFFVG07}, exemplar based clustering \cite{GK10}, image segmentation \cite{KXFK11}, and recommendation diversification \cite{YG11}.
 
-A main driving force behind the above research is the need for algorithms that not only provide provable approximation guarantees, but are also fast and extremely simple to implement in practice.
+A main driving force behind the above research is the need for algorithms that not only provide provable approximation guarantees, but are also fast and  simple to implement in practice.
 This need stems from the sheer scale of the applicability of submodular maximization problems in diverse disciplines, and is further amplified by the fact that many of the practical applications arise in areas such as machine learning and data mining where massive data sets and inputs are ubiquitous.\footnote{Refer to the recent book \cite{B13} and survey \cite{KG14} for additional examples and applications of submodularity in machine learning.}
 
 
@@ -40,7 +40,7 @@ Besides being a natural problem on its own right, capturing the classic Knapsack
 In this work we aim to find {\em fast} and {\em simple} algorithms for the \SK problem.
 
 We assume the standard value oracle model, where the algorithm can access the objective $f$ via queries of the form: ``what is $f(S)$?'' for every $S\subseteq U$.
-The running time of the algorithm is measured by the number of value queries it performs.
+The running time is the total number of value oracle queries and numerical operations performed by the algorithm. In all our algorithms the former dominates the later, and thus we are satisfied with counting the number of oracle queries alone.
 
 Building upon the work of Khuller {\em et. al.} \cite{khuller1999budgeted}, Sviridenko \cite{sviridenko2004note} presented a tight approximation of $(1-\nicefrac[]{1}{e})\approx 0.632$ for \SK.
 The algorithm of \cite{sviridenko2004note} returns the best of all subsets of $U$ of size at most three, where each subset of size three is greedily extended by the standard greedy rule that maximizes the ``bang per buck''.
@@ -49,10 +49,10 @@ A fast algorithm whose running time is just that of the greedy algorithm, {\em i
 
 
 Deviating from the above combinatorial approach of \cite{khuller1999budgeted,sviridenko2004note} to \SK, Badanidiyuru and Vondr\'{a}k \cite{badanidiyuru2014fast} initiated a different line of research based on both continuous and discrete techniques.
-They presented an algorithm achieving an approximation of $(1-\nicefrac[]{1}{e}-\varepsilon)$ whose running time is $O(n^2(\varepsilon ^{-1}\log n)^\text{poly}(\varepsilon^{-1}))$, for every constant $\varepsilon >0$.
+They presented an algorithm achieving an approximation of $(1-\nicefrac[]{1}{e}-\varepsilon)$ whose running time is $O(n^2(\varepsilon ^{-1}\log n)^{\text{poly}(\varepsilon^{-1})})$, for every constant $\varepsilon >0$.
 %In contrast to the combinatorial approach of \cite{khuller1999budgeted,sviridenko2004note}, Badanidiyuru and Vondr\'{a}k based their algorithm on a continuous approach.
 Building upon the approach of \cite{badanidiyuru2014fast}, Ene and Nguy\~{\^{e}}n \cite{Alina2017} presented an algorithm achieving the same approximation guarantee whose running time it $O(\varepsilon^{-O(\varepsilon^{-4})}n \log^2 n)$.
-Both algorithms of \cite{badanidiyuru2014fast,Alina2017} are theoretically interesting and appealing, as they require the introduction of novel ideas that enable one to extrapolate between discrete and continuous.
+Both algorithms of \cite{badanidiyuru2014fast,Alina2017} are theoretically interesting and appealing, as they require the introduction of novel ideas that enable one to extrapolate between the discrete and continuous approaches.
 Unfortunately, both are not simple nor fast, as even stated by the authors themselves, {\em e.g.}, see \cite{Alina2017}.
 To best exemplify the impracticality of these algorithms one needs only to choose $\varepsilon = \nicefrac[]{1}{4}$.
 This results in an approximation of $(1-\nicefrac[]{1}{e}-\nicefrac[]{1}{4})$, which is worse than the fast algorithm of \cite{khuller1999budgeted} since $(1-\nicefrac[]{1}{e}-\nicefrac[]{1}{4})<(1-e^{-\nicefrac[]{1}{2}})$, and an impossible running time of at least $2^{512} n$ \cite{Alina2017}.
@@ -82,7 +82,7 @@ This results in an approximation of $(1-\nicefrac[]{1}{e}-\nicefrac[]{1}{4})$, w
 %\cite{badanidiyuru2014fast}.
 %Ene and Nguyen developed an even faster algorithm that runs in $\frac{1}{\epsilon}^{O(1/\epsilon^4)}n \log^2 n$ time \cite{Alina2017}.
 %These algorithms, however, as mentioned by the authors, are impractical.
-%For example, the running time of the latter algorithm for $\epsilon = 2^{-2}$ is
+%For example, the ng time of the latter algorithm for $\epsilon = 2^{-2}$ is
 %$2^{2O(2^{8})}n\log^2n$ achieving approximation ratio of $\approx 0.38$.
 
 \paragraph*{Our Results}
@@ -96,7 +96,7 @@ The Modified Greedy algorithm of Kuller {\em et. al.} \cite{khuller1999budgeted}
 \end{theorem}
 Building upon the correct proof of Theorem \ref{thrm:CorrectModifiedGreedy}, we present a remarkably simple algorithm that chooses the best between the greedy algorithm and the best pair of elements.
 Our algorithm retains the same running time of $O(n^2)$ as the greedy algorithm and the Modified Greedy algorithm of \cite{khuller1999budgeted}, but achieves an improved approximation guarantee of $\approx 0.453647$ (whereas the Modified Greedy algorithm provides a guarantee of only $1-e^{-\nicefrac{1}{2}}\approx 0.393$).
-In fact, the running time of our algorithm is $3n^2/2+n$.
+In fact, the number of oracle queries used by our algorithm is $3n^2/2+n$.
 This is summarized in the following theorem.
 \begin{theorem}\label{thrm:ModifiedSquared}
 The \SK problem admits an algorithm that runs in time $O(n^2)$ and achieves an approximation of $0.453647$.
@@ -105,27 +105,27 @@ The \SK problem admits an algorithm that runs in time $O(n^2)$ and achieves an a
 %We also rectify this and present a different argument that proves the claimed guarantee of \cite{khuller1999budgeted}.
 
 \noindent {\bf{Amplification:}} We present a general method for ``amplifying'' algorithms for \SK.
-Specifically, given any black box algorithm $\mathcal{A}$ that obtains an approximation guarantee of $r$ and a number $k\in \mathbb{N}$ of executions, we show how to obtain a new algorithm for \SK with a better approximation than $r$ and a running time that equals $k$ times the running time of the black box algorithm plus an additional running time of $3n^2/2+n$.
+Specifically, given any black box algorithm $\mathcal{A}$ that obtains an approximation guarantee of $r$ and a number $k\in \mathbb{N}$ of executions, we show how to obtain a new algorithm for \SK with a better approximation than $r$ and a running time that equals $k$ times the running time of the black box algorithm plus an additional  $3n^2/2+n$ oracle queries.
 This is summarized in the following theorem.
 \begin{theorem}\label{thrm:Amplification}
 Let $\mathcal{A}$ be an algorithm for the \SK problem achieving an approximation of $r$, where $r< \nicefrac[]{1}{2}$.
 Let $k\geq \max \left\{2, -\frac{\log_2(A(\ln 2))}{\log_2(\nicefrac[]{1}{r} -1 ) }+1 \right\}$.
-Then there exists an algorithm that runs in time $3n^2/2+n$ plus $k$ times the running time of $\mathcal{A}$ and achieves an approximation of $r^*$, where:
+Then there exists an uses $3n^2/2+n$ oracle queries plus $k$ times the running time of $\mathcal{A}$ and achieves an approximation of $r^*$, where:
 \begin{enumerate}
-\item $r^* = \max _{\nicefrac[]{2}{3}\leq \alpha \leq \ln{2}} \left\{ \min \left\{ 1-e^{-\alpha},D(\alpha)+(1-r)\left( \frac{2+\nu(\alpha)}{1+\nu(\alpha)} (1-D(\alpha)) -1\right)\right\}\right\}$.
+\item $r^* = \max _{0< \alpha \leq \ln{2}} \left\{ \min \left\{ 1-e^{-\alpha},D(\alpha)+(1-r)\left( \frac{2+\nu(\alpha)}{1+\nu(\alpha)} (1-D(\alpha)) -1\right)\right\}\right\}$.
 \item $ D(\alpha)=(1-e^{-\alpha})/B(\alpha)$.
-\item ${\color{red}{\nu(\alpha )}} = 2^{-\frac{\log _2 {A(\alpha)}}{k-1}}-1$.
+\item $\nu(\alpha ) = 2^{-\frac{\log _2 {A(\alpha)}}{k-1}}-1$.
 \item $ A(\alpha) = \frac{1}{1-e^{-\alpha}}-\frac{1}{B(\alpha)}$.
 \item $ B(\alpha)=1-e^{-\frac{1}{\alpha}}$.
 \end{enumerate}
 \end{theorem}
 
 Given any black box algorithm $\mathcal{A}$ for \SK Theorem \ref{thrm:Amplification} can be used to answer two interesting questions: $(1)$ given an upper on the running time of the algorithm what is the best approximation that can be obtained using our amplification framework? $(2)$ given a target approximation guarantee what is the required running time using our amplification framework?
-For example, choosing the black box algorithm $\mathcal{A}$ to be the algorithm whose existence is guaranteed by Theorem \ref{thrm:ModifiedSquared}, amplifying it with $k=6$ we can obtain an algorithm achieving an improved approximation of $0.48$ whose running time is $21n^2/2+7n$.
-Moreover, one can repeatedly apply the amplification, each time with a suitable choice of $k$, obtaining an approximation guarantee that approaches $\nicefrac[]{1}{2}$. 
+For example, choosing the black box algorithm $\mathcal{A}$ to be the algorithm whose existence is guaranteed by Theorem \ref{thrm:ModifiedSquared}, amplifying it with $k=6$ we can obtain an algorithm achieving an improved approximation of $0.48$ and only uses  $10.5n^2+7n$ oracle queries.
+Moreover, one can repeatedly apply the amplification, each time with a suitable choice of $k$, obtaining an approximation guarantee that approaches $\nicefrac[]{1}{2}$.
 
 %Theorem \ref{thrm:Amplification} allows us to amplify any algorithm, in particular the algorithm whose existence is guaranteed in Theorem \ref{thrm:ModifiedSquared}.
-%Two interesting conclusion, for example, that can be derived from Theorems \ref{thrm:Amplification} and \ref{thrm:ModifiedSquared} are: $(1)$ applying the amplification with $k=6$ to the algorithm whose existence is guaranteed in Theorem \ref{thrm:ModifiedSquared} results in an improved approximation of $0.48$ and a running time of 
+%Two interesting conclusion, for example, that can be derived from Theorems \ref{thrm:Amplification} and \ref{thrm:ModifiedSquared} are: $(1)$ applying the amplification with $k=6$ to the algorithm whose existence is guaranteed in Theorem \ref{thrm:ModifiedSquared} results in an improved approximation of $0.48$ and a running time of
 %
 %Theorems \ref{thrm:ModifiedSquared} and \ref{thrm:Amplification} enable us to derive fast algorithms for \SK, by applying the ``amplification'' of Theorem \ref{thrm:Amplification} repeatedly several times.
 %For example, one can achieve an approximation of $(1-e^{-\nicefrac[]{2}{3}})\approx 0.4866$ in time {\color{red}{???}}.
@@ -161,10 +161,26 @@ Hence, since the optimal solution is not known, enumeration is used over the $O(
 
 We, on the other hand, adopt a different approach where it is enough to find a small subset that is {\em comparable} in both value and cost to the most valuable small subset in the optimal solution.
 We show that there is only a {\em constant} number of such comparable small subsets.
-This allows us, when combined with the first insight, to devise our method for amplifying any algorithm for the \SK problem: improving its approximation factor with only a small loss in the running time.
+This allows us, when combined with the first insight, to devise our method for amplifying any algorithm for the \SK problem: improving its approximation factor
+by running it a {\em constant} (the parameter $k$ from Theorem \ref{thrm:Amplification}) number of times on meticulously selected instances.
+%with only a small loss in the running time.
 
 \paragraph*{Related Work}
-{\color{red}{TBD: add the special case of a cardinality constraint, and the general matroid constraint (continuous greedy). Add Ariel's work on a constant number of packing constraints.}}
+
+A simple greedy algorithm which yields an $(1-e^{-1})$ approximation for the special
+case of \SK with uniform costs (i.e. cardinality constraint), along with a matching 
+lower bound in the oracle model is known since the late 70's due to the
+works of Nemhauser, Wolsey and Fisher \cite{Nemhauser1978}\cite{NW78}.
+Their works also achieved a $\nicefrac[]{1}{2}$ approximation for the problem
+of maximizing a monotone submodular function subject to a {\em matroid}
+constraint \cite{FNW78}. 
+An optimal $(1-e^{-1})$ approximation for the latter problem was only attained in the 2000's with 
+the introduction of the {continuous greedy} and matching 
+	{\em pipage rounding } \cite{CCPV11}.
+
+The problem can also be generalized to the problem of maximizing submodular function
+subject to {\em multiple} knapsack constraints for which Kulik et. al. provided a $(1-e^{-1}-\epsilon)$ approximation for every $\epsilon>0$ \cite{KST13}.  
+
 
 \paragraph*{Paper Organization}
 Section \ref{sec:Preliminaries} contains needed notations and description of previous algorithms.

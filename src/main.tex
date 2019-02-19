@@ -8,15 +8,19 @@
 \title{A Fast and Simple Algorithm for Submodular Maximization with a Knapsack Constraint}
 \titlerunning{A Fast and Simple Algorithm for Submodular Knapsack}
 
-\author{Ariel Kulik}{Department of Computer Science, Technion, Haifa, Israel}{arielk@cs.technion.ac.il}{}{}
+\author{Ariel Kulik}{Department of Computer Science, Technion, Haifa, Israel}{kulik@cs.technion.ac.il}{}{}
 \author{Gilad Kutiel}{Department of Computer Science, Technion, Haifa, Israel}{gkutiel@cs.technion.ac.il}{}{}
 \author{Roy Schwartz}{Department of Computer Science, Technion, Haifa, Israel}{schwartz@cs.technion.ac.il}{}{}
 \authorrunning{A.\,Kulik and G.\,Kutiel and R.\,Schwartz}
 
 \Copyright{Ariel Kulik and Gilad Kutiel and Roy Schwartz}
+\ccsdesc{}
 
-\ccsdesc[100]{ {\color{red}{TBD}} }
-\ccsdesc[100]{ {\color{red}{TBD}} }
+%\ccsdesc[100]{ {\color{red}{TBD}} }
+%\ccsdesc[100]{ {\color{red}{TBD}} }
+
+\ccsdesc[100]{Theory of computation~Submodular optimization and polymatroids}
+\ccsdesc[100]{Theory of computation~Approximation algorithms analysis}
 
 \keywords{knapsack, submodular function, approximation algorithm}
 
@@ -38,142 +42,70 @@
 \maketitle
 
 \begin{abstract}
+We consider the problem of maximizing a monotone submodular function with a knapsack constraint.
+In this work we aim at finding fast and simple algorithms for the problem.
+Previously, the best fast and simple algorithm is that of Khuller {\em et. al.} [IPL`99] which runs in time $O(n^2)$ and achieves an approximation guarantee of $(1-e^{-\nicefrac[]{1}{2}})\approx 0.393 $.
+We present a new fast and simple algorithm which retains the same running time and has an improved approximation guarantee of $0.4536$.
+%At the heart of our analysis lies a method that enables us to better analyze the greedy ``bang per buck'' algorithm in the presence of elements with varying cost.
+Moreover, we present a general method for ``amplifying'' the approximation factor of any algorithm for the problem, while losing little in the constants of the running time.
+Applying this amplification to our new algorithm enables us to further improve the results obtained.
+We believe that our amplification method might be of independent interest.
+
 %    We consider the problem of maximizing a monotone submodular function under a knapsack constraint.
 %    We propose a simple and fast algorithm to the problem that runs in $O(n^2)$ time (with very small constants) and achieves a $(1-e^{-2/3})$ approximation.
 %    As a side effect of our work we fix a logical flaw in the analysis of the ModifiedGreedy algorithm for this problem as appeared in \cite{khuller1999budgeted} and \cite{krause2005note}.
 %    We also analyze the Modified$^2$Greedy algorithm and show that it might achieves a better approximation than the ModifiedGreedy algorithm.
 %
-    {\color{red}{TBD}}
+%    {\color{red}{TBD}}
 \end{abstract}
 
 \input{content}
+
+\newpage
 
 \bibliographystyle{plainurl}
 \bibliography{bib/knapsack}
 
 \appendix
+\section{Omitted Proofs}
+\label{appendix:omitted}
+\begin{proof}[Proof of Lemma \ref{lemma:sub-main}]
+	
 
-\begin{figure}[H]
-	\caption{
-		\label{fig:mgreedy}
-		Modified Greedy Approximation Ratio
-	}
-	\begin{tikzpicture}
-		\begin{axis}[
-                width=\textwidth
-				,domain=0:0.49
-				,ymax=.7
-				,xmax=.51
-				,xlabel=$\delta$
-				,xtick distance=0.1
-				,ytick distance=0.1
-				,axis lines=left
-				,grid=both
-				,grid style={
-						draw=gray!20
-					}
-				,minor tick num=5
-				,legend pos=south west
-				,legend entries={
-						$f(A)$
-						,$f(B|A)$
-						,$f(A) + f(B|A)$
-						,$1 - e^{-\frac{1}{2}}$
-					}
-			]
-			\addplot[line blue]{1-exp(-(0.5-x))};
-			\addplot[line red]{(1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
-			\addplot[line brown]{1-exp(-(0.5-x)) + (1 - exp(-(4*x/(1-2*x)))) * (exp(-1/2) - 1 + exp(-(1/2-x)))};
-			\addplot[line teal]{1-exp(-0.5)};
-		\end{axis}
-	\end{tikzpicture}
-\end{figure}
+		Consider $a_i$ and observe that:
+		\begin{align}
+		\frac{f(a_i|A_{i-1})}{c(a_i)}c(B)
+		& = \sum_{e \in B} \frac{f(a_i|A_{i-1})}{c(a_i)}c(e)
+		\nonumber
+		\\ 	& \geq \sum_{e \in B} \frac{f(e|A_{i-1})}{c(e)}c(e)
+		\label{ineq:main:cond}
+		\\	& \geq f(B|A_{i-1})
+		\label{ineq:main:sub}
+		\\ 	& \geq f(B) - f(A_{i-1}).
+		\label{ineq:main:mon}
+		\end{align}
+		Inequality \eqref{ineq:main:cond} follows from the condition in the lemma, inequality \eqref{ineq:main:sub} follows from the submodularity of $f$, and inequality \eqref{ineq:main:mon} follows from the monotonicity of $f$.
+		Thus, from the above we can conclude that:
+		$$
+		f(B) - f(A_i)  \leq (f(B) - f(A_{i - 1}))
+		\left(1 - \frac{c(a_i)}{c(B)}\right).
+		$$
+		Hence,
+		$$
+		f(B) - f(A_i)  \leq f(B) \prod_{j = 1}^{i}
+		\left(1 - \frac{c(a_j)}{c(B)}\right).
+		$$
+		Applying the inequality $1 - x \leq e^{-x}$ we get that:
+		$$
+		f(B) - f(A_i)  \leq f(B)\cdot
+		e^{-\frac{c(A_i)}{c(B)}}.
+		$$
+		Rearranging the terms and setting $i = k$ completes the proof.
 
-\begin{figure}[H]
-    \caption{
-    \label{fig:mmgreedy}
-    Modified Modified Greedy Approximation Ratio ($\epsilon = \eps$)
-    }
-    \begin{tikzpicture}
-    \begin{axis}[
-        width=\textwidth
-        ,domain=0:0.49
-        ,ymax=.7
-        ,xmax=.51
-        ,xlabel=$\delta$
-        ,xtick distance=0.1
-        ,ytick distance=0.1
-        ,axis lines=left
-        ,grid=both
-        ,grid style={
-            draw=gray!20
-        }
-        ,minor tick num=5
-        ,legend pos=south west
-        ,legend entries={
-            $f(A)$
-            ,$f(B|A)$
-            ,$f(A) + f(B|A)$
-            ,$1-e^{-(0.5 + \epsilon)}$
-        }
-    ]
-      \addplot[line blue]{1-exp(-(0.5 + \eps -x))};
-      \addplot[line red]{
-          (1 - exp(-(1 - 6 * \eps + 6 * x)/(2 + 4 * \eps - 4 * x)))
-          *
-          (exp(-(0.5 + \eps)) - 1 + exp(-(0.5 + \eps - x)))
-      };
-      \addplot[line teal]{
-          1-exp(-(0.5 + \eps -x))
-          +
-          (1 - exp(-(1 - 6 * \eps + 6 * x)/(2 + 4 * \eps - 4 * x)))
-          *
-          (exp(-(0.5 + \eps)) - 1 + exp(-(0.5 + \eps - x)))
-      };
-      \addplot[line brown]{
-          1-exp(-(0.5 + \eps))
-      };
-    \end{axis}
-    \end{tikzpicture}
-    \end{figure}
-
-
-    \begin{figure}[H]
-        \caption{
-            \label{fig:sub:bucket}
-            Bucket Algorithm - Approximation Ratio
-        }
-        \begin{tikzpicture}
-            \begin{axis}[
-                    width=\textwidth
-                    ,domain=0:1
-                    ,ymax=.55
-                    ,ymin=0.3
-                    % 	,xmax=.51
-                    ,xlabel=$\rho{=}\frac{f(\pLarge)}{f(O)}$
-                    ,ylabel=Approximation Ratio
-                    ,xtick distance=0.1
-                    ,ytick distance=0.1
-                    ,axis lines=left
-                    ,grid=both
-                    ,grid style={
-                            draw=gray!20
-                        }
-                    ,minor tick num=5
-                    ,legend pos=south west
-                    ,legend entries={
-                            Bucket Algorithm
-                            ,Greedy Algorithm
-                            ,$(1 - e^{-2/3})$
-                        }
-                ]
-                \addplot[blue, dashed]{
-                    exp(-(0.5 + \eps))/1.008*x + (1 - exp(-(0.5 + \eps))) * (1 - x)};
-                \addplot[red, dotted]{(1 - exp(-1.5)) * (1 - x)};
-                \addplot[green]{(1 - exp(-2/3))};
-            \end{axis}
-        \end{tikzpicture}
-    \end{figure}
+	
+	
+	
+\end{proof}
 
 
 

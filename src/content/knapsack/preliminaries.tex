@@ -5,9 +5,6 @@ For any subset $A\subseteq U$ we denote by $c(A)\triangleq \sum _{x\in A}c(x)$.
 Moreover, for an ordered set $A = \{a_1, \dots, a_k\}$ we use $A_i$ to denote its prefix of size $i$, {\em i.e.}, $\{a_1, \dots, a_i\}$ ($A_0$ is set to the empty set).
 Since $f$ is monotone and non-negative, we can assume without loss of generality that $f(\emptyset)=0$.
 
-{\color{red}{ROY: Do we really need the following: $(1)$ For a given instance we denote by $O$ an optimal solution; $(2)$ we assume that the cost function is in the range $[0, b]$.; $(3)$ We refer to the cost function in terms of value (e.g. cheap, expensive, most valuable, etc...) and
-to the weight function in terms of size (e.g. small, medium, larger, etc...)}}
-
 Second, let us present known fast algorithms for \SK.
 The greedy algorithm for \SK which uses the ``bang per buck'' greedy rule appears in Algorithm \ref{alg:greedy}.
 It receives as parameters the ground set $U$, the submodular objective $f$ (via its value oracle), the cost function $c$, and the budget $\beta$.
@@ -15,11 +12,10 @@ It receives as parameters the ground set $U$, the submodular objective $f$ (via 
 \begin{algorithm}[H]
 \caption{Greedy$(U, f, c, \beta)$}
 \label{alg:greedy}
-
 $S \leftarrow \emptyset$
 \\
 \While{$U \neq \emptyset$}{
-	$e' \leftarrow \displaystyle{\argmax}\left\{\nicefrac[]{f(e|S)}{c(e)}\right:e\in U\}$
+	$e' \leftarrow \displaystyle{\argmax}\left\{\nicefrac[]{f(e|S)}{c(e)}:e\in U\right\}$
 	\\
 	$U \leftarrow U \setminus \{e'\}$
 	\\
@@ -28,7 +24,7 @@ $S \leftarrow \emptyset$
 		$S \leftarrow S \cup \{e'\}$
 	}
 }
-\Return{S}
+\Return{S}.
 \end{algorithm}
 
 If the condition in line \ref{line:dropped} is evaluated to false we say that
@@ -45,7 +41,7 @@ This appears in Algorithm \ref{alg:mgreedy} (its input is identical to that of A
 
 $S \leftarrow \text{Greedy}(U, f, c, \beta)$
 \\
-$T \leftarrow \argmax\{S, \argmax \left\{f(e):e\in U\right\}$
+$T \leftarrow \argmax\left\{S, \argmax \left\{f(e):e\in U, c(e)\leq \beta \right\} \right\}$
 \\
 \Return{$T$}
 \end{algorithm}
@@ -59,37 +55,9 @@ $\frac{f(a_i|A_{i-1})}{c(a_i)} \geq \frac{f(e|A_{i-1})}{c(e)}$.
 Then, $f(A) \geq (1 - e^{-\frac{c(A)}{c(B)}})f(B)$.
 \end{lemma}
 
-\begin{proof}
-Consider $a_i$ and observe that:
-\begin{align}
-	\frac{f(a_i|A_{i-1})}{c(a_i)}c(B)
-	& = \sum_{e \in B} \frac{f(a_i|A_{i-1})}{c(a_i)}c(e)
-	\nonumber
-	\\ 	& \geq \sum_{e \in B} \frac{f(e|A_{i-1})}{c(e)}c(e)
-	\label{ineq:main:cond}
-	\\	& \geq f(B|A_{i-1})
-	\label{ineq:main:sub}
-	\\ 	& \geq f(B) - f(A_{i-1}).
-	\label{ineq:main:mon}
-\end{align}
-Inequality \eqref{ineq:main:cond} follows from the condition in the lemma, inequality \eqref{ineq:main:sub} follows from the submodularity of $f$, and inequality \eqref{ineq:main:mon} follows from the monotonicity of $f$.
-Thus, from the above we can conclude that:
-$$
-f(B) - f(A_i)  \leq (f(B) - f(A_{i - 1}))
-\left(1 - \frac{c(a_i)}{c(B)}\right).
-$$
-Hence,
-$$
-f(B) - f(A_i)  \leq f(B) \prod_{j = 1}^{i}
-\left(1 - \frac{c(a_j)}{c(B)}\right).
-$$
-Applying the inequality $1 - x \leq e^{-x}$ we get that:
-$$
-f(B) - f(A_i)  \leq f(B)\cdot
-e^{-\frac{c(A_i)}{c(B)}}.
-$$
-Rearranging the terms and setting $i = k$ completes the proof.
-\end{proof}
+The proof for the lemma is given in Appendix  \ref{appendix:omitted}. We note that 
+the proof only uses standard techniques from previous works.
+
 A particular corollary of the above lemma is that if $A$ is the set of elements chosen by the greedy algorithm in
 the $k$ first iterations and $B$ is any subset such that no element from $B$ was dropped by the greedy algorithm in the first $k$ iterations,
 then all the condition of Lemma~\ref{lemma:sub-main} are met and it can be applied to lower bound the value of $A$.
