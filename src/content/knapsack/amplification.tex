@@ -1,0 +1,301 @@
+\def\pLarge{P_{\text{large}}}
+\def\pVal{P_{\text{val}}}
+\def\MGreedy{Modified$^2$Greedy}
+\def\BOTAlg{BestOfThree}
+\def\mA{\mathcal{A}}
+
+In this section we show a simple algorithm, which given
+an $r$-approximation $\mA$ for \SK, $r<1/2$ can
+be used to derive an $r'$-approximation, $r<r' <1/2$, for
+\SK using  a constant number of calls
+for $\mA$ and $\frac{3n^2}{2}+n$ oracle queries.
+
+Algorithm \ref{algorithm:amplify} receives
+an approximation algorithm $\mA$ for $\SK$,ƒo
+a universe $U$, a monotone non-negative
+submodular function $f:2^U \rightarrow \mathbb{R}$,
+a non-negative cost function $c:U \rightarrow \mathbb{R}$, and a budget $\beta$.
+The algorithm also gets two scalar parameters $\epsilon$
+and $\rho$.  These two parameters control the approximation
+ratio and complexity of the algorithm, and should be set according
+to the claims in this section to obtain the required approximation
+ratio and complexity.
+
+Broadly speaking,  the algorithm finds the pair of  elements with maximal value $\pVal$. It then divides all pairs of elements $\{a,b\} \subseteq U$ for which
+$\frac{f(\{a,b\})}{f(\pVal)} \geq \rho$ into {\em buckets}, where the subsets
+in each bucket have the same value to a factor of $(1+\epsilon)$.
+The algorithm then extends the set of smallest cost in  each bucket
+to a solution using the algorithm $\mA$.  The algorithm returns the
+best between the solutions found using the buckets and $\mA$, the pair of
+elements with maximal profit, the single element with maximal profit, and the result of the greedy algorithm
+over the input instance.
+
+\begin{algorithm}
+	\caption{Amplify($\mA, U, f, c, \beta, \epsilon, \rho$)}
+	\label{algorithm:amplify}
+	% Initialization
+	\tcp{Initialization}
+	$\pVal \leftarrow \argmax_{ \{a,b\} \subseteq U, c(\{a,b\})\leq \beta } f(\{a,b\})$
+	\\ $w_{\max}\leftarrow f(\pVal)$
+	\\ $i_{\max} \leftarrow \floor{\log_{1 + \epsilon} \frac{1}{\rho}}$
+	\\
+	\tcp{Buckets}
+	\For{$i \in \{0,\dots,i_{\max}\}$}{
+		$B_i = \left\{ \{a,b\}\subseteq U| c(\{a,b\})\leq \beta, \rho(1+\epsilon)^i \leq \frac{f(\{a,b\})}{w_{\max}}  < \rho (1+\epsilon)^{i+1} \right\}$
+		\\
+		$P_i \leftarrow \argmin_{\{a,b\}\in B_i} c(\{a,b\})$
+%	}
+%	\tcp{Candidate Solutions}
+%	\For{$i \in \{0,\dots,i_{\max}\}$}{
+\\
+		$S_i \leftarrow P_i \cup \mA(U , f_{P_i}, c, \beta - c(P_i))$
+	}
+	$G \leftarrow \text{Greedy}(U, f, c, \beta)$ \label{amplify:greedy}
+	\\
+	$T \leftarrow \argmax_{\{a\}\subseteq U| c(a)\leq \beta} f(\{a\})$ \label{amplify:singletons}
+	\\
+	\Return $\argmax_{S \in \{S_0, S_1, \ldots, S_{i_{\max}}, G, \pVal,T\}} f(S)$
+	%
+
+\end{algorithm}
+
+The following function, which already appeared on Theorem \ref{thrm:Amplification}, will be useful throughout the analysis of the algorithm:
+
+$$ B(\alpha)=1-e^{-\frac{1}{\alpha}}$$
+$$ A(\alpha) = \frac{1}{1-e^{-\alpha}}-\frac{1}{B(\alpha)}$$
+ $$D(\alpha)=(1-e^{-\alpha})/B(\alpha)$$
+
+ \begin{lemma}
+ 	\label{lemma:amplification}
+ 	Given an $r$-approximation $\mA$ for $\SK$ where $r<\frac{1}{2}$.
+ 	For any $0< \alpha \leq  \ln 2$, input $U,f,c,\beta$ of $\SK$,
+ 	and $\epsilon$ such that $0<\epsilon\leq \frac{1-2r}{r}$, then executing
+ 	Algorithm \ref{algorithm:amplify}  with parameters
+ 	$(\mA, U, f, c, \beta, \epsilon, A(\alpha))$ returns
+ 	$$min\left(1-e^{-\alpha}, D(\alpha) + (1-r) \left( \frac{2+\epsilon}{1+\epsilon}(1- D(\alpha)) -1 \right) \right)$$
+ 	approximation for the input instance.
+ \end{lemma}
+
+
+
+\begin{proof}
+
+	Fix an optimal solution $O$.
+	 If $|O|\leq 2$ the algorithm returns an optimal solution and the Lemma holds.
+	Therefore we can assume $|O| \geq 3$.  Denote by $\pLarge$ the set of  two  elements in $O$ with highest cost.
+	
+	Let $L\beta$ be the highest cost of element in $O$.  If $L\leq 1-\alpha$ then
+	by Lemma \ref{lemma:sub-main} and the monotonicity of $f$: $f(G) \geq (1-e^{-\alpha}) f(O)$  (recall that $G$ is the result of
+	greedy in line \ref{amplify:greedy} of the algorithm and thus Lemma \ref{lemma:sub-main} can be applied on the appropriate prefix of $G$). Therefore, the algorithm
+	returns a solution of value at least $(1-e^{-\alpha})f(O)$ and the Lemma holds. Therefore we can assume  $L> 1-\alpha$.
+%
+%	{\color{red}
+%	consider $G'\subseteq G$ to be the subset selected by the greedy (in line \ref{amplify:greedy})
+%	just before the first element from $O$ has been dropped ($G' = G$ if no such element exists).
+%	Due to the greedy procedure selection of elements the conditions of Lemma \ref{lemma:sub-main}
+%	hold for $G'$ (as $A$)  and $O$ (as $B$), therefore,
+%}  $f(G) \geq (1-e^{-\alpha}) f(O)$. Therefore, the algorithm
+%	returns a solution of value at least $(1-e^{-\alpha})f(O)$ and the Lemma holds. Hence, we can assume  $L> 1-\alpha$.
+	
+	If $O\setminus \pLarge \subseteq G$, then
+	$f(G)+ f(\pVal)\geq f(O\setminus \pLarge) + f(\pLarge) \geq f(O)$.
+	Therefore $f(G)\geq \frac{f(O)}{2}$ or $f(\pVal)\geq \frac{f(O)}{2}$
+	thus the Lemma holds (note that $\alpha \leq ln 2$ and therefore
+	$1-e^{-\alpha} < \frac{1}{2}$). Thus we can assume that
+	$O\setminus \pLarge \nsubseteq G$.
+	
+	The following corollary states that if $f(\pLarge)$ is fairly small
+	with respect to $f(O)$ (equivalently, $f(O|\pLarge)$ is high) then the solution $G$ from the greedy algorithm provides
+	the required approximation ratio.
+	
+	\begin{corollary}
+		\label{corollary:cor1}
+	If $f(O|\pLarge) \geq D(\alpha) f(O)$ then $f(G)\geq (1-e^{-\alpha})f(O)$.
+	\end{corollary}
+
+\begin{proof}
+	
+
+	Let $\beta M$ be the third highest cost of element in  $O$.
+	As the highest cost of  element in $O$ is $\beta L$,
+	using a simple argument we get, $M\leq M(L)$ where $M(L)= \min \{\frac{1-L}{2}, L\}$. Since
+	$O\setminus \pLarge \nsubseteq G$, there must be an element from $O \setminus \pLarge$ the greedy in line \ref{amplify:greedy} drops. Since all the elements
+	in $O\setminus \pLarge$ are of cost at most $\beta M$ the knapsack must
+	already have elements of cost $\beta (1-M)$ at the first time an element from $O\setminus \pLarge$ is dropped. Also, $c(O\setminus \pLarge) \leq \beta(1-L -M)$, therefore by Lemma \ref{lemma:sub-main} and the monotonicity of $f$ we get that:
+  	$$f(G)\geq \left(1-e^{- \frac{\beta (1-M) }{c(O\setminus \pLarge)}}\right) f(O\setminus \pLarge)
+  			\geq \left(1-e^{- \frac{1-M }{1-L-M}}\right) f(O\setminus \pLarge) .$$
+  			
+  	We note that the term $\frac{1-M}{1-L-M} = \left(  1- \frac{L}{1-M} \right)^{-1}$ is increasing as a function
+  	of $M$  in the range $[0, M(L)]$ (note that $1-L-M >0$ in the range).
+  	Therefore $\frac{1-M}{1-L-M} \geq  \frac{1 }{1-L}  \geq \frac{1}{1-(1-\alpha)} = \nicefrac[]{1}{\alpha}$. And conclude
+  %	The term  $1-e^{- \frac{1-M(L) }{1-L-M(L)}}$ is increasing as a function of $L$
+  %	({\bf this is not trivial, I simply drew the graph on Desmos for that}), therefore
+  	%	as $L> (1-\alpha)$ we get
+  %		$$f(G)\geq  \left(1-e^{- \frac{1-M(L) }{1-L-M(L)}}\right) f(O\setminus \pLarge)
+  	%	\geq \ \left(1-e^{- \frac{1-M(1-\alpha) }{1-(1-\alpha)-M(1-\alpha)}}\right) f(O\setminus \pLarge) $$
+  		
+  	%As $\frac{2}{3} \leq \alpha \leq \ln 2$ we have $M(1-\alpha) = 1-\alpha$. Combining this with the previous inequality we get
+  	  $$f(G)
+  	\geq \ \left(1-e^{- \frac{1-M }{1-L-M}}\right) f(O\setminus \pLarge) \geq \left( 1- e ^ {- \frac{1}{ \alpha}} \right)f(O\setminus \pLarge)
+  	= B(\alpha)f(O\setminus \pLarge) $$
+  	
+  	Now, recall that $D(\alpha)= \frac{1-e^{-\alpha}}{B(\alpha)}$,
+	$f(O|\pLarge) \geq D(\alpha) f(O)$ by the condition of the
+	lemma and $f(O|\pLarge) \leq f(O\setminus \pLarge)$ as
+	$f$ is submodular. Using these observations and the last lower
+	bound on $f(G)$ we obtain
+%	\begin{equation*}
+%\begin{array}{rcl}
+\begin{align*}
+f(G) \geq& B(\alpha)f(O\setminus \pLarge)  \geq
+B(\alpha) f(O|\pLarge)\\  \geq&
+B(\alpha ) D(\alpha ) f(O)
+= B(\alpha)\frac{1-e^{-\alpha}}{B(\alpha) }f(O)= (1-e^{-\alpha})f(O)
+\end{align*}
+%\end{array}
+%	\end{equation*}
+
+	\end{proof}
+
+	\begin{corollary}
+		\label{corollary:cor2}
+		If $f(G)< (1-e^{-\alpha})f(O)$ and $f(\pVal) < (1-e^{-\alpha})f(O)$ then
+		$f(\pLarge) \geq A(\alpha) f(\pVal)$
+		\end{corollary}
+	\begin{proof}
+		As $f(G)< (1-e^{-\alpha})$, the condition of corollary \ref{corollary:cor1} does not hold. Therefore
+		$f(O|\pLarge)< D(\alpha) f(O)$. Hence,
+		$$f(O)= f(\pLarge) + f(O|\pLarge) < f(\pLarge) + D(\alpha) f(O)$$
+		By rearranging the terms and using $f(\pVal) < (1-e^{-\alpha})f(O)$
+		we get
+		$$f(\pLarge) > (1-D(\alpha)) f(O) > \frac{1-D(\alpha)}{1-e^{-\alpha}} f(\pVal)
+		= \left(\frac{1}{1-e^{-\alpha}} - \frac{D(\alpha)}{1-e^{-\alpha}}\right) f(\pVal) = A(\alpha) f(\pVal)$$
+		The second inequality uses the observation that $D(\alpha) \leq 1$ for $0\leq \alpha \leq 1$ which can be easily verified. The last equality follows from the definitions
+		of $D(\alpha)$ and $A(\alpha)$.
+		
+			
+		\end{proof}
+
+	\begin{corollary}
+		\label{corollary:cor3}
+			If $f(G)< (1-e^{-\alpha})f(O)$ and $f(\pVal) < (1-e^{-\alpha})f(O)$ then
+			there is $i\in \{0, \ldots, i_{\max}\}$ such that
+		$$\frac{f(S_i)}{f(O)} \geq D(\alpha) + (1-r)\left( \frac{2+\epsilon}{1+\epsilon} D(\alpha) -1 \right)$$
+	\end{corollary}
+\begin{proof}
+		As the conditions of corollary \ref{corollary:cor2} hold, we have
+		$f(\pLarge) \geq A(\alpha) f(\pVal)$.
+		 Let $i$ be the minimal integer $i$ such
+		that $\frac{f(\pLarge)}{f(\pVal)} < A(\alpha)(1+\epsilon) ^{i+1}$, as $f(\pLarge) \geq A(\alpha) f(\pVal)$ we get $i\geq 0$.
+		Recall that $i_{\max}= \floor{\log_{1+\epsilon} \frac{1}{\rho} } =
+		\floor{\log_{1+\epsilon} \frac{1}{A(\alpha)}} $ (as the algorithm is used
+			with $\rho=A(\alpha)$).
+			Therefore,
+			$$A(\alpha) (1+\epsilon) ^{i_{\max} +1}
+			> A(\alpha) \frac{1}{A(\alpha) } = 1 \geq \frac{f(\pLarge)}{f(\pVal)}$$
+			Thus $i\leq i_{\max}$.
+			Also $c(\pLarge) \leq c(O) \leq \beta$, and we can conclude that
+			$\pLarge \in B_i$ (note that $w_{\max} = f(\pVal)$).
+			
+			From the definition of $P_i$ we get $c(P_i)\leq c(\pLarge)$ and
+			$f(P_i) \geq \frac{1}{1+\epsilon} f(\pLarge)$.
+			Let $Q_i  =  \mA(U, f_{P_i}, c, \beta - c(P_i))$.
+			As $c(P_i) \leq c(\pLarge)$ we get that $O\setminus \pLarge$
+			is a feasible solution for the problem instance given to $\mA$.
+			Hence, as $\mA$ is a $r$-approximation we get
+			$$f(Q_i | P_i) \geq r f(O\setminus \pLarge| P_i)$$
+			Therefore,
+			\begin{align*}
+			f(S_{i})
+			&
+			\geq f(P_i) + f(Q_i|P_i)
+			\\ &
+			\geq f(P_i) + r f(O \setminus \pLarge | P_i)
+			\\ &
+			\geq f(P_i) + r(f(O) - f(\pLarge) - f(P_i))
+			\\ &
+			= (1-r)f(P_i) + r(f(O) - f(\pLarge))
+			\\ &
+			\geq \frac{1-r}{1 + \epsilon}f(\pLarge) + r(f(O) - f(\pLarge))
+			\\ &
+			= \left(
+			\frac{(2 + \epsilon)}{(1 + \epsilon)}(1-r) - 1
+			\right)
+			f(\pLarge)
+			+ rf(O)
+			\label{eq:sub:bucket}
+			\end{align*}
+			
+			As $\epsilon\leq \frac{1-2r}{r}$ one can deduce that
+			$\left(
+			\frac{(2 + \epsilon)}{(1 + \epsilon)}(1-r) - 1
+			\right) \geq 0$.
+			Also, since $f(G)< (1-e^{-\alpha})f(O)$ by corollary \ref{corollary:cor1} we
+			get $f(O|\pLarge)  <D(\alpha)f(O)$, by using $f(O|\pLarge)= f(O) -f(\pLarge)$
+			and rearranging  the terms we get
+			$f(\pLarge)> (1-D(\alpha)) f(O)$.
+			Therefore,
+			\begin{align*}
+			f(S_i) \geq&
+			\left(
+			\frac{(2 + \epsilon)}{(1 + \epsilon)}(1-r) - 1
+			\right)
+			f(\pLarge)
+			+ rf(O) \\ \geq &
+				\left(
+			\frac{(2 + \epsilon)}{(1 + \epsilon)}(1-r) - 1
+			\right) (1-D(\alpha ) )f(O) +rf(O)\\
+			=& f(O) \left(  D(\alpha) + (1-r)\left(  \frac{(2 + \epsilon)}{(1 + \epsilon)} (1-D(\alpha)) -1\right) \right)
+			\end{align*}
+			and the corollary immediately follows.
+			
+		
+	\end{proof}
+The Lemma follows immediately from corollary \ref{corollary:cor3} as it states
+that either $G$, $\pVal$ or $S_i$ for some $i$ would provide the required approximation
+ratio.
+\end{proof}
+
+\begin{lemma}
+	\label{lemma:amp_runtime}
+Algorithm \ref{algorithm:amplify} uses $\floor{\log_{1+\epsilon} \frac{1}{\rho}}+1$
+	invocation to $\mA$ and up to $\frac{3}{2} n ^2+n$ additional oracle queries.
+ \end{lemma}
+\begin{proof}
+	The number of invocation to $\mA$ immediately follows from the algorithm.
+	Beside the invocation to $\mA$ the algorithm runs the greedy procedure
+	which uses up to $n^2$ queries. The queries for the initialization and
+	buckets phases only considers sets of size $2$, and therefore can be
+	implemented by up to $n(n-1)/2\leq n^2/2$ queries. The execution
+	of line \ref{amplify:singletons} would take another $n$ queries.
+	\end{proof}
+
+
+
+\begin{proof}[Proof of Theorem \ref{thrm:Amplification}]
+	Let $$\alpha^*  = \argmax _{0<\alpha \leq \ln{2}} \left\{ \min \left\{ 1-e^{-\alpha},D(\alpha)+(1-r)\left( \frac{2+\nu(\alpha)}{1+\nu(\alpha)} (1-D(\alpha)) -1\right)\right\}\right\}$$
+	We obtain the described approximation ratio when running the algorithm
+	with $\epsilon = \nu(\alpha^*)$ and $\rho = A(\alpha^*)$.
+	By the conditions of the theorem,
+	$$k \geq -\frac{\log A(\ln 2)} { \log(\nicefrac[]{1}{r} -1 ) } +1 \geq-\frac{\log A(\alpha*)} { \log(\nicefrac[]{1}{r} -1 ) } +1 $$
+	Where the last inequality uses the fact that $A$ is monotonically decreasing.  Thus,
+	$$\epsilon^* = 2 ^{-\frac{\log_2 (A(\alpha^*))}{k-1}} -1 \leq \
+	2 ^{-\frac{ \log_2(A(\alpha^*))}{  -\left(\frac{\log_2(A(\alpha* ))}{\log_2(\nicefrac[]{1}{r}-1)} \right) }} -1  =
+	2^{\log_2(\nicefrac[]{1}{r}-1)} -1 = \nicefrac[]{1}{r}-2 = \frac{1-2r}{r} $$
+	therefore the conditions of Lemma \ref{lemma:amplification} apply,
+	and the approximation ratio follows.
+	
+	By lemma \ref{lemma:amp_runtime} the number of invocations for $\mA$
+	is
+	\begin{align*}
+	\floor{\log_{1+\epsilon^*} \frac{1}{A(\alpha^*)}}+1 \leq \
+	-\log_{1+\epsilon^*} (A(\alpha^*)) +1 =
+	\frac{-\log A(\alpha^*)} {\log(1+\epsilon^*)} +1 \\
+	= \frac{-\log {A(\alpha^*)}} {\log(2 ^{-\frac{\log_2 (A(\alpha^*))}{k-1}} )} +1
+	= \frac{-\log {A(\alpha^*)}} {-\frac{\log_2 (A(\alpha^*))}{k-1}} +1
+	= k \end{align*}
+	and the number of addition oracle queries is $\nicefrac[]{3n^2}{2} + n $
+	as required.
+	
+\end{proof}
+
