@@ -1,43 +1,23 @@
-In combinatorial optimization we are looking for the best object from a given finite set of
-objects.
-The quality of an object is described by a function
-that assigns a numerical value to each of the objects and,
-depending on the type of the problem,
-we are looking for the object with maximum or minimum value.
-Combinatorial optimization is used to calculate efficient resource allocation, optimize production operation and has many applications in machine learning, artificial intelligence, image processing and more.
+In a typical instance of a \emph{network design} problem we are given a collection of resources and our goal is to construct a desired network that satisfies some requirements while utilizing the minimum possible amount of resources.
+One of the classical network design problems (and probably the most well known) is the Minimum Spanning Tree problem, where given an undirected weighted graph our goal is to find the minimum cost set of edges that induces a connected graph.
+Network design problems have many applications: the construction of efficient communication and traffic networks, the design of small and cheap VLSI chips, the reconstruction of phylogenetic trees and other applications in other fields of science.
 
-Usually, the set of objects to be considered is given in a compact representation.
-For example, in the Minimum Spanning Tree problem, we are given an
-edge weighted undirected graph and the goal is to find a spanning tree that minimizes
-the total weight of its edges.
-In general, there are exponential number (with respect to the size of the graph)
-of potential spanning trees to be considered.
-Scanning all the potential trees is inefficient and impractical.
-Fortunately, it is well known that a greedy algorithm -
-one that build a spanning tree iteratively by adding at each step the lightest edge that can be added to the tree -
-always find a minimum spanning tree.
+Submodularity is a fundamental mathematical notion that captures the concept of economy of scale and is prevalent in many areas of science and technology.
+Given a ground set $U$ a set function $f:2^U \to \mathbb{R}_+$ over $U$ is called \emph{submodular} if it has the \emph{diminishing returns} property:
+$f(A \cup \{a\}) - f(A) \geq f(B \cup \{a\}) - f(B)$ for every $A \subseteq B \subseteq U$ and $a \in U \setminus B$.\footnote{
+    An equivalent definition is: $f(A) + f(B) \geq f(A \cup B) + f(A \cup B)$ for every $A,B \in U$.
+}
+Submodular functions naturally arise in different disciplines such as combinatorics, graph theory, probability, game theory, and economics.
+Some well known examples include coverage functions, cuts in graphs and hypergraphs, matroid rank functions, entropy, and budget additive functions.
+Additionally, submodular functions play a major role in many real world applications, {\em e.g.}, the spread of influence in networks, recommender systems, document summarization, and information gathering, are just a few such examples.
 
-Unfortunately, there are lots of optimization problems that are NP-complete lots of them are fundamental problems.
-It is known that an efficient (polynomial) algorithm to one NP-problem is in fact an efficient algorithm to all NP-complete problems.
-Yet, despite numerous effort over several decades, no such algorithm was found and it is even possible that none exists.
-Tues, we have to take a different approach to tackle such problems.
-Several approaches exist:
-\begin{description}
-\item[Heuristics] - Algorithms that employ a practical method based on intuition.
-Those algorithms are not guaranteed to be optimal or efficient but usually are easy to implement and sometimes provide good solutions in practice.
+Combinatorial optimization problems with a submodular objective have been the focus of intense research in the last decade as such problems provide a unifying framework that captures many fundamental problems in the theory of algorithms and numerous real world practical applications.
+Examples of the former include, {\em e.g.}, Max-CUT and Max-DiCUT, Max-$k$-Coverage, Max-Bisection, Generalized-Assignment, and Max-Facility-Location, whereas examples of the latter include, {\em e.g.}, pollution detection, gang violence reduction, outbreak detection in networks, exemplar based clustering, image segmentation, and recommendation diversification.
 
-\item[Special cases] - Some times, while the problem is NP-complete, we can find efficient algorithms to more restricted cases of the problem.
+A main driving force behind the above research is the need for algorithms that not only provide provable approximation guarantees, but are also fast and  simple to implement in practice.
+This need stems from the sheer scale of the applicability of submodular maximization problems in diverse disciplines, and is further amplified by the fact that many of the practical applications arise in areas such as machine learning and data mining where massive data sets and inputs are ubiquitous.
 
-\item[Parameterized algorithms] - Those are algorithms whose running time is polynomial in the input size and also depend on some parameter of the input (e.g. the size of the optimal solution).
-The dependency on this parameter can be exponential or even worse.
-Those algorithms find an optimal solution and are efficient on certain inputs, tough we usually can not determine the running time of the algorithm for a certain input in advance.
-
-\item[Approximation algorithms] - Those are efficient algorithms that find an approximate solution.
-A $\alpha$-approximation algorithm is one that always find a solution with value that is at most (at least) $\alpha$ times the value of the optimal solution.
-Sometimes $\alpha$ can be a function of the input (e.g. its size).
-\end{description}
-
-In this thesis we consider four combinatorial optimization problems and develop approximation algorithms for them.
-For three of the problems we achieve the best approximation ratio that is known.
-For the other problem we present a good trade-off between the running time of the algorithm and its approximation ratio.
-
+Submodular function maximization problems as well as Many of the practical network design problems are NP-hard and thus likely intractable. 
+In this thesis we focus on approximation algorithms for two network design problems, namely the \emph{Convex Recoloring} and the \emph{Service Chain Placement in SDNs} problems. 
+We also develop a fast and simple approximation algorithm for a \emph{Submodular Function Maximization} problem. 
+Finally, we consider the \emph{Maximum Carpool Matching}, an optimization problem that seeks for the optimal way a group of people should share their ride, and show that this problem can be formulated as a submodular optimization problem.
