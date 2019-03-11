@@ -1,21 +1,6 @@
-%Submodularity is prevalent in many ares of science and technology, {\em e.g.}, machine learning and data mining~\cite{bach2013learning,bordeaux2014tractability}, algorithmic game theory and social networks~\cite{dughmi2009revenue,hartline2008optimal,he2015stability,kempe2003maximizing,schulz2013approximating}, and economics~\cite{ahmed2011maximizing}.
-%It serves as a unifying framework capturing both classic problems in the theory of algorithms and practical applications.
-%Examples of the former include, {\em e.g.}, maximum cut and maximum directed cut~\cite{goemans1995improved,Halperin:2001:CAA:365411.365412,Hastad:2001:OIR:502090.502098,Karp1972,Khot05optimalinapproximability}, maximum coverage~\cite{Feige:1998:TLN:285055.285059,KHULLER199939}, generalized assignment problem~\cite{Chekuri06apolynomial,Cohen06anefficient,Feige2006ApproximationAF,Fleischer:2006:TAA:1109557.1109624}, maximum bisection~\cite{DBLP:journals/talg/AustrinBG16,DBLP:journals/algorithmica/FriezeJ97}, and facility location~\cite{DBLP:journals/dam/AgeevS99,CORNUEJOLS1977163,doi:10.1287/mnsc.23.8.789}.
-%Examples of the latter include, {\e, e.g.}, {\color{red}{ROY: ADD EXAMPLES FROM GRANT PROPOSAL}}.
-%
-%%The study of combinatorial optimization problems with a submodular objective has attracted much attention in the last decade.
-%%A set function $f:2^\mathcal{N} \to \mathbb{R}_+$ over a ground set $\mathcal{N}$ is called \emph{submodular} if it has the \emph{diminishing returns} property:
-%%$f(A \cup \{a\}) - f(A) \geq f(B \cup \{a\}) - f(B)$ for every $A \subseteq B \subseteq \mathcal{N}$ and $a \in \mathcal{N} \setminus B$\footnote{
-%%    An equivalent definition is: $f(A) + f(B) \geq f(A \cup B) + f(A \cup B)$ for every $A,B \in \mathcal{N}$.
-%%}
-%%Submodular functions capture the principle of economy of scale, prevalent in bothe theory and real world applications.
-%%Thus, it is no surprise that combinatorial optimization problems with a submodular objective arise in numerous disciplines, e.g., machine learning and data mining~\cite{bach2013learning,bordeaux2014tractability}, algorithmic game theory and social networks~\cite{dughmi2009revenue,hartline2008optimal,he2015stability,kempe2003maximizing,schulz2013approximating}, and economics~\cite{ahmed2011maximizing}.
-%%Additionally, many classical problems in combinatorial optimization are in fact submodular in nature, e.g., maximum cut and maximum directed cut~\cite{goemans1995improved,Halperin:2001:CAA:365411.365412,Hastad:2001:OIR:502090.502098,Karp1972,Khot05optimalinapproximability}, maximum coverage~\cite{Feige:1998:TLN:285055.285059,KHULLER199939}, generalized assignment problem~\cite{Chekuri06apolynomial,Cohen06anefficient,Feige2006ApproximationAF,Fleischer:2006:TAA:1109557.1109624}, maximum bisection~\cite{DBLP:journals/talg/AustrinBG16,DBLP:journals/algorithmica/FriezeJ97}, and facility location~\cite{DBLP:journals/dam/AgeevS99,CORNUEJOLS1977163,doi:10.1287/mnsc.23.8.789}.
-
 In this thesis we consider the problems of maximizing a monotone\footnote{
     $f$ is monotone if $f(S) \leq f(T)$ for every $S \subseteq T \subseteq U$.
 } submodular function given a knapsack constraint.
-%{\color{red}{ROY: ADD APPLICATIONS SPECIFIC TO OUR PROBLEM HERE WITH A SHORT EXPLANATION}}.
 In this problem we are given a ground set
 $U$ of size $n$, a monotone submodular function $f:2^U \to \mathbb{R}_+$, a cost function $c:U \to \mathbb{R}_+$, and a budget $\beta$.
 The goal is to find a subset of elements $S$ that maximizes $f(S)$ such that the total cost of the elements in $S$ does not exceed the budget, {\em i.e.}, $\sum _{x\in S}c(x)\leq \beta$.
@@ -34,40 +19,11 @@ A fast algorithm whose running time is just that of the greedy algorithm, {\em i
 
 Deviating from the above combinatorial approach of \cite{khuller1999budgeted,sviridenko2004note} to \SK, Badanidiyuru and Vondr\'{a}k \cite{badanidiyuru2014fast} initiated a different line of research based on both continuous and discrete techniques.
 They presented an algorithm achieving an approximation of $(1-\nicefrac[]{1}{e}-\varepsilon)$ whose running time is $O(n^2(\varepsilon ^{-1}\log n)^{\text{poly}(\varepsilon^{-1})})$, for every constant $\varepsilon >0$.
-%In contrast to the combinatorial approach of \cite{khuller1999budgeted,sviridenko2004note}, Badanidiyuru and Vondr\'{a}k based their algorithm on a continuous approach.
 Building upon the approach of \cite{badanidiyuru2014fast}, Ene and Nguy\~{\^{e}}n \cite{Alina2017} presented an algorithm achieving the same approximation guarantee whose running time it $O(\varepsilon^{-O(\varepsilon^{-4})}n \log^2 n)$.
 Both algorithms of \cite{badanidiyuru2014fast,Alina2017} are theoretically interesting and appealing, as they require the introduction of novel ideas that enable one to extrapolate between the discrete and continuous approaches.
 Unfortunately, both are not simple nor fast, as even stated by the authors themselves, {\em e.g.}, see \cite{Alina2017}.
 To best exemplify the impracticality of these algorithms one needs only to choose $\varepsilon = \nicefrac[]{1}{4}$.
 This results in an approximation of $(1-\nicefrac[]{1}{e}-\nicefrac[]{1}{4})$, which is worse than the fast algorithm of \cite{khuller1999budgeted} since $(1-\nicefrac[]{1}{e}-\nicefrac[]{1}{4})<(1-e^{-\nicefrac[]{1}{2}})$, and an impossible running time of at least $2^{512} n$ \cite{Alina2017}.
-%This renders the algorithms of \cite{Alina2017,badanidiyuru2014fast} theoretically interesting an appealing, but completely useless.
-
-%Maximizing a monotone submodular function under a knapsack constraint generalized the budgeted maximum coverage problem~\cite{khuller1999budgeted} and has applications such as document summarization~\cite{lin2010multi} and maximizing entropy in discrete graphical models~\cite{krause2005note}.
-
-
-%\paragraph*{Previous Work}
-%Nemhauser et al. considered the problem of maximizing a monotone submodular function under cardinality constant \cite{Nemhauser1978}.
-%They proved that the greedy algorithm (one that iteratively construct a solution by selecting each time the best element) gives $(1 - e^{-1})$ approximation.
-%Khuller et. al considered the Budgeted Maximum Coverage problem\cite{khuller1999budgeted}.
-%A coverage objective is a special case of submodular objective.
-%They gave a $(1-e^{-1})$-approximation algorithm for this problem and showed that this is the best possible unless P = NP.
-%Sviridenko \cite{sviridenko2004note} showed that the same algorithm presented by
-%Khuller et. al can be used to maximize a general monotone submodular function
-%with the same guarantee.
-%This algorithm requires $O(n^5)$ calls to the value oracle and might be impractical for real world applications~\cite{lin2010multi}.
-%
-%A faster algorithm that runs in $O(n^2)$ time and achieves a $1 - e^{-1/2}$ approximation ratio was also presented in \cite{khuller1999budgeted}.
-%It was shown by Krause and Guestrin \cite{krause2005note} that the same algorithm
-%gives the same guarantee for a general monotone submodular function and requires only $O(n^2)$ calls to the value oracle.
-%
-%Badanidiyuru and Vondr´ak developed a $1 - \frac{1}{e} - \epsilon$-approximation
-%algorithms that runs in
-%$O(n^2(\frac{1}{\epsilon}\log n)^\text{poly}(\frac{1}{\epsilon}))$ time
-%\cite{badanidiyuru2014fast}.
-%Ene and Nguyen developed an even faster algorithm that runs in $\frac{1}{\epsilon}^{O(1/\epsilon^4)}n \log^2 n$ time \cite{Alina2017}.
-%These algorithms, however, as mentioned by the authors, are impractical.
-%For example, the ng time of the latter algorithm for $\epsilon = 2^{-2}$ is
-%$2^{2O(2^{8})}n\log^2n$ achieving approximation ratio of $\approx 0.38$.
 
 \paragraph*{Our Results}
 Our results can be partitioned into two parts: $(1)$ fast and simple combinatorial algorithms for \SK; and $(2)$ a general method for ``amplifying'' any algorithm for \SK by improving its approximation factor while losing little in the running time.
@@ -85,8 +41,6 @@ This is summarized in the following theorem.
 \begin{theorem}\label{thrm:ModifiedSquared}
 The \SK problem admits an algorithm that runs in time $O(n^2)$ and achieves an approximation of $0.453647$.
 \end{theorem}
-%While proving Theorem \ref{thrm:ModifiedSquared}, we discovered that the proof that the fast algorithm of \cite{khuller1999budgeted} achieves an approximation guarantee of $(1-e^{-\nicefrac[]{1}{2}})$ is incorrect \cite{naor}.
-%We also rectify this and present a different argument that proves the claimed guarantee of \cite{khuller1999budgeted}.
 
 \noindent {\bf{Amplification:}} We present a general method for ``amplifying'' algorithms for \SK.
 Specifically, given any black box algorithm $\mathcal{A}$ that obtains an approximation guarantee of $r$ and a number $k\in \mathbb{N}$ of executions, we show how to obtain a new algorithm for \SK with a better approximation than $r$ and a running time that equals $k$ times the running time of the black box algorithm plus an additional  $3n^2/2+n$ oracle queries.
@@ -166,7 +120,7 @@ The problem can also be generalized to the problem of maximizing submodular func
 subject to {\em multiple} knapsack constraints for which Kulik et. al. provided a $(1-e^{-1}-\epsilon)$ approximation for every $\epsilon>0$ \cite{KST13}.  
 
 
-\paragraph*{Paper Organization}
+\paragraph*{Chapter Organization}
 Section \ref{sec:Preliminaries} contains needed notations and description of previous algorithms.
 Section \ref{sec:ModifiedGreedy} contains a correct proof of the fast algorithm of Khuller {\em et. al.} \cite{khuller1999budgeted}, whereas Section \ref{sec:Modified2Greedy} contains our improved fast algorithm.
 Lastly, Section \ref{sec:Amplification} describes our amplification method. 
