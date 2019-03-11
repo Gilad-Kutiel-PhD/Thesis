@@ -1,3 +1,4 @@
+\subfloat[Original Network.]{%
 \begin{tikzpicture}[every node/.style={default node}]
 \node(6) at(0, 0){6};
 \node(2) at(1, 1){2};
@@ -18,7 +19,13 @@
 \pat[blue, dashed, thick] (2) -- (4);
 \pat (1.north) to[bend right] (6.north);
 \pat (3.south east) to[bend left] (4.east);
+\end{tikzpicture}
+}
 
+\hspace{50pt}
+
+\subfloat[Orientated network.]{%
+\begin{tikzpicture}[every node/.style={default node}]
 \node(6) at(6, 0){6};
 \node(2) at(7, 1){2};
 \node(1) at(9, 2){1};
@@ -38,5 +45,5 @@
 \dpat[blue, dashed, thick] (2) -- (4);
 \dpat (1.north) to[bend right] (6.north);
 \dpat (3.south east) to[bend left] (4.east);
-
 \end{tikzpicture}
+}

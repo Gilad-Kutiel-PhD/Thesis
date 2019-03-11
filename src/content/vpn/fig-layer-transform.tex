@@ -1,3 +1,5 @@
+
+\subfloat[A directed acyclic graph.]{%
 \begin{tikzpicture}[every node/.style={default node}]
 
 \foreach[count=\i] \x \y in {
@@ -27,8 +29,14 @@
 }{
 	\draw (\u) -- (\v);
 }
-
-\begin{scope}[yshift=-5cm, x=1.5cm]
+\end{tikzpicture}
+}
+%
+%%
+%
+\subfloat[A topological ordering of the DAG.]{%
+\begin{tikzpicture}[every node/.style={default node}]
+\begin{scope}[yshift=-5cm, x=1.2cm]
 \foreach[count=\i] \x \y in {
 	0/0
 	,1/0
@@ -65,7 +73,11 @@
 	\draw (\u) to[] (\v);
 }
 \end{scope}
+\end{tikzpicture}
+}
 
+\subfloat[A layered graph.]{%
+\begin{tikzpicture}[every node/.style={default node}]
 \begin{scope}[yshift=-10cm, x=1.5cm]
 \foreach[count=\i] \x \y in {
 	0/0
@@ -106,3 +118,4 @@
 }
 \end{scope}
 \end{tikzpicture}
+}
