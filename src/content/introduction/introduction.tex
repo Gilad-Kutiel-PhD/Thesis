@@ -1,6 +1,6 @@
 \subsection*{Network Design Problems}
-In a typical instance of a \emph{network design} problem we are given a collection of resources and our goal is to construct a desired network that satisfies some requirements while consuming utilizing the minimum possible amount of resources.
-One of the classical network design problems, and maybe the most well known, is the Minimum Spanning Tree problem, where given an undirected weighted graph our goal is to find the minimum cost set of edges that induces a connected graph.
+In a typical instance of a \emph{network design} problem we are given a collection of resources and our goal is to construct a desired network that satisfies some requirements while utilizing the minimum possible amount of resources.
+One of the classical network design problems (and probably the most well known) is the Minimum Spanning Tree problem where, given an undirected weighted graph, our goal is to find the minimum cost set of edges that induces a connected graph.
 Network design problems have many applications: the construction of efficient communication and traffic networks, the design of small and cheap VLSI chips, the reconstruction of phylogenetic trees and other applications in other fields of science.
 
 Many of the practical network design problems are NP-hard and thus likely intractable. 
@@ -12,19 +12,19 @@ In Chapter~\ref{chapter:convex-recoloring} we study the Convex Recoloring proble
 A \emph{coloring} of an undirected graph, $G(V, E)$, is a function $f:V \to \mathbb{N}$.
 We say that a coloring is \emph{convex} if the vertices of each color induce a connected sub-graph of $G$.
 In the Convex Recoloring problem we are given an undirected graph $G$ and a (non-convex) coloring of this graph and our goal is to find a convex coloring of the graph that recolor the minimum number of vertices.
-In this thesis we consider a special case of this problem, namely the 2-Convex Recoloring problem in which the original coloring colors at most two vertices with the same color.
+In this thesis we consider a special case of this problem, namely the 2-Convex Recoloring problem, in which the original coloring colors at most two vertices with the same color.
 For this special case we develop a greedy $3/2$-approximation algorithm.
 We show that if the input graph is a path then this is in fact a $5/4$-approximation algorithm.
 
 
 \subsubsection*{Service Chain Placement in SDNs} 
-Traditional networks use ad-hoc controller to achieve various functionality and to provide various services to the clients of the network.
-An emerging paradigm aim to construct networks of general, smart controllers that can programed to achieve the same goal. 
+Traditional communication networks use ad-hoc controllers to achieve various functionality and to provide various services for the clients of the network.
+An emerging paradigm aim to construct networks of general, smart controllers that can be programed to achieve the same goal. 
 This new paradigm offers much more flexibility to the network administrator that can now construct many virtual networks on top of the physical one.
 The question that arises is how to allocate resource efficiently in order to satisfy clients demand.
 In Chapter~\ref{chapter:service-chain-placement-in-sdns} we model the problem and, using a rounding and non-trivial dynamic programming technique, we give a fully polynomial approximation scheme for the special case where the physical network is directed acyclic graph. 
 For general graphs we give a parameterized algorithm.
-This algorithm find optimal solution efficiently when the cactus network.
+This algorithm find optimal solution efficiently for cactus network.
 
 \subsection*{Submodular Function Maximization}
 Submodularity is a fundamental mathematical notion that captures the concept of economy of scale and is prevalent in many areas of science and technology.

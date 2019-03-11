@@ -7,7 +7,7 @@
 \node(5) at(4,-1){5};
 \node(4) at(2,-3){4};
 
-\def\pat{\draw[path, -]}
+\def\pat{\draw[path]}
 \pat[blue, dashed, thick] (1) -- (2.north east);
 \pat (2) -- (3);
 \pat (3) -- (5);
@@ -25,7 +25,7 @@
 \hspace{50pt}
 
 \subfloat[Orientated network.]{%
-\begin{tikzpicture}[every node/.style={default node}]
+\begin{tikzpicture}[every node/.style={default node}, ->]
 \node(6) at(6, 0){6};
 \node(2) at(7, 1){2};
 \node(1) at(9, 2){1};
