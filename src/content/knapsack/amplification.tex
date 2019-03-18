@@ -168,8 +168,13 @@ B(\alpha ) D(\alpha ) f(O)
 		$$f(O)= f(\pLarge) + f(O|\pLarge) < f(\pLarge) + D(\alpha) f(O)$$
 		By rearranging the terms and using $f(\pVal) < (1-e^{-\alpha})f(O)$
 		we get
-		$$f(\pLarge) > (1-D(\alpha)) f(O) > \frac{1-D(\alpha)}{1-e^{-\alpha}} f(\pVal)
-		= \left(\frac{1}{1-e^{-\alpha}} - \frac{D(\alpha)}{1-e^{-\alpha}}\right) f(\pVal) = A(\alpha) f(\pVal)$$
+
+		\begin{align*}
+			f(\pLarge) 	& > (1-D(\alpha)) f(O) \\
+						& > \frac{1-D(\alpha)}{1-e^{-\alpha}} f(\pVal) \\
+						& = \left(\frac{1}{1-e^{-\alpha}} - \frac{D(\alpha)}{1-e^{-\alpha}}\right) f(\pVal) =  A(\alpha) f(\pVal)
+		\end{align*}
+
 		The second inequality uses the observation that $D(\alpha) \leq 1$ for $0\leq \alpha \leq 1$ which can be easily verified. The last equality follows from the definitions
 		of $D(\alpha)$ and $A(\alpha)$.
 		

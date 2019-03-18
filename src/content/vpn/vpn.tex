@@ -324,7 +324,7 @@ Figure~\ref{fig:solution}.
 \scalebox{0.9}{
 \add{fig-embedding}
 }
-\caption{An example of an \scp instance and a solution.
+\caption[\scp{} - Example input and output]{An example of an \scp instance and a solution.
 %
 The DAG on the left is the virtual DAG, and the numbers on its
 vertices and edges are their demands.
@@ -480,7 +480,7 @@ cost is $\half \sum_i a_i$.
 \scalebox{1}{
   \add{fig-reduction}
 }
-\caption{The specification defined in the proof of Theorem~\ref{thm:simple}.}
+\caption[\scp{} - Hardness (single node)]{The specification defined in the proof of Theorem~\ref{thm:simple}.}
 \label{fig:simple}
 \end{figure}
 
@@ -519,7 +519,7 @@ only if there is a placement with cost $\half \sum_i^n a_i$.
 \scalebox{.75}{
 \add{fig-reduction2}
 }
-\caption{A reduction from a partition instance $a_1, \ldots, a_n$.
+\caption[\scp{} - Hardness (paths)]{A reduction from a partition instance $a_1, \ldots, a_n$.
   The cost function enforces each $\alpha_i$ to be placed either in
   $v_i^-$ or in $v_i^+$.  In the former case this placement incure no
   cost but additional latency of $a_i$, in the later case there will
@@ -674,7 +674,7 @@ The recursive computation is illustrated in Figure~\ref{fig:dp1}.
 \add{fig-dp2}
 }
 %\vspace{-20pt}
-\caption{The optimal placement of a path to $\alpha$ into a path to
+\caption[\scp{} - Dynamic programming illustration]{The optimal placement of a path to $\alpha$ into a path to
   $v$ can be efficiently computed by breaking the problem into the
   problem of placing a path to $\gamma$-path into a path to $u$ (blue,
   dashed rectangles) and the problem of embedding a path from $\beta$
@@ -901,7 +901,7 @@ A na\"ive implementation of this phase would run in $O(|V||E|)$ time.
 \scalebox{0.9}{
   \add{fig-orientation}
 }
-\caption{Orientation phase: on the left is the physical network, where
+\caption[\scp{} - Orientation phase]{Orientation phase: on the left is the physical network, where
   only the neighborly nodes are drawn.  The numbers represent the
   permutation and the dashed path represents a path of an optimal
   placement.  The oriented physical network is on the right.  It is
@@ -996,7 +996,7 @@ vertices in $B_i$.  See Figure~\ref{fig:or2} for an example.
 \begin{center}
 \add{fig-or2}
 \end{center}
-\caption{An undirected graph whose blocks on the way from $s$ to $t$
+\caption[\scp{} - Block graph example]{An undirected graph whose blocks on the way from $s$ to $t$
   marked in dashed green lines.
 \label{fig:or2}
 }
@@ -1083,7 +1083,7 @@ although there is a 2-robust placement that costs $4 - 2 \eps$.
 \begin{center}
 \add{fig-alg-bad-example}
 \end{center}
-\caption{An example of a network, source, and destination.}
+\caption[\scp{} - Greedy algorithm, worst case]{An example of a network, source, and destination.}
 \label{fig:greedy-bad}
 \end{figure}
 
@@ -1115,9 +1115,9 @@ layered DAG.
 
 \begin{figure}[t]
 \begin{center}
-\add{fig-layer-transform}
+    \add{fig-layer-transform}
 \end{center}
-\caption{A layered graph, a topological ordering, and the resulting
+\caption[\scp{} - Layered graph transformation]{A layered graph, a topological ordering, and the resulting
   layered graph.}
 \label{fig:layer-transform}
 \end{figure}
