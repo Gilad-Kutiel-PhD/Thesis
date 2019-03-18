@@ -21,6 +21,10 @@
 /out/
 /tmp/
 *.fls
+*.glo
 *.lof
+*.lot
+*.nlo
+*.slo
 *.fdb_latexmk
 .dropbox
