@@ -1,12 +1,12 @@
-In this thesis we develop and analyze approximation algorithms for four NP-hard combinatorial optimization problems.
-The first two problems, namely the \textsc{Convex Recoloring} and the \textsc{Service Chain Placement in SDNs} are network design problems.
-The third problem deals with the maximization of a general monotone submodular function.
-Lastly, we consider the \textsc{Maximum Carpool Matching} problem and show how this problem can be formulated as a submodular function optimization problem.
+In this thesis we develop and analyze approximation algorithms, while focusing on two families of problems: network design and submodular optimization.
+For the former family we consider the problems of \textsc{Convex Recoloring} and the \textsc{Service Chain Placement in SDNs}.
+For the latter family we consider the problems of maximizing a monotone submodular function given a knapsack constraint and the \textsc{Maximum Carpool Matching} problem.
+Let us now elaborate on the above.
 
 \subsection*{Network Design Problems}
 In a typical instance of a \emph{network design} problem we are given a collection of resources and our goal is to construct a desired network that satisfies some requirements while utilizing the minimum possible amount of resources.
-One of the classical network design problems (and probably the most well known) is the Minimum Spanning Tree problem where, given an undirected weighted graph, our goal is to find the minimum cost set of edges that induces a connected graph.
-Network design problems have many applications: the construction of efficient communication and traffic networks, the design of small and cheap VLSI chips, the reconstruction of phylogenetic trees and other applications in other fields of science.
+One of the classical network design problems (and probably the most well known) is the \textsc{Minimum Spanning Tree} problem where, given an undirected weighted graph, our goal is to find the minimum cost set of edges that induces a connected graph.
+Network design problems have numerous applications: the construction of efficient communication and traffic networks, the design of small and cheap VLSI chips, the reconstruction of phylogenetic trees are just a few.
 
 Many of the practical network design problems are NP-hard and thus likely intractable. 
 In this thesis we focus on approximation algorithms for two network design problems which we now briefly (and somewhat informally) describe\footnote{A formal, detailed, description of each problem will be given at the relevant chapters.}:
@@ -14,17 +14,17 @@ In this thesis we focus on approximation algorithms for two network design probl
 
 \subsubsection*{Convex Recoloring} 
 In Chapter~\ref{chapter:convex-recoloring} we study the Convex Recoloring problem.
-Let $C$ be a set of colors, a \emph{coloring} of an undirected graph, $G(V, E)$, is a function $\chi:V \to \mathbb{C}$.
+Let $\mathcal{C}$ be a set of colors, a \emph{coloring} of an undirected graph, $G(V, E)$, is a function $\chi:V \to \mathcal{C}$.
 We say that a coloring is \emph{convex} if the vertices of each color induce a connected sub-graph of $G$.
 In the Convex Recoloring problem we are given an undirected graph $G$ and a (non-convex) coloring of this graph and our goal is to find a convex coloring of the graph that recolor the minimum number of vertices.
-In this thesis we consider a special case of this problem, namely the 2-Convex Recoloring problem, in which the original coloring colors at most two vertices with the same color.
+In this thesis we consider a special case of this problem, namely the 2-Convex Recoloring problem, in which the original coloring uses each color in $\mathcal{C}$ to color at most two vertices.
 For this special case we develop a greedy $3/2$-approximation algorithm.
 We show that if the input graph is a path then this is in fact a $5/4$-approximation algorithm.
 
 
 \subsubsection*{Service Chain Placement in SDNs} 
 Traditional communication networks use ad-hoc controllers to achieve various functionality and to provide various services for the clients of the network.
-An emerging paradigm aim to construct networks of general, smart controllers that can be programed to achieve the same goal. 
+An emerging paradigm aims to construct networks of general, smart controllers that can be programed to achieve the same goal. 
 This new paradigm offers much more flexibility to the network administrator that can now construct many virtual networks on top of the physical one.
 The question that arises is how to allocate resource efficiently in order to satisfy clients demand.
 In Chapter~\ref{chapter:service-chain-placement-in-sdns} we model the problem and, using a rounding and non-trivial dynamic programming technique, we give a fully polynomial approximation scheme for the special case where the physical network is directed acyclic graph. 
