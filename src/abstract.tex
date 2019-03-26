@@ -1,23 +1,26 @@
+In this thesis we develop and analyze approximation algorithms, while focusing on two families of problems: network design and submodular optimization.
+For the former family we consider the problems of \textsc{Convex Recoloring} and the \textsc{Service Chain Placement in SDNs}.
+For the latter family we consider the problems of maximizing a monotone submodular function given a knapsack constraint and the \textsc{Maximum Carpool Matching} problem.
+
 In a typical instance of a \emph{network design} problem we are given a collection of resources and our goal is to construct a desired network that satisfies some requirements while utilizing the minimum possible amount of resources.
-One of the classical network design problems (and probably the most well known) is the Minimum Spanning Tree problem, where given an undirected weighted graph our goal is to find the minimum cost set of edges that induces a connected graph.
-Network design problems have many applications: the construction of efficient communication and traffic networks, the design of small and cheap VLSI chips, the reconstruction of phylogenetic trees and other applications in other fields of science.
+One of the classical network design problems (and probably the most well known) is the \textsc{Minimum Spanning Tree} problem where, given an undirected weighted graph, our goal is to find the minimum cost set of edges that induces a connected graph.
+
+Let $\mathcal{C}$ be a set of colors, a \emph{coloring} of an undirected graph, $G(V, E)$, is a function $\chi:V \to \mathcal{C}$.
+We say that a coloring is \emph{convex} if the vertices of each color induce a connected graph of $G$.
+In the \textsc{Convex Recoloring} problem we are given an undirected graph $G$ and a (non-convex) coloring of this graph and our goal is to find a convex coloring of the graph that recolors the minimum number of vertices.
+In this thesis we consider a special case of this problem, namely the \textsc{2-Convex Recoloring} problem, in which the original coloring uses each color in $\mathcal{C}$ to color at most two vertices.
+For this special case we develop a greedy $3/2$-approximation algorithm.
+We show that if the input graph is a path then this is in fact a $5/4$-approximation algorithm.
+
+In the \textsc{Service Chain Placement in SDNs} problem our goal is to find an optimal resource allocation in a software defined networks that support network function virtualization.
+We model the problem and give a fully polynomial time approximation scheme for the special case where the physical network is a directed acyclic graph. 
+For general graphs we give a parameterized algorithm. 
+This algorithm finds an optimal solution efficiently for cactus network.
 
 Submodularity is a fundamental mathematical notion that captures the concept of economy of scale and is prevalent in many areas of science and technology.
 Given a ground set $U$ a set function $f:2^U \to \mathbb{R}_+$ over $U$ is called \emph{submodular} if it has the \emph{diminishing returns} property:
-$f(A \cup \{a\}) - f(A) \geq f(B \cup \{a\}) - f(B)$ for every $A \subseteq B \subseteq U$ and $a \in U \setminus B$.\footnote{
-    An equivalent definition is: $f(A) + f(B) \geq f(A \cup B) + f(A \cup B)$ for every $A,B \in U$.
-}
+$f(A \cup \{a\}) - f(A) \geq f(B \cup \{a\}) - f(B)$ for every $A \subseteq B \subseteq U$ and $a \in U \setminus B$.
 Submodular functions naturally arise in different disciplines such as combinatorics, graph theory, probability, game theory, and economics.
-Some well known examples include coverage functions, cuts in graphs and hypergraphs, matroid rank functions, entropy, and budget additive functions.
-Additionally, submodular functions play a major role in many real world applications, {\em e.g.}, the spread of influence in networks, recommender systems, document summarization, and information gathering, are just a few such examples.
 
-Combinatorial optimization problems with a submodular objective have been the focus of intense research in the last decade as such problems provide a unifying framework that captures many fundamental problems in the theory of algorithms and numerous real world practical applications.
-Examples of the former include, {\em e.g.}, Max-CUT and Max-DiCUT, Max-$k$-Coverage, Max-Bisection, Generalized-Assignment, and Max-Facility-Location, whereas examples of the latter include, {\em e.g.}, pollution detection, gang violence reduction, outbreak detection in networks, exemplar based clustering, image segmentation, and recommendation diversification.
-
-A main driving force behind the above research is the need for algorithms that not only provide provable approximation guarantees, but are also fast and  simple to implement in practice.
-This need stems from the sheer scale of the applicability of submodular maximization problems in diverse disciplines, and is further amplified by the fact that many of the practical applications arise in areas such as machine learning and data mining where massive data sets and inputs are ubiquitous.
-
-Submodular function maximization problems as well as Many of the practical network design problems are NP-hard and thus likely intractable. 
-In this thesis we focus on approximation algorithms for two network design problems, namely the \emph{Convex Recoloring} and the \emph{Service Chain Placement in SDNs} problems. 
-We also develop a fast and simple approximation algorithm for a \emph{Submodular Function Maximization} problem. 
-Finally, we consider the \emph{Maximum Carpool Matching}, an optimization problem that seeks for the optimal way a group of people should share their ride, and show that this problem can be formulated as a submodular maximization problem.
+In this thesis we consider the problem of maximizing a monotone, submodular function given a knapsack constraint and develop a fast and simple approximation algorithm for this problem.
+We also consider the \textsc{Maximum Carpool Matching} problem, where we seek for an optimal way a group of people should share their ride, and show that this problem can be formalized as a non-monotone, unconstrained, submodular function maximization, thus admitting a $1/2$-approximation.
