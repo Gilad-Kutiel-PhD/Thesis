@@ -1229,38 +1229,3 @@ that is at most $2L$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Conclusion}
-
-Chaining of virtual network functions is a service concept which has
-gained much attention from both practitioners and researchers, since
-it promises increased flexibility and cost-efficiency for future
-carrier networks.
-%
-In this setting a client requests a compound service from the network
-provider which translates into a service chain that needs to be
-embedded into the physical network.  To ensure efficient utilization
-of the underline physical network, the placement of the service chain
-should be done carefully and efficiently.
-%
-In this paper we define a model for service chain placement in SDNs.
-We show that the placement problem is computationally hard even in
-very simple cases.  Given these hardness results, we propose an FPTAS
-for the placement problem in acyclic physical networks.  For general
-networks we propose a randomized algorithm and an fixed parameter
-algorithm whose running time depends on the topology of the network,
-more specifically on the number of nodes in the network with more than
-two neighbors.  Finally, we extend our results to a fault tolerant
-setting.
-
-Several questions regarding service chain placement remain open:
-\begin{inparaenum}[(i)]
-\item Are there (practical) networks (other than DAGs) that are
-  computationaly easy?
-\item Can our results be extended to the case where the service chain
-  is placed within a walk instead of a path?
-\item Can multiple requests be treated within our model?
-\end{inparaenum}
-We believe that our results and techniques can serve as a starting
-point for future work dealing with those questions.
-

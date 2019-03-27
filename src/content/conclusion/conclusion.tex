@@ -1,0 +1,19 @@
+In this thesis we developed approximation algorithms for four NP-hard combinatorial optimization problems. 
+Let us now summarize our results.
+
+For the \textsc{2-Convex Recoloring} problem we developed a greedy $3/2$-approximation algorithm.
+We show that if the input graph is a path then this is in fact a $5/4$-approximation algorithm.
+This is the first time a constant-ratio approximation algorithm is
+given for a variant of
+\CRP{} in general graphs.
+
+Next, we defined a model for service chain placement in SDNs.
+We show that the placement problem is computationally hard even in very simple cases.  Given these hardness results, we propose an FPTAS for the placement problem in acyclic physical networks.  
+For general networks we propose a randomized algorithm and an fixed parameter algorithm whose running time depends on the topology of the network, more specifically on the number of nodes in the network with more than two neighbors.  
+Finally, we extend our results to a fault tolerant setting.
+
+For \textsc{Submodular Knapsack} we developed a framework that for any $\alpha < \beta < \frac{1}{2}$ and an $\alpha$-approximation algorithm $A$ with a running time $t(n)$ produces a $\beta$-approximation algorithm $B$.
+The running time of $B$ is $O(n^2) + O(t(n))$ where the constants hidden by the big $O$ depend on $\alpha$ and $\beta$.
+This framework can be used, for example, to develop a $(1-e^{-2/3})$-approximation algorithm that runs in time $O(n^2)$ with very small constant.
+
+Finally, we show that the \textsc{Maximum Carpool Matching} can be formulated as a submodular optimization problem, thus, admitting a $1/2$-approximation algorithm.
